@@ -11,7 +11,10 @@ public class DeviceFactory {
             return new Thermostat();
         } else if (type.equalsIgnoreCase("camera")) {
             return new SecurityCamera();
+        } else if (type.equalsIgnoreCase("smartPlug")) {
+            return new SmartPlug();
         }
+
         throw new IllegalArgumentException("Unknown device type");
     }
 }

@@ -1,11 +1,17 @@
 import devices.DeviceFactory;
+import devices.Light;
 import devices.SmartDevice;
 import devices.SmartPlug;
+import devices.configs.LightConfig;
 import home.SmartHome;
 import notifications.Notification;
 import notifications.NotificationChannels;
 import notifications.NotificationService;
+import util.DeviceManager;
 import util.SmartLogger;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Main
 {
@@ -81,5 +87,29 @@ public class Main
         // Koniec, Tydzień 1, Prototype Builder 2
 
         System.out.println(SEPARATOR);
+
+
+        //Tydzień 1, Wzorzec Factory 3, Builder 3
+        System.out.println("Default settings:");
+
+        List<SmartDevice> smartDevices = new ArrayList<SmartDevice>() {{
+            add(DeviceFactory.createDevice("light"));
+            add(DeviceFactory.createDevice("camera"));
+            add(DeviceFactory.createDevice("smartPlug"));
+        }};
+
+        for (SmartDevice smartDevice : smartDevices) {
+            System.out.println(smartDevice.getStatus());
+        }
+
+
+        //Tydzień 1, Wzorzec Prototype 3
+        LightConfig defaultLightConfig = DeviceManager.INSTANCE.getSetting(Light.CONFIG_KEY, LightConfig.class);
+        System.out.println("Default LightConfig: " + defaultLightConfig);
+
+        LightConfig clonedLightConfig = defaultLightConfig.clone();
+        System.out.println("Cloned LightConfig: " + clonedLightConfig);
+
+
     }
 }
