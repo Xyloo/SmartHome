@@ -2,6 +2,9 @@ import devices.DeviceFactory;
 import devices.SmartDevice;
 import devices.SmartPlug;
 import home.SmartHome;
+import notifications.Notification;
+import notifications.NotificationChannels;
+import notifications.NotificationService;
 import util.SmartLogger;
 
 public class Main
@@ -52,5 +55,31 @@ public class Main
         System.out.println(plug1.getStatus());
         System.out.println(plug2.getStatus());
         // Koniec, Tydzień 1, Wzorzec Prototype 1
+
+        System.out.println(SEPARATOR);
+
+        // Tydzień 1, Wzorzec Singleton oraz Factory 2
+        NotificationService service = NotificationService.getInstance(NotificationChannels.App);
+        // Koniec, Tydzień 1, Wzorzec Singleton oraz Factory 2
+
+        System.out.println(SEPARATOR);
+
+        // Tydzień 1, Wzorzec Builder 2
+        Notification notification = new Notification.NotificationBuilder("Uwaga! Wykryto niespodziewany ruch w salonie!")
+                .setPriority(1)
+                .setType("Warning")
+                .addTitle("Uwaga! Wykryto ruch!")
+                .build();
+        service.Notify(notification);
+        // Koniec, Tydzień 1, Wzorzec Builder 2
+
+        System.out.println(SEPARATOR);
+
+        // Tydzień 1, Wzorzec Prototype 2
+        Notification secondNotification = notification.clone();
+        service.Notify(notification);
+        // Koniec, Tydzień 1, Prototype Builder 2
+
+        System.out.println(SEPARATOR);
     }
 }
