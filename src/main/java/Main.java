@@ -38,6 +38,8 @@ public class Main
 
         // Tydzień 1, Wzorzec Singleton 1
         SmartLogger logger = SmartLogger.getInstance();
+        SmartLogger logger2 = SmartLogger.getInstance();
+        assert logger == logger2;
         logger.log("SmartHome system started.");
         // Koniec, Tydzień 1, Wzorzec Singleton 1
 
@@ -83,7 +85,7 @@ public class Main
 
         // Tydzień 1, Wzorzec Prototype 2
         Notification secondNotification = notification.clone();
-        service.Notify(notification);
+        service.Notify(secondNotification);
         // Koniec, Tydzień 1, Prototype Builder 2
 
         System.out.println(SEPARATOR);
@@ -109,6 +111,7 @@ public class Main
 
         LightConfig clonedLightConfig = defaultLightConfig.clone();
         System.out.println("Cloned LightConfig: " + clonedLightConfig);
+
 
 
     }

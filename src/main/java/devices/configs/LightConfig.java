@@ -36,6 +36,12 @@ public class LightConfig implements DeviceConfig, Cloneable {
         private boolean initialState;
         private int brightness;
 
+        public Builder(){}
+
+        public Builder(boolean initialState) {
+            this.initialState = initialState;
+        }
+
         public Builder initialState(boolean initialState) {
             this.initialState = initialState;
             return this;

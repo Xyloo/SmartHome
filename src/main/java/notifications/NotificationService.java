@@ -9,9 +9,9 @@ public class NotificationService {
     }
 
     public static NotificationService getInstance(NotificationChannels value){
-        NotificationService configurePanel = service;
-        if(configurePanel != null){
-            return configurePanel;
+        NotificationService notificationService = service;
+        if(notificationService != null){
+            return notificationService;
         }
         synchronized (NotificationService.class){
             if(service == null){
