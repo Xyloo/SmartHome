@@ -1,15 +1,17 @@
-package devices;
+package devices.impl;
 
-public class Thermostat implements SmartDevice {
+public class Thermostat extends AbstractSmartDevice implements SmartDevice {
     private int temperature = 20; // default temperature
 
     @Override
     public void turnOn() {
+        super.turnOn();
         temperature = 20;
     }
 
     @Override
     public void turnOff() {
+        super.turnOff();
         temperature = 0;
     }
 

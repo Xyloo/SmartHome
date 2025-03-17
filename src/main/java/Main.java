@@ -1,8 +1,11 @@
-import devices.DeviceFactory;
-import devices.Light;
-import devices.SmartDevice;
-import devices.SmartPlug;
+import devices.composite.LightingGroup;
+import devices.composite.SecurityGroup;
+import devices.factory.DeviceFactory;
+import devices.impl.lighting.Light;
+import devices.impl.SmartDevice;
+import devices.impl.SmartPlug;
 import devices.configs.LightConfig;
+import devices.impl.security.SecurityCamera;
 import home.SmartHome;
 import notifications.Notification;
 import notifications.NotificationChannels;
@@ -113,6 +116,27 @@ public class Main
         System.out.println("Cloned LightConfig: " + clonedLightConfig);
 
 
+        //Tydzień 2
+
+        System.out.println(SEPARATOR);
+        LightingGroup livingRoomLights = new LightingGroup(1);
+        livingRoomLights.addDevice(new Light());
+        livingRoomLights.addDevice(new Light());
+        livingRoomLights.turnOn();
+        livingRoomLights.setBrightness (20);
+        System.out.println(livingRoomLights.getStatus ());
+
+        livingRoomLights.turnOff();
+        livingRoomLights.setBrightness (40);
+        System.out.println(livingRoomLights.getStatus ());
+        System.out.println(SEPARATOR);
+
+        SecurityGroup securityGroup = new SecurityGroup (2);
+        securityGroup.addDevice (new SecurityCamera (4));
+        System.out.println (securityGroup.getStatus ());
+
+
+        System.out.println(SEPARATOR);
 
     }
 }
