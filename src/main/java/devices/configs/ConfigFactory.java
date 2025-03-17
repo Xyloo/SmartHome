@@ -5,7 +5,7 @@ public class ConfigFactory {
     public static DeviceConfig createConfig(String deviceType) {
         if (deviceType.equalsIgnoreCase("light")) {
             return new LightConfig.Builder()
-                    .initialState(true)
+                    .initialState(false)
                     .brightness(60)
                     .build();
         } else if (deviceType.equalsIgnoreCase("securityCamera")) {

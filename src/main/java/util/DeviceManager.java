@@ -1,8 +1,8 @@
 package util;
 
-import devices.Light;
-import devices.SecurityCamera;
-import devices.SmartPlug;
+import devices.impl.lighting.Light;
+import devices.impl.security.SecurityCamera;
+import devices.impl.SmartPlug;
 import devices.configs.*;
 
 import java.util.HashMap;

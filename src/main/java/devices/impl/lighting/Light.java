@@ -1,11 +1,11 @@
-package devices;
+package devices.impl.lighting;
 
+import devices.impl.AbstractSmartDevice;
 import devices.configs.LightConfig;
 import util.DeviceManager;
 
-public class Light implements SmartDevice {
+public class Light extends AbstractSmartDevice implements LightingDevice {
     public static final String CONFIG_KEY = "Light";
-    private boolean isOn;
     private int brightness;
 
     public Light() {
@@ -15,14 +15,18 @@ public class Light implements SmartDevice {
     }
 
     @Override
-    public void turnOn() { isOn = true; }
+    public void setBrightness( int brightness ) {
+        this.brightness = brightness;
+    }
 
     @Override
-    public void turnOff() { isOn = false; }
+    public int getBrightness() {
+        return brightness;
+    }
 
     @Override
     public String getStatus() {
-        return "Light is " + (isOn ? "ON" : "OFF") + " Brightness: " + brightness;
+        return "Light [" + id + "] is " + (isOn ? "ON" : "OFF") + " Brightness: " + brightness;
     }
 }
 

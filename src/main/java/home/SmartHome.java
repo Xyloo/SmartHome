@@ -1,6 +1,6 @@
 package home;
 
-import devices.SmartDevice;
+import devices.impl.SmartDevice;
 
 import java.util.ArrayList;
 import java.util.List;

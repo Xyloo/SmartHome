@@ -1,4 +1,4 @@
-package devices;
+package devices.impl;
 
 public interface SmartDevice {
     void turnOn();
