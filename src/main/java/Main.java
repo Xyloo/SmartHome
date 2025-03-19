@@ -10,6 +10,8 @@ import devices.bridge.BasicRemoteControl;
 import devices.bridge.MobileRemoteControl;
 import devices.composite.LightingGroup;
 import devices.composite.SecurityGroup;
+import devices.decorator.NotificationDeviceDecorator;
+import devices.decorator.SecurityCheckDecorator;
 import devices.decorator.VerboseSecurityCameraDecorator;
 import devices.factory.DeviceFactory;
 import devices.impl.Thermostat;
@@ -22,9 +24,7 @@ import devices.impl.security.ExternalSecurityCamera;
 import devices.impl.security.SecurityCamera;
 import devices.impl.security.SecurityCameraDevice;
 import home.SmartHome;
-import notifications.Notification;
-import notifications.NotificationChannels;
-import notifications.NotificationService;
+import notifications.*;
 import util.DeviceManager;
 import util.SmartLogger;
 
@@ -49,13 +49,25 @@ public class Main
         livingRoomLights.setBrightness (40);
         System.out.println(livingRoomLights.getStatus ());
         System.out.println(SEPARATOR);
+        //Koniec Tydzień 2, Wzorzec Composite 1
 
+        //Koniec Tydzień 2, Wzorzec Composite 2
         SecurityGroup securityGroup = new SecurityGroup (2);
         securityGroup.addDevice (new SecurityCamera (4));
+        securityGroup.addDevice (new SecurityCamera (5));
         System.out.println (securityGroup.getStatus ());
-
         System.out.println(SEPARATOR);
-        //Koniec Tydzień 2, Wzorzec Composite 1
+        //Koniec Tydzień 2, Wzorzec Composite 2
+
+        //Tydzien 2, Wzorzec Composite 3
+        SmartScenario nightMode = new SmartScenario.Builder("Night Mode")
+                .addAction(new TurnOffLights())
+                .addAction(new SetThermostatLow())
+                .addAction(new ActivateAlarm())
+                .build();
+        nightMode.execute();
+        System.out.println(SEPARATOR);
+        //Koniec, Tydzien 2, Wzorzec Composite 3
 
 
         //Tydzień 2, Wzorzec Decorator 1
@@ -65,6 +77,28 @@ public class Main
         System.out.println(decorator.getStatus());
         System.out.println(SEPARATOR);
         //Koniec Tydzień 2, Wzorzec Decorator 1
+
+        //Tydzień 2, Wzorzec Decorator 2
+        NotificationGroup notificationGroup = new NotificationGroup();
+        notificationGroup.addNotification(Notificator.create(NotificationChannels.App));
+        notificationGroup.addNotification(Notificator.create(NotificationChannels.Email));
+        NotificationDeviceDecorator decorator2 = new NotificationDeviceDecorator(
+                new SecurityCamera(2),
+                notificationGroup
+        );
+        decorator2.turnOn();
+        decorator2.turnOff();
+        System.out.println(SEPARATOR);
+        //Koniec Tydzień 2, Wzorzec Decorator 2
+
+        //Tydzień 2, Wzorzec Decorator 3
+        SecurityCheckDecorator securityCheckDecorator = new SecurityCheckDecorator(
+                new SecurityCamera(3)
+        );
+        securityCheckDecorator.turnOn();
+        securityCheckDecorator.turnOff();
+        System.out.println(SEPARATOR);
+        //Koniec Tydzień 2, Wzorzec Decorator 3
 
 
         //Tydzień 2, Wzorzec Adapter 1
@@ -83,10 +117,10 @@ public class Main
             smartDevice.setAutoRecordingEnabled(true);
             System.out.println(((SmartDevice)smartDevice).getStatus() + "\n");
         }
+        System.out.println(SEPARATOR);
         //Koniec Tydzień 2, Wzorzec Adapter 1
 
         //Tydzień 2, Wzorzec Adapter 2
-        System.out.println(SEPARATOR);
         var externalBasicLight = new BasicLight();
         var externalBasicLightAdapter = new ExternalBasicLightAdapter(externalBasicLight);
 
@@ -98,7 +132,6 @@ public class Main
         //Koniec Tydzień 2, Wzorzec Adapter 2
 
         //Tydzień 2, Wzorzec Adapter 3
-        System.out.println(SEPARATOR);
         var thermostat = new Thermostat();
         var thermostatAdapter = new ExternalThermostatAdapter(thermostat);
 
@@ -107,6 +140,7 @@ public class Main
         System.out.println(thermostatAdapter.getStatus());
         System.out.println(SEPARATOR);
         //Koniec Tydzień 2, Wzorzec Adapter 3
+
 
         //Tydzień 2, Wzorzec Bridge 1
         BasicRemoteControl remoteControl = new BasicRemoteControl(new Light());
@@ -117,7 +151,6 @@ public class Main
         //Koniec Tydzień 2, Wzorzec Bridge 1
 
         //Tydzień 2, Wzorzec Bridge 2
-        System.out.println(SEPARATOR);
         var advancedRemoteControl = new AdvancedRemoteControl(securityCamera);
         System.out.println(advancedRemoteControl.getStatus());
         advancedRemoteControl.startRecording();
@@ -127,7 +160,6 @@ public class Main
         //Koniec Tydzień 2, Wzorzec Bridge 2
 
         //Tydzień 2, Wzorzez Bridge 3
-        System.out.println(SEPARATOR);
         var mobileRemoteControl = new MobileRemoteControl(externalSecurityCameraAdapter);
         System.out.println(mobileRemoteControl.getStatus());
         mobileRemoteControl.enableVoiceControl();
@@ -135,15 +167,6 @@ public class Main
         System.out.println(mobileRemoteControl.getStatus());
         System.out.println(SEPARATOR);
         //Koniec Tydzień 2, Wzorzec Bridge 3
-
-        //Tydzien 2, Wzorzec Composite 2
-        SmartScenario nightMode = new SmartScenario.Builder("Night Mode")
-                .addAction(new TurnOffLights())
-                .addAction(new SetThermostatLow())
-                .addAction(new ActivateAlarm())
-                .build();
-        nightMode.execute();
-        //Koniec, Tydzien 2, Wzorzec Composite 2
 
     }
 
