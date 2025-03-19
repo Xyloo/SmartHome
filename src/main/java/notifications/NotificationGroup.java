@@ -15,7 +15,9 @@ public class NotificationGroup implements INotification{
     }
 
     @Override
-    public void Send(String message) {
-
+    public void send(String message) {
+        for (INotification notification : notifications) {
+            notification.send(message);
+        }
     }
 }

@@ -5,7 +5,7 @@ public class NotificationService {
     public INotification notificator;
 
     private NotificationService(NotificationChannels channel){
-        this.notificator = Notificator.Create(channel);
+        this.notificator = Notificator.create(channel);
     }
 
     public static NotificationService getInstance(NotificationChannels value){
@@ -21,6 +21,6 @@ public class NotificationService {
         }
     }
     public void Notify(Notification notification){
-        notificator.Send("Sending notification: " + notification.toString());
+        notificator.send("Sending notification: " + notification.toString());
     }
 }
