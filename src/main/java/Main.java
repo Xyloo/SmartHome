@@ -1,4 +1,8 @@
 import devices.adapter.ExternalBasicLightAdapter;
+import Scenarios.ActivateAlarm;
+import Scenarios.SetThermostatLow;
+import Scenarios.SmartScenario;
+import Scenarios.TurnOffLights;
 import devices.adapter.ExternalSecurityCameraAdapter;
 import devices.adapter.ExternalThermostatAdapter;
 import devices.bridge.AdvancedRemoteControl;
@@ -131,6 +135,16 @@ public class Main
         System.out.println(mobileRemoteControl.getStatus());
         System.out.println(SEPARATOR);
         //Koniec Tydzień 2, Wzorzec Bridge 3
+
+        //Tydzien 2, Wzorzec Composite 2
+        SmartScenario nightMode = new SmartScenario.Builder("Night Mode")
+                .addAction(new TurnOffLights())
+                .addAction(new SetThermostatLow())
+                .addAction(new ActivateAlarm())
+                .build();
+        nightMode.execute();
+        //Koniec, Tydzien 2, Wzorzec Composite 2
+
     }
 
     private void tydzien1()
@@ -230,6 +244,67 @@ public class Main
 
         LightConfig clonedLightConfig = defaultLightConfig.clone();
         System.out.println("Cloned LightConfig: " + clonedLightConfig);
-        //Koniec Tydzień 1, Wzorzec Prototype 3
+        //Koniec, Tydzień 1, Wzorzec Prototype 3
+        System.out.println(SEPARATOR);
+
+
+        //Tydzień 2, Wzorzec Composite 1
+        System.out.println(SEPARATOR);
+        LightingGroup livingRoomLights = new LightingGroup(1);
+        livingRoomLights.addDevice(new Light());
+        livingRoomLights.addDevice(new Light());
+        livingRoomLights.turnOn();
+        livingRoomLights.setBrightness (20);
+        System.out.println(livingRoomLights.getStatus ());
+
+        livingRoomLights.turnOff();
+        livingRoomLights.setBrightness (40);
+        System.out.println(livingRoomLights.getStatus ());
+        System.out.println(SEPARATOR);
+
+        SecurityGroup securityGroup = new SecurityGroup (2);
+        securityGroup.addDevice (new SecurityCamera (4));
+        System.out.println (securityGroup.getStatus ());
+
+        System.out.println(SEPARATOR);
+        //Koniec Tydzień 2, Wzorzec Composite 1
+
+
+        //Tydzień 2, Wzorzec Decorator 1
+        VerboseSecurityCameraDecorator decorator = new VerboseSecurityCameraDecorator(
+                new SecurityCamera(1)
+        );
+        System.out.println(decorator.getStatus());
+        System.out.println(SEPARATOR);
+        //Koniec Tydzień 2, Wzorzec Decorator 1
+
+        //Tydzień 2, Wzorzec Bridge 1
+        BasicRemoteControl remoteControl = new BasicRemoteControl(new Light());
+        System.out.println(remoteControl.getStatus());
+        remoteControl.turnOn();
+        System.out.println(remoteControl.getStatus());
+        System.out.println(SEPARATOR);
+        //Koniec Tydzień 2, Wzorzec Bridge 1
+
+
+        //Tydzień 2, Wzorzec Adapter 1
+        List<SecurityCameraDevice> smartDeviceList = new ArrayList<>();
+        var securityCamera = new SecurityCamera(50);
+        var externalSecurityCamera = new ExternalSecurityCamera();
+        var externalSecurityCameraAdapter = new ExternalSecurityCameraAdapter(externalSecurityCamera);
+
+        smartDeviceList.add(securityCamera);
+        smartDeviceList.add(externalSecurityCameraAdapter);
+
+        for (SecurityCameraDevice smartDevice : smartDeviceList) {
+            System.out.println(((SmartDevice)smartDevice).getStatus());
+            smartDevice.stopRecording();
+            smartDevice.takeSnapshot();
+            smartDevice.setAutoRecordingEnabled(true);
+            System.out.println(((SmartDevice)smartDevice).getStatus() + "\n");
+        }
+
+        //Koniec Tydzień 2, Wzorzec Adapter 1
+
     }
 }
