@@ -1,4 +1,5 @@
 import devices.adapter.ExternalSecurityCameraAdapter;
+import devices.bridge.AdvancedRemoteControl;
 import devices.bridge.BasicRemoteControl;
 import devices.composite.LightingGroup;
 import devices.composite.SecurityGroup;
@@ -179,6 +180,16 @@ public class Main
         }
 
         //Koniec Tydzień 3, Wzorzec Adapter 1
+
+        //Tydzień 3, Wzorzec Bridge 2
+        System.out.println(SEPARATOR);
+        var advancedRemoteControl = new AdvancedRemoteControl(securityCamera);
+        System.out.println(advancedRemoteControl.getStatus());
+        advancedRemoteControl.startRecording();
+        advancedRemoteControl.setBrightness(50);
+        System.out.println(advancedRemoteControl.getStatus());
+        System.out.println(SEPARATOR);
+        //Koniec Tydzień 3, Wzorzec Bridge 2
 
     }
 }
