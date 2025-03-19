@@ -13,7 +13,7 @@ public class ExternalSecurityCameraAdapter extends AbstractSmartDevice implement
 
     @Override
     public String getStatus() {
-        util.SmartLogger.getInstance().log("[ExternalSecurityCameraAdapter] getStatus]");
+        util.SmartLogger.getInstance().log("[ExternalSecurityCameraAdapter] getStatus");
         return device.showDeviceState();
     }
 

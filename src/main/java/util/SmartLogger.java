@@ -23,5 +23,8 @@ public class SmartLogger {
     public void log(String message) {
         System.out.println("LOG: " + message);
     }
+    public void log(Object obj, String message) {
+        System.out.println("LOG: [" + obj.getClass().getSimpleName() + "]: " + message);
+    }
 }
 // Koniec, Tydzień 1, Wzorzec Singleton 1
