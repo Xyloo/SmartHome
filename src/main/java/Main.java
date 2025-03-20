@@ -11,6 +11,7 @@ import devices.bridge.MobileRemoteControl;
 import devices.composite.LightingGroup;
 import devices.composite.SecurityGroup;
 import devices.decorator.NotificationDeviceDecorator;
+import devices.decorator.SecurityCameraDecorator;
 import devices.decorator.SecurityCheckDecorator;
 import devices.decorator.VerboseSecurityCameraDecorator;
 import devices.factory.DeviceFactory;
@@ -40,7 +41,7 @@ public class Main
         System.out.println(SEPARATOR);
         LightingGroup livingRoomLights = new LightingGroup(1);
         livingRoomLights.addDevice(new Light());
-        livingRoomLights.addDevice(new Light());
+        //livingRoomLights.addDevice(new BasicLight());
         livingRoomLights.turnOn();
         livingRoomLights.setBrightness (20);
         System.out.println(livingRoomLights.getStatus ());
@@ -55,6 +56,7 @@ public class Main
         SecurityGroup securityGroup = new SecurityGroup (2);
         securityGroup.addDevice (new SecurityCamera (4));
         securityGroup.addDevice (new SecurityCamera (5));
+        securityGroup.addDevice (livingRoomLights);
         System.out.println (securityGroup.getStatus ());
         System.out.println(SEPARATOR);
         //Koniec Tydzień 2, Wzorzec Composite 2
@@ -71,10 +73,16 @@ public class Main
 
 
         //Tydzień 2, Wzorzec Decorator 1
-        VerboseSecurityCameraDecorator decorator = new VerboseSecurityCameraDecorator(
+        SecurityCameraDecorator decorator = new SecurityCameraDecorator(
                 new SecurityCamera(1)
         );
         System.out.println(decorator.getStatus());
+        decorator.startRecording();
+        System.out.println(decorator.getStatus());
+        VerboseSecurityCameraDecorator decorator1 = new VerboseSecurityCameraDecorator(
+                decorator
+        );
+        System.out.println(decorator1.getStatus());
         System.out.println(SEPARATOR);
         //Koniec Tydzień 2, Wzorzec Decorator 1
 

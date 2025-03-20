@@ -1,6 +1,8 @@
 package devices.impl.lighting;
 
-public class BasicLight
+import devices.impl.SmartDevice;
+
+public class BasicLight implements SmartDevice
 {
     private boolean on;
 
@@ -9,6 +11,16 @@ public class BasicLight
     }
 
     public void switchOff() {
+        on = false;
+    }
+
+    @Override
+    public void turnOn() {
+        on = true;
+    }
+
+    @Override
+    public void turnOff() {
         on = false;
     }
 

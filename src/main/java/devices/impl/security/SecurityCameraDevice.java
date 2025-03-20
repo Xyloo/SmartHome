@@ -1,6 +1,8 @@
 package devices.impl.security;
 
-public interface SecurityCameraDevice {
+import devices.impl.SmartDevice;
+
+public interface SecurityCameraDevice extends SmartDevice {
     void startRecording();
     void stopRecording();
     void takeSnapshot();

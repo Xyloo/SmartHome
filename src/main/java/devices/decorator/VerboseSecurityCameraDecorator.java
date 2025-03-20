@@ -1,11 +1,11 @@
 package devices.decorator;
 
-import devices.impl.security.SecurityCamera;
+import devices.impl.security.SecurityCameraDevice;
 
 //Tydzień 2, Wzorzec Decorator 4
 public class VerboseSecurityCameraDecorator extends SecurityCameraDecorator {
 
-    public VerboseSecurityCameraDecorator(SecurityCamera decorated) {
+    public VerboseSecurityCameraDecorator(SecurityCameraDevice decorated) {
         super(decorated);
     }
 
