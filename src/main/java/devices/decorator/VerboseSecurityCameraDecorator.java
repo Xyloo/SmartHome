@@ -2,6 +2,7 @@ package devices.decorator;
 
 import devices.impl.security.SecurityCamera;
 
+//Tydzień 2, Wzorzec Decorator 4
 public class VerboseSecurityCameraDecorator extends SecurityCameraDecorator {
 
     public VerboseSecurityCameraDecorator(SecurityCamera decorated) {
@@ -14,3 +15,4 @@ public class VerboseSecurityCameraDecorator extends SecurityCameraDecorator {
             + super.getStatus();
     }
 }
+//Tydzień 2, Wzorzec Decorator 4

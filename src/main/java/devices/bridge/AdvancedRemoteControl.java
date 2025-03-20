@@ -4,6 +4,7 @@ import devices.impl.SmartDevice;
 import devices.impl.lighting.Light;
 import devices.impl.security.SecurityCamera;
 
+//Tydzień 2, Wzorzec Bridge 1
 public class AdvancedRemoteControl extends AbstractRemoteControl {
 
     public AdvancedRemoteControl(SmartDevice device) {
@@ -46,3 +47,4 @@ public class AdvancedRemoteControl extends AbstractRemoteControl {
         return "[AdvancedRemoteControl] " + status;
     }
 }
+//Koniec Tydzień 2, Wzorzec Bridge 1

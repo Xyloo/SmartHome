@@ -3,6 +3,7 @@ package devices.composite;
 
 import devices.impl.lighting.LightingDevice;
 
+//Tydzień 2, Wzorzec Composite 1
 public class LightingGroup extends AbstractDeviceGroup implements LightingDevice {
 
     public LightingGroup() {
@@ -25,3 +26,4 @@ public class LightingGroup extends AbstractDeviceGroup implements LightingDevice
         return 0;
     }
 }
+//Koniec Tydzień 2, Wzorzec Composite 1

@@ -5,6 +5,7 @@ import devices.impl.SmartDevice;
 import devices.impl.lighting.BasicLight;
 import util.SmartLogger;
 
+//Tydzień 2, Wzorzec Adapter 1
 public class ExternalBasicLightAdapter extends AbstractSmartDevice implements SmartDevice
 {
     private final BasicLight legacyLight;
@@ -31,4 +32,5 @@ public class ExternalBasicLightAdapter extends AbstractSmartDevice implements Sm
         return "External Basic Light is " + legacyLight.getStatus();
     }
 }
+//Koniec Tydzień 2, Adapter 1
 

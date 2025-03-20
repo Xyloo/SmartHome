@@ -5,6 +5,7 @@ import devices.impl.SmartDevice;
 import devices.impl.Thermostat;
 import util.SmartLogger;
 
+//Tydzień 2, Wzorzec Adapter 3
 public class ExternalThermostatAdapter extends AbstractSmartDevice implements SmartDevice
 {
     private final Thermostat legacyThermostat;
@@ -31,3 +32,4 @@ public class ExternalThermostatAdapter extends AbstractSmartDevice implements Sm
         return "External Thermostat is " + legacyThermostat.getStatus();
     }
 }
+//Koniec Tydzień 2, Wzorzec Adapter 1

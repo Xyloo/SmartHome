@@ -2,6 +2,7 @@ package devices.composite;
 
 import devices.impl.security.SecurityCameraDevice;
 
+//Tydzień 2, Wzorzec Composite 2
 public class SecurityGroup extends AbstractDeviceGroup implements SecurityCameraDevice {
 
     public SecurityGroup(int locationId){
@@ -44,3 +45,4 @@ public class SecurityGroup extends AbstractDeviceGroup implements SecurityCamera
         return false;
     }
 }
+//Koniec Tydzień 2, Wzorzec Composite 2

@@ -3,7 +3,7 @@ package devices.decorator;
 import devices.impl.SmartDevice;
 import util.SmartLogger;
 
-
+//Tydzień 2, Wzorzec Decorator 3
 public class SecurityCheckDecorator implements SmartDevice {
     private SmartDevice decoratedDevice;
     private SmartLogger logger = SmartLogger.getInstance();
@@ -48,3 +48,4 @@ public class SecurityCheckDecorator implements SmartDevice {
         return decoratedDevice.getStatus();
     }
 }
+//Koniec Tydzień 2, Wzorzec Decorator 3

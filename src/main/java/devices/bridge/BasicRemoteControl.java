@@ -2,6 +2,7 @@ package devices.bridge;
 
 import devices.impl.SmartDevice;
 
+//Tydzień 2, Wzorzec Bridge 2
 public class BasicRemoteControl extends AbstractRemoteControl {
     public BasicRemoteControl(SmartDevice device) {
         super(device);
@@ -25,3 +26,4 @@ public class BasicRemoteControl extends AbstractRemoteControl {
         return device.getStatus();
     }
 }
+//Koniec Tydzień 2, Wzorzec Bridge 2

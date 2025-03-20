@@ -4,6 +4,7 @@ import devices.impl.SmartDevice;
 import devices.impl.lighting.Light;
 import util.SmartLogger;
 
+//Tydzień 2, Wzorzec Bridge 3
 public class MobileRemoteControl extends AbstractRemoteControl {
     SmartLogger logger = SmartLogger.getInstance();
     boolean voiceControlEnabled = false;
@@ -51,3 +52,4 @@ public class MobileRemoteControl extends AbstractRemoteControl {
         return device.getStatus();
     }
 }
+//Koniec Tydzień 2, Wzorzec Bridge 3

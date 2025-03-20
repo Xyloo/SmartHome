@@ -3,6 +3,7 @@ package devices.decorator;
 import devices.impl.SmartDevice;
 import notifications.NotificationGroup;
 
+//Tydzień 2, Wzorzec Decorator 1
 public class NotificationDeviceDecorator implements SmartDevice
 {
     private SmartDevice device;
@@ -34,3 +35,4 @@ public class NotificationDeviceDecorator implements SmartDevice
         return device.getStatus();
     }
 }
+//Koniec Tydzień 2, Wzorzec Decorator 1

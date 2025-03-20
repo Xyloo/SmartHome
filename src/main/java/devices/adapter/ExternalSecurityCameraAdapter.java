@@ -4,6 +4,8 @@ import devices.impl.AbstractSmartDevice;
 import devices.impl.security.ExternalSecurityCamera;
 import devices.impl.security.SecurityCameraDevice;
 
+
+//Tydzień 2, Wzorzec Adapter 2
 public class ExternalSecurityCameraAdapter extends AbstractSmartDevice implements SecurityCameraDevice {
     protected ExternalSecurityCamera device;
 
@@ -59,3 +61,5 @@ public class ExternalSecurityCameraAdapter extends AbstractSmartDevice implement
         return device.isAutoRecording();
     }
 }
+
+//Koniec Tydzień 2, Wzorzec Adapter 2

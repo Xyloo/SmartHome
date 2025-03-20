@@ -4,6 +4,7 @@ import devices.impl.SmartDevice;
 import devices.impl.security.SecurityCamera;
 import devices.impl.security.SecurityCameraDevice;
 
+//Tydzień 2, Wzorzec Decorator 2
 public class SecurityCameraDecorator implements SecurityCameraDevice, SmartDevice {
     protected SecurityCamera decorated;
     public SecurityCameraDecorator(SecurityCamera decorated) {
@@ -60,3 +61,4 @@ public class SecurityCameraDecorator implements SecurityCameraDevice, SmartDevic
         return decorated.getStatus();
     }
 }
+//Koniec Tydzień 2, Wzorzec Decorator 2

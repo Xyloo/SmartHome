@@ -3,6 +3,7 @@ package Scenarios;
 import java.util.ArrayList;
 import java.util.List;
 
+//Tydzień 2, Wzorzec Composite 3
 public class SmartScenario implements SmartAction {
     private final String name;
     private final List<SmartAction> actions;
@@ -38,3 +39,4 @@ public class SmartScenario implements SmartAction {
         }
     }
 }
+//Koniec Tydzień 2, Wzorzec Composite 3
