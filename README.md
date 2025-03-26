@@ -38,6 +38,7 @@
 ### Facade
 - home.SmartHomeFacade: 1-72
 - devices.proxy.MonitoringFacade: 1-54
+- devices.impl.speakers.SmartSpeakerFacade: 1-68
 ### Flyweight
 - devices.security.sensors.SmartHomeSecuritySystem: 1-37
 - devices.impl.security.lockingsystem.LockingSystem: 1-39

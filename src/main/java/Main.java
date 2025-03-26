@@ -132,8 +132,8 @@ public class Main
         // Tydzień 3, Wzorzec Facade 3
         SmartSpeakerFacade speakerFacade = new SmartSpeakerFacade();
 
-        speakerSystem.installSpeaker("Living Room", "Echo Dot", "Amazon", true);
-        speakerSystem.installSpeaker("Kitchen", "Echo Dot", "Amazon", true);
+        speakerFacade.installSpeaker("Living Room", "Echo Dot", "Amazon", true);
+        speakerFacade.installSpeaker("Kitchen", "Echo Dot", "Amazon", true);
 
         speakerFacade.turnOnAllSpeakers();
         speakerFacade.playMusicOnAll("Imagine by John Lennon");
