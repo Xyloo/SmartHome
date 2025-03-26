@@ -43,6 +43,16 @@ public class SmartHome {
         }
     }
 
+    public <T extends SmartDevice> List<T> getDevicesOfType(Class<T> type) {
+        List<T> result = new ArrayList<>();
+        for (SmartDevice device : devices) {
+            if (type.isInstance(device)) {
+                result.add(type.cast(device));
+            }
+        }
+        return result;
+    }
+
     @Override
     public String toString() {
         return "SmartHome{" +
