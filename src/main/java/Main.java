@@ -1,4 +1,5 @@
 import devices.impl.SecurityAlarm;
+import devices.impl.speakers.SmartSpeakerSystem;
 import devices.proxy.MonitoringFacade;
 import devices.impl.security.SecureDeviceProxy;
 import devices.impl.security.SecurityConfig;
@@ -108,6 +109,22 @@ public class Main
         secureDeviceProxy.turnOn();
         secureDeviceProxy.turnOff();
         // Koniec, Tydzień 3, Wzorzec Proxy 3
+        System.out.println(SEPARATOR);
+
+        // Tydzień 3, Wzorzec Flyweight 3
+        SmartSpeakerSystem speakerSystem = new SmartSpeakerSystem();
+
+        // Install speakers (note how shared SpeakerType is reused if identical)
+        speakerSystem.installSpeaker("Living Room", "Echo Dot", "Amazon", true);
+        speakerSystem.installSpeaker("Kitchen", "Echo Dot", "Amazon", true);
+        speakerSystem.installSpeaker("Bedroom", "HomePod Mini", "Apple", false);
+
+        // Play music on all speakers
+        speakerSystem.playMusicOnAll("Imagine by John Lennon");
+
+        // Adjust volume on all speakers
+        speakerSystem.setAllVolumes(70);
+        // Koniec, Tydzień 3, Wzorzec Flyweight 3
     }
 }
 
