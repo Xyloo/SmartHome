@@ -4,12 +4,6 @@ import scenarios.actions.*;
 import scenarios.SmartScenario;
 import devices.impl.Thermostat;
 import devices.impl.lighting.Light;
-import devices.impl.SmartDevice;
-import devices.impl.SmartPlug;
-import devices.configs.LightConfig;
-import devices.impl.security.ExternalSecurityCamera;
-import devices.impl.security.SecurityCamera;
-import devices.impl.security.SecurityCameraDevice;
 import devices.impl.security.lockingsystem.LockingSystem;
 import devices.impl.security.sensors.SmartHomeSecuritySystem;
 import home.SmartHome;
@@ -56,43 +50,8 @@ public class Main
         system.listDevices();
         system.closeAll();
         //Koniec Tydzień 3, Wzorzec Flyweight 2
-    }
-    private void tydzien2(){
 
-        //Tydzień 2, Wzorzec Composite 1
         System.out.println(SEPARATOR);
-        LightingGroup livingRoomLights = new LightingGroup(1);
-        livingRoomLights.addDevice(new Light());
-        //livingRoomLights.addDevice(new BasicLight());
-        livingRoomLights.turnOn();
-        livingRoomLights.setBrightness (20);
-        System.out.println(livingRoomLights.getStatus ());
-
-        livingRoomLights.turnOff();
-        livingRoomLights.setBrightness (40);
-        System.out.println(livingRoomLights.getStatus ());
-        System.out.println(SEPARATOR);
-        //Koniec Tydzień 2, Wzorzec Composite 1
-
-        //Koniec Tydzień 2, Wzorzec Composite 2
-        SecurityGroup securityGroup = new SecurityGroup (2);
-        securityGroup.addDevice (new SecurityCamera (4));
-        securityGroup.addDevice (new SecurityCamera (5));
-        securityGroup.addDevice (livingRoomLights);
-        System.out.println (securityGroup.getStatus ());
-        System.out.println(SEPARATOR);
-        //Koniec Tydzień 2, Wzorzec Composite 2
-
-        //Tydzien 2, Wzorzec Composite 3
-        SmartScenario nightMode = new SmartScenario.Builder("Night Mode")
-                .addAction(new TurnOffLights())
-                .addAction(new SetThermostatLow())
-                .addAction(new ActivateAlarm())
-                .build();
-        nightMode.execute();
-        System.out.println(SEPARATOR);
-        //Koniec, Tydzien 2, Wzorzec Composite 3
-
 
         // Tydzień 3, Wzorzec Facade 1
         NotificationGroup notificationGroup = new NotificationGroup();
