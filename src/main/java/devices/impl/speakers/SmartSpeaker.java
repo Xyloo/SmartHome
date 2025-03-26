@@ -27,7 +27,9 @@ public class SmartSpeaker implements SmartDevice
         this.volume = volume;
         logger.log(this, "Setting volume to " + volume + " at " + location);
     }
-
+    public String getLocation(){
+        return this.location;
+    }
     @Override
     public void turnOn()
     {

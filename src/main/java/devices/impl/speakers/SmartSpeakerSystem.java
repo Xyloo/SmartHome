@@ -25,5 +25,9 @@ public class SmartSpeakerSystem {
             speaker.setVolume(volume);
         }
     }
+    public List<SmartSpeaker> getAllSpeakers(){
+        return speakers;
+    }
+
 }
 // Koniec Tydzień 3, Wzorzec Flyweight 3

@@ -1,4 +1,5 @@
 import devices.impl.SecurityAlarm;
+import devices.impl.speakers.SmartSpeakerFacade;
 import devices.impl.speakers.SmartSpeakerSystem;
 import devices.proxy.MonitoringFacade;
 import devices.impl.security.SecureDeviceProxy;
@@ -125,6 +126,25 @@ public class Main
         // Adjust volume on all speakers
         speakerSystem.setAllVolumes(70);
         // Koniec, Tydzień 3, Wzorzec Flyweight 3
+
+        System.out.println(SEPARATOR);
+
+        // Tydzień 3, Wzorzec Facade 3
+        SmartSpeakerFacade speakerFacade = new SmartSpeakerFacade();
+
+        speakerSystem.installSpeaker("Living Room", "Echo Dot", "Amazon", true);
+        speakerSystem.installSpeaker("Kitchen", "Echo Dot", "Amazon", true);
+
+        speakerFacade.turnOnAllSpeakers();
+        speakerFacade.playMusicOnAll("Imagine by John Lennon");
+        speakerFacade.setVolumeForAll(70);
+
+        speakerFacade.playMusicOnSpeaker("Living Room", "Song B");
+        speakerFacade.setVolumeForSpeaker("Living Room", 30);
+
+        speakerFacade.activatePartyMode();
+        speakerFacade.turnOffAllSpeakers();
+        // Koniec, Tydzień 3, Wzorzec Facade 3
     }
 }
 
