@@ -4,6 +4,7 @@ import devices.factory.LockingSystemFactory;
 import java.util.ArrayList;
 import java.util.List;
 
+//Tydzień 2, Wzorzec Flyweight 2
 public class LockingSystem {
     private List<SmartBlind> blinds = new ArrayList<>();
 
@@ -35,3 +36,4 @@ public class LockingSystem {
         }
     }
 }
+// Koniec Tydzień 2, Wzorzec Flyweight 2

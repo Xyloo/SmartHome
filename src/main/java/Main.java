@@ -1,5 +1,9 @@
 import devices.impl.SecurityAlarm;
 import devices.proxy.MonitoringFacade;
+import devices.impl.security.SecureDeviceProxy;
+import devices.impl.security.SecurityConfig;
+import devices.proxy.Camera;
+import devices.proxy.CameraProxy;
 import home.SmartHomeFacade;
 import scenarios.actions.*;
 import scenarios.SmartScenario;
@@ -89,6 +93,21 @@ public class Main
         monitoring.startRecording();
         monitoring.stopRecording();
         // Koniec, Tydzień 3, Wzorzec Proxy 1 & Facade 2
+        System.out.println(SEPARATOR);
+
+        // Tydzień 3, Wzorzec Proxy 1, 2
+        Camera camera = new CameraProxy();
+        camera.startRecording();
+        camera.stopRecording();
+        // Koniec, Tydzień 3, Wzorzec Proxy 1, 2
+        System.out.println(SEPARATOR);
+
+        // Tydzień 3, Wzorzec Proxy 3
+        SecurityConfig securityConfig = new SecurityConfig("password123");
+        SecureDeviceProxy secureDeviceProxy = new SecureDeviceProxy(alarm1, securityConfig);
+        secureDeviceProxy.turnOn();
+        secureDeviceProxy.turnOff();
+        // Koniec, Tydzień 3, Wzorzec Proxy 3
     }
 }
 
