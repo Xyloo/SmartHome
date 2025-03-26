@@ -4,6 +4,12 @@ package devices.proxy;
 public class CloudStorageProxy implements CloudStorage {
     private final CloudStorageService cloudStorageService;
 
+    public void loginToCloud(String user, String password){
+        System.out.println("CloudStorageProxy: Authenticate in the cloud.");
+        cloudStorageService.setUser(user);
+        cloudStorageService.setPassword(password);
+    }
+
     public CloudStorageProxy() {
         this.cloudStorageService = new CloudStorageService();
     }

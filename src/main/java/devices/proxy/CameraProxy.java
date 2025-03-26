@@ -9,6 +9,13 @@ public class CameraProxy implements Camera {
         this.cloudStorage = new CloudStorageProxy();
     }
 
+    public void initializeCamera(String resolution, String delay, String savingSettings){
+        System.out.println("CameraProxy: Initialize camera.");
+        camera.setResolution(resolution);
+        camera.setDelay(delay);
+        camera.setSavingSettings(savingSettings);
+    }
+
     @Override
     public void startRecording() {
         System.out.println("CameraProxy: Sending request to CameraLibrary to start recording.");
