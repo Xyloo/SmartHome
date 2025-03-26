@@ -36,11 +36,12 @@
 - devices.decorator.SecurityCheckDecorator: 1-51
 # Tydzień 3
 ### Facade
-- devices.facade.SmartHomeFacade: 1-72
+- home.SmartHomeFacade: 1-72
 - devices.proxy.MonitoringFacade: 1-54
 ### Flyweight
 - devices.security.sensors.SmartHomeSecuritySystem: 1-37
 - devices.impl.security.lockingsystem.LockingSystem: 1-39
+- devices.impl.speakers.SmartSpeakerSystem: 1-29
 ### Proxy
 - devices.proxy.CameraProxy: 1-34
 - devices.proxy.CloudStorageProxy: 1-27
