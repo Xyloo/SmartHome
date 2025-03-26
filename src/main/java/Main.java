@@ -24,6 +24,7 @@ import devices.configs.LightConfig;
 import devices.impl.security.ExternalSecurityCamera;
 import devices.impl.security.SecurityCamera;
 import devices.impl.security.SecurityCameraDevice;
+import devices.impl.security.sensors.SmartHomeSecuritySystem;
 import home.SmartHome;
 import notifications.*;
 import util.DeviceManager;
@@ -36,6 +37,32 @@ public class Main
 {
     private static final String SEPARATOR = "----------------------------------------";
     public static void main(String[] args) {
+        //Tydzień 3, Wzorzec Flyweight 1
+        SmartHomeSecuritySystem securitySystem = new SmartHomeSecuritySystem();
+        securitySystem.installSensor(80, true, "Salon", "Motion", "High Sensitivity", "1", true);
+        securitySystem.installSensor(75, true, "Kuchnia", "Motion", "High Sensitivity", "2", true);
+        securitySystem.installSensor(90, false, "Sypialnia", "Motion", "Medium Sensitivity", "3", false);
+
+        System.out.println("\n--- Testowanie czujników ---");
+        securitySystem.testSensor("Salon");
+        securitySystem.testSensor("Kuchnia");
+        securitySystem.testSensor("Sypialnia");
+
+        // Sprawdzanie statusu
+        System.out.println("\n--- Status czujników ---");
+        securitySystem.getSensorStatus("Salon");
+        securitySystem.getSensorStatus("Sypialnia");
+        securitySystem.getSensorStatus("Kuchnia");
+
+        // Wyzwalanie alarmów
+        System.out.println("\n--- Symulacja alarmów ---");
+        securitySystem.triggerAlarm("Salon");
+        securitySystem.triggerAlarm("Sypialnia");
+        //Koniec Tydzień 3, Wzorzec Flyweight 1
+
+        System.out.println(SEPARATOR);
+    }
+    private void tydzien2(){
 
         //Tydzień 2, Wzorzec Composite 1
         System.out.println(SEPARATOR);
@@ -177,7 +204,6 @@ public class Main
         //Koniec Tydzień 2, Wzorzec Bridge 3
 
     }
-
     private void tydzien1()
     {
         // Tydzień 1, Wzorzec Factory 1
