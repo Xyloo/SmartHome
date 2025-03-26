@@ -4,13 +4,40 @@ import scenarios.actions.*;
 import scenarios.SmartScenario;
 import devices.impl.Thermostat;
 import devices.impl.lighting.Light;
+import devices.impl.security.sensors.SmartHomeSecuritySystem;
 import home.SmartHome;
 import notifications.*;
 
 public class Main
 {
     private static final String SEPARATOR = "----------------------------------------";
-    public static void main(String[] args) {
+
+    public static void main(String[] args)
+    {
+        //Tydzień 3, Wzorzec Flyweight 1
+        SmartHomeSecuritySystem securitySystem = new SmartHomeSecuritySystem();
+        securitySystem.installSensor(80, true, "Salon", "Motion", "High Sensitivity", "1", true);
+        securitySystem.installSensor(75, true, "Kuchnia", "Motion", "High Sensitivity", "2", true);
+        securitySystem.installSensor(90, false, "Sypialnia", "Motion", "Medium Sensitivity", "3", false);
+
+        System.out.println("\n--- Testowanie czujników ---");
+        securitySystem.testSensor("Salon");
+        securitySystem.testSensor("Kuchnia");
+        securitySystem.testSensor("Sypialnia");
+
+        // Sprawdzanie statusu
+        System.out.println("\n--- Status czujników ---");
+        securitySystem.getSensorStatus("Salon");
+        securitySystem.getSensorStatus("Sypialnia");
+        securitySystem.getSensorStatus("Kuchnia");
+
+        // Wyzwalanie alarmów
+        System.out.println("\n--- Symulacja alarmów ---");
+        securitySystem.triggerAlarm("Salon");
+        securitySystem.triggerAlarm("Sypialnia");
+        //Koniec Tydzień 3, Wzorzec Flyweight 1
+
+        System.out.println(SEPARATOR);
 
         // Tydzień 3, Wzorzec Facade 1
         NotificationGroup notificationGroup = new NotificationGroup();
@@ -42,6 +69,7 @@ public class Main
         System.out.println(SEPARATOR);
         // Koniec, Tydzień 3, Wzorzec Facade 1
     }
+}
 
     /*
     private void tydzien1()
@@ -352,4 +380,3 @@ public class Main
         //Koniec Tydzień 2, Wzorzec Bridge 3
     }
     */
-}
