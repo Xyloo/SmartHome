@@ -24,6 +24,7 @@ import devices.configs.LightConfig;
 import devices.impl.security.ExternalSecurityCamera;
 import devices.impl.security.SecurityCamera;
 import devices.impl.security.SecurityCameraDevice;
+import devices.impl.security.lockingsystem.LockingSystem;
 import devices.impl.security.sensors.SmartHomeSecuritySystem;
 import home.SmartHome;
 import notifications.*;
@@ -61,6 +62,17 @@ public class Main
         //Koniec Tydzień 3, Wzorzec Flyweight 1
 
         System.out.println(SEPARATOR);
+
+        //Tydzień 3, Wzorzec Flyweight 2
+        LockingSystem system = new LockingSystem();
+        system.installBlind("Sypialnia","Dzień-noc","Białe","Zaciemniające");
+        system.installBlind("Kuchnia","Dzień-noc","Białe","Termoizolacyjne");
+        system.installBlind("Salon","Dzień-noc","Białe","Zaciemniające");
+
+        system.openAll();
+        system.listDevices();
+        system.closeAll();
+        //Koniec Tydzień 3, Wzorzec Flyweight 2
     }
     private void tydzien2(){
 
