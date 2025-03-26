@@ -19,5 +19,13 @@ public class Thermostat extends AbstractSmartDevice implements SmartDevice {
     public String getStatus() {
         return (temperature == 0) ? "Thermostat is OFF" : "Thermostat is ON. Current temperature is " + temperature + " degrees";
     }
+
+    public void setTemperature(int temperature) {
+        this.temperature = temperature;
+    }
+
+    public int getTemperature() {
+        return temperature;
+    }
 }
 

@@ -29,7 +29,7 @@
 ### Composite
 - devices.composite.LightingGroup: 1-29
 - devices.composite.SecurityGroup: 1-48
-- Scenarios.scenario: 1-48
+- scenarios.scenario: 1-48
 ### Decorator
 - devices.decorator.SecurityCameraDecorator: 1-64
 - devices.decorator.NotificationDeviceDecorator: 1-38
