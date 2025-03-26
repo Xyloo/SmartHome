@@ -1,5 +1,6 @@
 package devices.proxy;
 
+// Tydzień 3, Wzorzec Facade 2
 public class MonitoringFacade {
     private final CameraProxy camera;
     private final CloudStorageProxy cloudStorage;
@@ -50,3 +51,4 @@ public class MonitoringFacade {
         return "******";
     }
 }
+// Koniec Tydzień 3, Wzorzec Facade 2
