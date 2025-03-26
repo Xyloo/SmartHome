@@ -29,8 +29,18 @@
 ### Composite
 - devices.composite.LightingGroup: 1-29
 - devices.composite.SecurityGroup: 1-48
-- scenarios.scenario: 1-48
+- scenarios.SmartScenario: 1-48
 ### Decorator
 - devices.decorator.SecurityCameraDecorator: 1-64
 - devices.decorator.NotificationDeviceDecorator: 1-38
 - devices.decorator.SecurityCheckDecorator: 1-51
+# Tydzień 3
+### Facade
+- devices.facade.SmartHomeFacade: 1-72
+### Flyweight
+- devices.security.sensors.SmartHomeSecuritySystem: 1-37
+- devices.impl.security.lockingsystem.LockingSystem: 1-39
+### Proxy
+- devices.proxy.CameraProxy: 1-34
+- devices.proxy.CloudStorageProxy: 1-27
+- devices.impl.security.SecureDeviceProxy: 1-61

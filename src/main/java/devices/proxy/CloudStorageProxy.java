@@ -1,6 +1,7 @@
 package devices.proxy;
 
 // Proxy do serwisu obsługującego chmurę danych
+// Tydzień 3, Wzorzec Proxy 2
 public class CloudStorageProxy implements CloudStorage {
     private final CloudStorageService cloudStorageService;
 
@@ -23,3 +24,4 @@ public class CloudStorageProxy implements CloudStorage {
         return true;
     }
 }
+// Koniec Tydzień 3, Wzorzec Proxy 2

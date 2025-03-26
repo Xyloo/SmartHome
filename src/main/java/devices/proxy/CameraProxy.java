@@ -1,5 +1,6 @@
 package devices.proxy;
 
+// Tydzień 3, Wzorzec Proxy 1
 public class CameraProxy implements Camera {
     private final SecurityCameraLibrary camera;
     private final CloudStorage cloudStorage;
@@ -30,3 +31,4 @@ public class CameraProxy implements Camera {
         return camera.getVideo();
     }
 }
+// Koniec Tydzień 3, Wzorzec Proxy 1
