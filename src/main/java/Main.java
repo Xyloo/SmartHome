@@ -22,129 +22,75 @@ public class Main
 
     public static void main(String[] args)
     {
-        //Tydzień 3, Wzorzec Flyweight 1
-        SmartHomeSecuritySystem securitySystem = new SmartHomeSecuritySystem();
-        securitySystem.installSensor(80, true, "Salon", "Motion", "High Sensitivity", "1", true);
-        securitySystem.installSensor(75, true, "Kuchnia", "Motion", "High Sensitivity", "2", true);
-        securitySystem.installSensor(90, false, "Sypialnia", "Motion", "Medium Sensitivity", "3", false);
+        // Tydzien 4, Wzorzec Command 1
 
-        System.out.println("\n--- Testowanie czujników ---");
-        securitySystem.testSensor("Salon");
-        securitySystem.testSensor("Kuchnia");
-        securitySystem.testSensor("Sypialnia");
-
-        // Sprawdzanie statusu
-        System.out.println("\n--- Status czujników ---");
-        securitySystem.getSensorStatus("Salon");
-        securitySystem.getSensorStatus("Sypialnia");
-        securitySystem.getSensorStatus("Kuchnia");
-
-        // Wyzwalanie alarmów
-        System.out.println("\n--- Symulacja alarmów ---");
-        securitySystem.triggerAlarm("Salon");
-        securitySystem.triggerAlarm("Sypialnia");
-        //Koniec Tydzień 3, Wzorzec Flyweight 1
+        // Koniec Tydzien 4, Wzorzec Command 1
 
         System.out.println(SEPARATOR);
 
-        //Tydzień 3, Wzorzec Flyweight 2
-        LockingSystem system = new LockingSystem();
-        system.installBlind("Sypialnia","Dzień-noc","Białe","Zaciemniające");
-        system.installBlind("Kuchnia","Dzień-noc","Białe","Termoizolacyjne");
-        system.installBlind("Salon","Dzień-noc","Białe","Zaciemniające");
+        // Tydzien 4, Wzorzec Command 2
+        
+        // Koniec Tydzien 4, Wzorzec Command 2
+        
+        System.out.println(SEPARATOR);
 
-        system.openAll();
-        system.listDevices();
-        system.closeAll();
-        //Koniec Tydzień 3, Wzorzec Flyweight 2
+        // Tydzien 4, Wzorzec Command 3
+        
+        // Koniec Tydzien 4, Wzorzec Command 3
 
         System.out.println(SEPARATOR);
 
-        // Tydzień 3, Wzorzec Facade 1
-        NotificationGroup notificationGroup = new NotificationGroup();
-        notificationGroup.addNotification(Notificator.create(NotificationChannels.App));
-        SecurityAlarm alarm1 = new SecurityAlarm(notificationGroup);
-        SecurityAlarm alarm2 = new SecurityAlarm(notificationGroup);
-        Light light1 = new Light();
-        Light light2 = new Light();
-        Light light3 = new Light();
-        Thermostat thermostat1 = new Thermostat();
-        SmartHome smartHome1 = new SmartHome.Builder("Smart Home 1")
-                .location("Nadbystrzycka 38")
-                .addDevice(light1)
-                .addDevice(light2)
-                .addDevice(light3)
-                .addDevice(thermostat1)
-                .addDevice(alarm1)
-                .addDevice(alarm2)
-                .build();
-        SmartScenario smartScenario1 = new SmartScenario.Builder("My Scenario")
-                .addAction(new GenericDeviceAction<>(light1, Light::turnOn))
-                .addAction(new GenericDeviceAction<>(light2, Light::turnOff))
-                .addAction(new GenericDeviceAction<>(light3, Light::turnOn))
-                .build();
-        SmartHomeFacade smartHomeFacade = new SmartHomeFacade(smartHome1, notificationGroup, smartScenario1);
-        smartHomeFacade.executeScenario(smartScenario1.getName());
-        smartHomeFacade.activateNightMode();
-        smartHomeFacade.deactivateNightMode();
-        System.out.println(SEPARATOR);
-        // Koniec, Tydzień 3, Wzorzec Facade 1
-
-        // Tydzień 3, Wzorzec Proxy 1 & Facade 2
-        MonitoringFacade monitoring = new MonitoringFacade();
-        monitoring.startRecording();
-        monitoring.stopRecording();
-        // Koniec, Tydzień 3, Wzorzec Proxy 1 & Facade 2
-        System.out.println(SEPARATOR);
-
-        // Tydzień 3, Wzorzec Proxy 1, 2
-        Camera camera = new CameraProxy();
-        camera.startRecording();
-        camera.stopRecording();
-        // Koniec, Tydzień 3, Wzorzec Proxy 1, 2
-        System.out.println(SEPARATOR);
-
-        // Tydzień 3, Wzorzec Proxy 3
-        SecurityConfig securityConfig = new SecurityConfig("password123");
-        SecureDeviceProxy secureDeviceProxy = new SecureDeviceProxy(alarm1, securityConfig);
-        secureDeviceProxy.turnOn();
-        secureDeviceProxy.turnOff();
-        // Koniec, Tydzień 3, Wzorzec Proxy 3
-        System.out.println(SEPARATOR);
-
-        // Tydzień 3, Wzorzec Flyweight 3
-        SmartSpeakerSystem speakerSystem = new SmartSpeakerSystem();
-
-        // Install speakers (note how shared SpeakerType is reused if identical)
-        speakerSystem.installSpeaker("Living Room", "Echo Dot", "Amazon", true);
-        speakerSystem.installSpeaker("Kitchen", "Echo Dot", "Amazon", true);
-        speakerSystem.installSpeaker("Bedroom", "HomePod Mini", "Apple", false);
-
-        // Play music on all speakers
-        speakerSystem.playMusicOnAll("Imagine by John Lennon");
-
-        // Adjust volume on all speakers
-        speakerSystem.setAllVolumes(70);
-        // Koniec, Tydzień 3, Wzorzec Flyweight 3
+        // Tydzien 4, Wzorzec Interpreter 1
+        
+        // Koniec Tydzien 4, Wzorzec Interpreter 1
 
         System.out.println(SEPARATOR);
 
-        // Tydzień 3, Wzorzec Facade 3
-        SmartSpeakerFacade speakerFacade = new SmartSpeakerFacade();
+        // Tydzien 4, Wzorzec Interpreter 2
+        
+        // Koniec Tydzien 4, Wzorzec Interpreter 2
 
-        speakerFacade.installSpeaker("Living Room", "Echo Dot", "Amazon", true);
-        speakerFacade.installSpeaker("Kitchen", "Echo Dot", "Amazon", true);
+        System.out.println(SEPARATOR);
 
-        speakerFacade.turnOnAllSpeakers();
-        speakerFacade.playMusicOnAll("Imagine by John Lennon");
-        speakerFacade.setVolumeForAll(70);
+        // Tydzien 4, Wzorzec Interpreter 3
+        
+        // Koniec Tydzien 4, Wzorzec Interpreter 3
 
-        speakerFacade.playMusicOnSpeaker("Living Room", "Song B");
-        speakerFacade.setVolumeForSpeaker("Living Room", 30);
+        System.out.println(SEPARATOR);
 
-        speakerFacade.activatePartyMode();
-        speakerFacade.turnOffAllSpeakers();
-        // Koniec, Tydzień 3, Wzorzec Facade 3
+        // Tydzien 4, Wzorzec Iterator 1
+        
+        // Koniec Tydzien 4, Wzorzec Iterator 1
+
+        System.out.println(SEPARATOR);
+
+        // Tydzien 4, Wzorzec Iterator 2
+        
+        // Koniec Tydzien 4, Wzorzec Iterator 2
+
+        System.out.println(SEPARATOR);
+
+        // Tydzien 4, Wzorzec Iterator 3
+        
+        // Koniec Tydzien 4, Wzorzec Iterator Iterator 3
+
+        System.out.println(SEPARATOR);
+
+        // Tydzien 4, Wzorzec Mediator 1
+        
+        // Koniec Tydzien 4, Wzorzec Mediator 1
+
+        System.out.println(SEPARATOR);
+
+        // Tydzien 4, Wzorzec Mediator 2
+        
+        // Koniec Tydzien 4, Wzorzec Mediator 2
+
+        System.out.println(SEPARATOR);
+
+        // Tydzien 4, Wzorzec Mediator 3
+        
+        // Koniec Tydzien 4, Wzorzec Mediator Mediator
     }
 }
 
@@ -455,5 +401,130 @@ public class Main
         System.out.println(mobileRemoteControl.getStatus());
         System.out.println(SEPARATOR);
         //Koniec Tydzień 2, Wzorzec Bridge 3
+    }
+    private void tydzien3(){
+    //Tydzień 3, Wzorzec Flyweight 1
+        SmartHomeSecuritySystem securitySystem = new SmartHomeSecuritySystem();
+        securitySystem.installSensor(80, true, "Salon", "Motion", "High Sensitivity", "1", true);
+        securitySystem.installSensor(75, true, "Kuchnia", "Motion", "High Sensitivity", "2", true);
+        securitySystem.installSensor(90, false, "Sypialnia", "Motion", "Medium Sensitivity", "3", false);
+
+        System.out.println("\n--- Testowanie czujników ---");
+        securitySystem.testSensor("Salon");
+        securitySystem.testSensor("Kuchnia");
+        securitySystem.testSensor("Sypialnia");
+
+        // Sprawdzanie statusu
+        System.out.println("\n--- Status czujników ---");
+        securitySystem.getSensorStatus("Salon");
+        securitySystem.getSensorStatus("Sypialnia");
+        securitySystem.getSensorStatus("Kuchnia");
+
+        // Wyzwalanie alarmów
+        System.out.println("\n--- Symulacja alarmów ---");
+        securitySystem.triggerAlarm("Salon");
+        securitySystem.triggerAlarm("Sypialnia");
+        //Koniec Tydzień 3, Wzorzec Flyweight 1
+
+        System.out.println(SEPARATOR);
+
+        //Tydzień 3, Wzorzec Flyweight 2
+        LockingSystem system = new LockingSystem();
+        system.installBlind("Sypialnia","Dzień-noc","Białe","Zaciemniające");
+        system.installBlind("Kuchnia","Dzień-noc","Białe","Termoizolacyjne");
+        system.installBlind("Salon","Dzień-noc","Białe","Zaciemniające");
+
+        system.openAll();
+        system.listDevices();
+        system.closeAll();
+        //Koniec Tydzień 3, Wzorzec Flyweight 2
+
+        System.out.println(SEPARATOR);
+
+        // Tydzień 3, Wzorzec Facade 1
+        NotificationGroup notificationGroup = new NotificationGroup();
+        notificationGroup.addNotification(Notificator.create(NotificationChannels.App));
+        SecurityAlarm alarm1 = new SecurityAlarm(notificationGroup);
+        SecurityAlarm alarm2 = new SecurityAlarm(notificationGroup);
+        Light light1 = new Light();
+        Light light2 = new Light();
+        Light light3 = new Light();
+        Thermostat thermostat1 = new Thermostat();
+        SmartHome smartHome1 = new SmartHome.Builder("Smart Home 1")
+                .location("Nadbystrzycka 38")
+                .addDevice(light1)
+                .addDevice(light2)
+                .addDevice(light3)
+                .addDevice(thermostat1)
+                .addDevice(alarm1)
+                .addDevice(alarm2)
+                .build();
+        SmartScenario smartScenario1 = new SmartScenario.Builder("My Scenario")
+                .addAction(new GenericDeviceAction<>(light1, Light::turnOn))
+                .addAction(new GenericDeviceAction<>(light2, Light::turnOff))
+                .addAction(new GenericDeviceAction<>(light3, Light::turnOn))
+                .build();
+        SmartHomeFacade smartHomeFacade = new SmartHomeFacade(smartHome1, notificationGroup, smartScenario1);
+        smartHomeFacade.executeScenario(smartScenario1.getName());
+        smartHomeFacade.activateNightMode();
+        smartHomeFacade.deactivateNightMode();
+        System.out.println(SEPARATOR);
+        // Koniec, Tydzień 3, Wzorzec Facade 1
+
+        // Tydzień 3, Wzorzec Proxy 1 & Facade 2
+        MonitoringFacade monitoring = new MonitoringFacade();
+        monitoring.startRecording();
+        monitoring.stopRecording();
+        // Koniec, Tydzień 3, Wzorzec Proxy 1 & Facade 2
+        System.out.println(SEPARATOR);
+
+        // Tydzień 3, Wzorzec Proxy 1, 2
+        Camera camera = new CameraProxy();
+        camera.startRecording();
+        camera.stopRecording();
+        // Koniec, Tydzień 3, Wzorzec Proxy 1, 2
+        System.out.println(SEPARATOR);
+
+        // Tydzień 3, Wzorzec Proxy 3
+        SecurityConfig securityConfig = new SecurityConfig("password123");
+        SecureDeviceProxy secureDeviceProxy = new SecureDeviceProxy(alarm1, securityConfig);
+        secureDeviceProxy.turnOn();
+        secureDeviceProxy.turnOff();
+        // Koniec, Tydzień 3, Wzorzec Proxy 3
+        System.out.println(SEPARATOR);
+
+        // Tydzień 3, Wzorzec Flyweight 3
+        SmartSpeakerSystem speakerSystem = new SmartSpeakerSystem();
+
+        // Install speakers (note how shared SpeakerType is reused if identical)
+        speakerSystem.installSpeaker("Living Room", "Echo Dot", "Amazon", true);
+        speakerSystem.installSpeaker("Kitchen", "Echo Dot", "Amazon", true);
+        speakerSystem.installSpeaker("Bedroom", "HomePod Mini", "Apple", false);
+
+        // Play music on all speakers
+        speakerSystem.playMusicOnAll("Imagine by John Lennon");
+
+        // Adjust volume on all speakers
+        speakerSystem.setAllVolumes(70);
+        // Koniec, Tydzień 3, Wzorzec Flyweight 3
+
+        System.out.println(SEPARATOR);
+
+        // Tydzień 3, Wzorzec Facade 3
+        SmartSpeakerFacade speakerFacade = new SmartSpeakerFacade();
+
+        speakerFacade.installSpeaker("Living Room", "Echo Dot", "Amazon", true);
+        speakerFacade.installSpeaker("Kitchen", "Echo Dot", "Amazon", true);
+
+        speakerFacade.turnOnAllSpeakers();
+        speakerFacade.playMusicOnAll("Imagine by John Lennon");
+        speakerFacade.setVolumeForAll(70);
+
+        speakerFacade.playMusicOnSpeaker("Living Room", "Song B");
+        speakerFacade.setVolumeForSpeaker("Living Room", 30);
+
+        speakerFacade.activatePartyMode();
+        speakerFacade.turnOffAllSpeakers();
+        // Koniec, Tydzień 3, Wzorzec Facade 3
     }
     */
