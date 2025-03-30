@@ -36,11 +36,10 @@ public class SmartSpeakerFacade {
     }
 
     public void playMusicOnSpeaker(String location, String song) {
-        for (SmartSpeaker speaker : speakerSystem.getAllSpeakers()) {
-            if (speaker.getLocation().equals(location)) {
-                speaker.playMusic(song);
-                break;
-            }
+        SmartSpeakerIterator iterator = speakerSystem.getLocationFilteredIterator(location);
+        while (iterator.hasNext()) {
+            SmartSpeaker speaker = iterator.next();
+            speaker.playMusic(song);
         }
     }
 
