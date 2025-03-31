@@ -3,14 +3,25 @@ import devices.command.SetBrightnessCommand;
 import devices.command.TurnOffDeviceCommand;
 import devices.command.TurnOnDeviceCommand;
 import devices.composite.LightingGroup;
+import devices.impl.SecurityAlarm;
 import devices.impl.SmartDevice;
+import devices.impl.Thermostat;
 import devices.impl.lighting.ColorLight;
 import devices.impl.lighting.LightingDevice;
 import devices.impl.lighting.Light;
 import devices.impl.speakers.SmartSpeakerFacade;
 import devices.iterator.FilteringSmartDeviceIterator;
+import home.SmartHome;
+import home.SmartHomeFacade;
+import notifications.NotificationChannels;
+import notifications.NotificationGroup;
+import notifications.Notificator;
+import scenarios.SmartScenario;
+import scenarios.actions.GenericDeviceAction;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 public class Main
 {
@@ -128,7 +139,35 @@ public class Main
         System.out.println(SEPARATOR);
 
         // Tydzien 4, Wzorzec Iterator 3
-        
+        NotificationGroup notificationGroup = new NotificationGroup();
+        notificationGroup.addNotification(Notificator.create(NotificationChannels.App));
+        SecurityAlarm alarm1 = new SecurityAlarm(notificationGroup);
+        SecurityAlarm alarm2 = new SecurityAlarm(notificationGroup);
+        Light light1 = new Light();
+        Light light2 = new Light();
+        Light light3 = new Light();
+        Thermostat thermostat1 = new Thermostat();
+        SmartHome smartHome1 = new SmartHome.Builder("Smart Home 1")
+                .location("Nadbystrzycka 38")
+                .addDevice(light1)
+                .addDevice(light2)
+                .addDevice(light3)
+                .addDevice(thermostat1)
+                .addDevice(alarm1)
+                .addDevice(alarm2)
+                .build();
+        SmartScenario smartScenario1 = new SmartScenario.Builder("My Scenario")
+                .addAction(new GenericDeviceAction<>(light1, Light::turnOn))
+                .addAction(new GenericDeviceAction<>(light2, Light::turnOff))
+                .addAction(new GenericDeviceAction<>(light3, Light::turnOn))
+                .build();
+        SmartHomeFacade smartHomeFacade = new SmartHomeFacade(smartHome1, notificationGroup, smartScenario1);
+
+        List<String> scenariosToExecute = new ArrayList<>();
+        scenariosToExecute.add("NightMode");
+        scenariosToExecute.add("My Scenario");
+
+        smartHomeFacade.executeScenarios(scenariosToExecute);
         // Koniec Tydzien 4, Wzorzec Iterator Iterator 3
 
         System.out.println(SEPARATOR);

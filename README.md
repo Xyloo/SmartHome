@@ -53,6 +53,7 @@
 ### Interpreter
 
 ### Iterator 
-
+- devices.impl.speakers.SmartSpeakerFacade: 40-50
+- home.SmartHomeFacade: 63-77
 ### Mediator
 

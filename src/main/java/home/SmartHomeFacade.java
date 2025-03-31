@@ -7,6 +7,7 @@ import devices.impl.lighting.Light;
 import notifications.NotificationGroup;
 import scenarios.SmartScenario;
 import scenarios.actions.GenericDeviceAction;
+import scenarios.iterator.SmartScenarioIterator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,14 +60,19 @@ public class SmartHomeFacade {
         scenarios.add(scenario);
     }
 
-    public void executeScenario(String scenarioName) {
-        for (SmartScenario scenario : scenarios) {
-            if (scenarioName.equals(scenario.getName())) {
-                scenario.execute();
-                return;
-            }
-        }
-        notificationGroup.send("Scenario not found.");
-    }
+    // Tydzień 4, Wzorzec Iterator 3
+    public void executeScenarios(List<String> scenarioNames) {
+        SmartScenarioIterator iterator = new SmartScenarioIterator(scenarios, scenarioNames);
 
+        if (!iterator.hasNext()) {
+            System.out.println("No matching scenarios found.");
+            return;
+        }
+
+        while (iterator.hasNext()) {
+            SmartScenario scenario = iterator.next();
+            scenario.execute(); // Execute the matched scenario
+        }
+    }
+    // Koniec Tydzień 4, Wzorzec Iterator 3
 }
