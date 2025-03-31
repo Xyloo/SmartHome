@@ -65,7 +65,17 @@ public class Main
         System.out.println(SEPARATOR);
 
         // Tydzien 4, Wzorzec Iterator 2
-        
+
+        SmartSpeakerFacade speakerFacade = new SmartSpeakerFacade();
+
+        speakerFacade.installSpeaker("Living Room", "Xl5S", "LG", true);
+        speakerFacade.installSpeaker("Kitchen", "TD22", "Sony", false);
+        speakerFacade.installSpeaker("Living Room", "Acton III", "Marshall", true);
+
+        speakerFacade.playMusicOnSpeaker("Living Room", "Nirvana - Come as You Are");
+        speakerFacade.playMusicOnSpeaker("Kitchen", "Linkin Park - Numb");
+        speakerFacade.playMusicOnSpeaker("Bedroom", "Metallica - Nothing else matters");
+
         // Koniec Tydzien 4, Wzorzec Iterator 2
 
         System.out.println(SEPARATOR);
