@@ -2,9 +2,10 @@ package devices.composite;
 
 import devices.impl.SmartDevice;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
-public abstract class AbstractDeviceGroup implements SmartDevice {
+public abstract class AbstractDeviceGroup implements SmartDevice, Iterable<SmartDevice> {
     public final String id;
     protected List<SmartDevice> devices = new ArrayList<>();
     protected int locationId;
@@ -43,4 +44,10 @@ public abstract class AbstractDeviceGroup implements SmartDevice {
         devices.forEach(device -> status.append(device.getStatus()).append("\n"));
         return status.toString();
     }
+
+    @Override
+    public Iterator<SmartDevice> iterator(){
+        return devices.iterator();
+    }
+
 }

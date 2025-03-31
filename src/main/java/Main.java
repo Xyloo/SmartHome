@@ -2,9 +2,14 @@ import devices.command.MacroCommand;
 import devices.command.SetBrightnessCommand;
 import devices.command.TurnOffDeviceCommand;
 import devices.command.TurnOnDeviceCommand;
+import devices.composite.LightingGroup;
+import devices.impl.SmartDevice;
 import devices.impl.lighting.ColorLight;
 import devices.impl.lighting.LightingDevice;
 import devices.impl.lighting.Light;
+import devices.iterator.FilteringSmartDeviceIterator;
+
+import java.util.Iterator;
 
 public class Main
 {
@@ -86,7 +91,21 @@ public class Main
         System.out.println(SEPARATOR);
 
         // Tydzien 4, Wzorzec Iterator 1
-        
+
+        System.out.println("Iterator 1");
+        LightingGroup lightingGroup = new LightingGroup();
+        lightingGroup.addDevice(colorLight);
+        lightingGroup.addDevice(lightDevice);
+
+        Iterator<SmartDevice> smartDeviceIterator = new FilteringSmartDeviceIterator(
+                lightingGroup.iterator(),
+                device -> device instanceof ColorLight
+        );
+
+        while (smartDeviceIterator.hasNext()) {
+            System.out.println(smartDeviceIterator.next().getStatus());
+        }
+
         // Koniec Tydzien 4, Wzorzec Iterator 1
 
         System.out.println(SEPARATOR);
