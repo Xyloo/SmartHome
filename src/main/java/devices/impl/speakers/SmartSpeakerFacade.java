@@ -2,6 +2,8 @@ package devices.impl.speakers;
 
 import devices.impl.lighting.Light;
 
+import java.util.logging.Logger;
+
 // Tydzień 3, Wzorzec Facade 3
 public class SmartSpeakerFacade {
 
@@ -35,15 +37,17 @@ public class SmartSpeakerFacade {
         }
     }
 
+    // Tydzień 4, Wzorzec Iterator 2
     public void playMusicOnSpeaker(String location, String song) {
-        for (SmartSpeaker speaker : speakerSystem.getAllSpeakers()) {
-            if (speaker.getLocation().equals(location)) {
-                speaker.playMusic(song);
-                break;
-            }
+        SmartSpeakerIterator iterator = speakerSystem.getLocationFilteredIterator(location);
+        if(!iterator.hasNext())
+            System.out.println("No speakers found in the " + location);
+        while (iterator.hasNext()) {
+            SmartSpeaker speaker = iterator.next();
+            speaker.playMusic(song);
         }
     }
-
+    // Koniec Tydzien 4, Wzorzec Iterator 2
     public void setVolumeForSpeaker(String location, int volume) {
         for (SmartSpeaker speaker : speakerSystem.getAllSpeakers()) {
             if (speaker.getLocation().equals(location)) {

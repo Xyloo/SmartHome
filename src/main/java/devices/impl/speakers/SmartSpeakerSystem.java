@@ -29,5 +29,10 @@ public class SmartSpeakerSystem {
         return speakers;
     }
 
+    public SmartSpeakerIterator getLocationFilteredIterator(String location) {
+        SmartSpeakerLocationIterator iterator = new SmartSpeakerLocationIterator(speakers);
+        iterator.onLocation(location);
+        return iterator;
+    }
 }
 // Koniec Tydzień 3, Wzorzec Flyweight 3
