@@ -1,20 +1,10 @@
-import devices.impl.SecurityAlarm;
-import devices.impl.speakers.SmartSpeakerFacade;
-import devices.impl.speakers.SmartSpeakerSystem;
-import devices.proxy.MonitoringFacade;
-import devices.impl.security.SecureDeviceProxy;
-import devices.impl.security.SecurityConfig;
-import devices.proxy.Camera;
-import devices.proxy.CameraProxy;
-import home.SmartHomeFacade;
-import scenarios.actions.*;
-import scenarios.SmartScenario;
-import devices.impl.Thermostat;
+import devices.command.MacroCommand;
+import devices.command.SetBrightnessCommand;
+import devices.command.TurnOffDeviceCommand;
+import devices.command.TurnOnDeviceCommand;
+import devices.impl.lighting.ColorLight;
+import devices.impl.lighting.LightingDevice;
 import devices.impl.lighting.Light;
-import devices.impl.security.lockingsystem.LockingSystem;
-import devices.impl.security.sensors.SmartHomeSecuritySystem;
-import home.SmartHome;
-import notifications.*;
 
 public class Main
 {
@@ -24,12 +14,49 @@ public class Main
     {
         // Tydzien 4, Wzorzec Command 1
 
+
+
+
         // Koniec Tydzien 4, Wzorzec Command 1
 
         System.out.println(SEPARATOR);
 
         // Tydzien 4, Wzorzec Command 2
-        
+        System.out.println(SEPARATOR);
+        LightingDevice colorLight = new ColorLight("red");
+        System.out.println(colorLight.getStatus());
+
+        System.out.println(SEPARATOR);
+        MacroCommand colorLightCommands = new MacroCommand();
+        colorLightCommands.addCommand(new SetBrightnessCommand(colorLight, 10));
+        colorLightCommands.addCommand(new TurnOnDeviceCommand(colorLight));
+        colorLightCommands.execute();
+
+        System.out.println(colorLight.getStatus());
+        System.out.println(SEPARATOR);
+
+        LightingDevice lightDevice = new Light();
+        lightDevice.turnOn();
+        System.out.println(lightDevice.getStatus());
+        System.out.println(SEPARATOR);
+
+
+        MacroCommand lightCommands = new MacroCommand();
+        colorLightCommands.addCommand(new SetBrightnessCommand(lightDevice, 20));
+        colorLightCommands.addCommand(new TurnOffDeviceCommand(lightDevice));
+        System.out.println(colorLight.getStatus());
+
+
+        System.out.println("CommandsWrapper");
+        MacroCommand commandsWrapper = new MacroCommand();
+        commandsWrapper.addCommand(colorLightCommands);
+        commandsWrapper.addCommand(lightCommands);
+        commandsWrapper.execute();
+
+        System.out.println(colorLight.getStatus());
+        System.out.println(lightDevice.getStatus());
+        System.out.println(SEPARATOR);
+
         // Koniec Tydzien 4, Wzorzec Command 2
         
         System.out.println(SEPARATOR);
@@ -65,7 +92,7 @@ public class Main
         System.out.println(SEPARATOR);
 
         // Tydzien 4, Wzorzec Iterator 2
-        
+
         // Koniec Tydzien 4, Wzorzec Iterator 2
 
         System.out.println(SEPARATOR);
