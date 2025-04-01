@@ -3,6 +3,7 @@ import devices.command.SetBrightnessCommand;
 import devices.command.TurnOffDeviceCommand;
 import devices.command.TurnOnDeviceCommand;
 import devices.composite.LightingGroup;
+import devices.factory.DeviceFactory;
 import devices.impl.SecurityAlarm;
 import devices.impl.SmartDevice;
 import devices.impl.Thermostat;
@@ -12,6 +13,7 @@ import devices.impl.lighting.Light;
 import devices.impl.security.sensors.MotionSensor;
 import devices.impl.speakers.SmartSpeakerFacade;
 import devices.iterator.FilteringSmartDeviceIterator;
+import devices.mediator.SmartDeviceHandler;
 import home.SmartHome;
 import home.SmartHomeFacade;
 import notifications.NotificationChannels;
@@ -182,7 +184,15 @@ public class Main
         System.out.println(SEPARATOR);
 
         // Tydzien 4, Wzorzec Mediator 2
-        
+        SmartDeviceHandler handler = new SmartDeviceHandler();
+        SmartDevice light = DeviceFactory.createDevice("light");
+        SmartDevice camera = DeviceFactory.createDevice("camera");
+
+        handler.addDevice(light);
+        handler.addDevice(camera);
+
+        handler.notify(light,"LIGHTS_TURN_OFF");
+        handler.notify(camera,"LIGHTS_TURN_OFF");
         // Koniec Tydzien 4, Wzorzec Mediator 2
 
         System.out.println(SEPARATOR);

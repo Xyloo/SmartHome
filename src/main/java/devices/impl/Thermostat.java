@@ -1,7 +1,10 @@
 package devices.impl;
 
+import devices.mediator.Mediator;
+
 public class Thermostat extends AbstractSmartDevice implements SmartDevice {
     private int temperature = 20; // default temperature
+    private Mediator mediator;
 
     @Override
     public void turnOn() {
@@ -18,6 +21,18 @@ public class Thermostat extends AbstractSmartDevice implements SmartDevice {
     @Override
     public String getStatus() {
         return (temperature == 0) ? "Thermostat is OFF" : "Thermostat is ON. Current temperature is " + temperature + " degrees";
+    }
+
+    @Override
+    public void setMediator(Mediator mediator) {
+        this.mediator = mediator;
+    }
+
+    @Override
+    public void Handle(String event) {
+        if(event.equals("SET_TEMPERATURE_20")){
+            setTemperature(20);
+        }
     }
 
     public void setTemperature(int temperature) {

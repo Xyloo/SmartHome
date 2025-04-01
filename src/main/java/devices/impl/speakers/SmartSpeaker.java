@@ -1,6 +1,7 @@
 package devices.impl.speakers;
 
 import devices.impl.SmartDevice;
+import devices.mediator.Mediator;
 import util.SmartLogger;
 
 public class SmartSpeaker implements SmartDevice
@@ -10,6 +11,7 @@ public class SmartSpeaker implements SmartDevice
     private int volume;
     private boolean isOn = false;
     private final SmartLogger logger = SmartLogger.getInstance();
+    private Mediator mediator;
 
     public SmartSpeaker(SpeakerType speakerType, String location) {
         this.speakerType = speakerType;
@@ -48,5 +50,17 @@ public class SmartSpeaker implements SmartDevice
     public String getStatus()
     {
         return "Speaker is " + (isOn ? "ON" : "OFF") + " at " + location;
+    }
+
+    @Override
+    public void setMediator(Mediator mediator) {
+        this.mediator = mediator;
+    }
+
+    @Override
+    public void Handle(String event) {
+        if(event.equals("SPEAKER_VOLUME_50")){
+            setVolume(50);
+        }
     }
 }

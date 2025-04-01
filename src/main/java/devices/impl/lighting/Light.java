@@ -2,11 +2,13 @@ package devices.impl.lighting;
 
 import devices.impl.AbstractSmartDevice;
 import devices.configs.LightConfig;
+import devices.mediator.Mediator;
 import util.DeviceManager;
 
 public class Light extends AbstractSmartDevice implements LightingDevice {
     public static final String CONFIG_KEY = "Light";
     private int brightness;
+    private Mediator mediator;
 
     public Light() {
         LightConfig config = DeviceManager.INSTANCE.getSetting(CONFIG_KEY, LightConfig.class);
@@ -27,6 +29,20 @@ public class Light extends AbstractSmartDevice implements LightingDevice {
     @Override
     public String getStatus() {
         return "Light [" + id + "] is " + (isOn ? "ON" : "OFF") + " Brightness: " + brightness;
+    }
+
+    @Override
+    public void setMediator(Mediator mediator) {
+        this.mediator = mediator;
+    }
+
+    @Override
+    public void Handle(String event) {
+        System.out.println("Light handling event: " + event);
+        if(event.equals("LIGHTS_TURN_OFF")) {
+            System.out.println("Smart light - setting brightness to 0");
+            setBrightness(0);
+        }
     }
 }
 

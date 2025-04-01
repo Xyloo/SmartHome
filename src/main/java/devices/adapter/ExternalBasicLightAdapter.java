@@ -3,6 +3,7 @@ package devices.adapter;
 import devices.impl.AbstractSmartDevice;
 import devices.impl.SmartDevice;
 import devices.impl.lighting.BasicLight;
+import devices.mediator.Mediator;
 import util.SmartLogger;
 
 //Tydzień 2, Wzorzec Adapter 1
@@ -10,6 +11,7 @@ public class ExternalBasicLightAdapter extends AbstractSmartDevice implements Sm
 {
     private final BasicLight legacyLight;
     private final SmartLogger logger = SmartLogger.getInstance();
+    private Mediator mediator;
 
     public ExternalBasicLightAdapter(BasicLight legacyLight) {
         this.legacyLight = legacyLight;
@@ -30,6 +32,18 @@ public class ExternalBasicLightAdapter extends AbstractSmartDevice implements Sm
     @Override
     public String getStatus() {
         return "External Basic Light is " + legacyLight.getStatus();
+    }
+
+    @Override
+    public void setMediator(Mediator mediator) {
+        this.mediator = mediator;
+    }
+
+    @Override
+    public void Handle(String event) {
+        if(event.equals("EXTERNAL_LIGHT_ON")){
+            turnOn();
+        }
     }
 }
 //Koniec Tydzień 2, Adapter 1

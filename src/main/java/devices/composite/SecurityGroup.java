@@ -1,9 +1,12 @@
 package devices.composite;
 
 import devices.impl.security.SecurityCameraDevice;
+import devices.mediator.Mediator;
 
 //Tydzień 2, Wzorzec Composite 2
 public class SecurityGroup extends AbstractDeviceGroup implements SecurityCameraDevice {
+
+    private Mediator mediator;
 
     public SecurityGroup(int locationId){
         super(locationId);
@@ -43,6 +46,18 @@ public class SecurityGroup extends AbstractDeviceGroup implements SecurityCamera
     @Override
     public boolean isAutoRecordingEnabled() {
         return false;
+    }
+
+    @Override
+    public void setMediator(Mediator mediator) {
+        this.mediator = mediator;
+    }
+
+    @Override
+    public void Handle(String event) {
+        if(event.equals("RECORDING_START_GROUP")){
+            startRecording();
+        }
     }
 }
 //Koniec Tydzień 2, Wzorzec Composite 2

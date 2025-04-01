@@ -2,6 +2,7 @@ package devices.impl.security;
 
 import devices.impl.AbstractSmartDevice;
 import devices.configs.SecurityCameraConfig;
+import devices.mediator.Mediator;
 import util.DeviceManager;
 
 import java.util.UUID;
@@ -11,6 +12,7 @@ public class SecurityCamera extends AbstractSmartDevice implements SecurityCamer
     private boolean isRecording;
     private boolean isMotionDetectionEnabled;
     private boolean isAutoRecordingEnabled;
+    private Mediator mediator;
 
     public SecurityCamera() {
         SecurityCameraConfig config = DeviceManager.INSTANCE.getSetting(CONFIG_KEY, SecurityCameraConfig.class);
@@ -39,6 +41,20 @@ public class SecurityCamera extends AbstractSmartDevice implements SecurityCamer
                 ", isRecording = " + isRecording +
                 ", isMotionDetectionEnabled = " + isMotionDetectionEnabled +
                 ", isAutoRecordingEnabled = " + isAutoRecordingEnabled;
+    }
+
+    @Override
+    public void setMediator(Mediator mediator) {
+        this.mediator = mediator;
+    }
+
+    @Override
+    public void Handle(String event) {
+        System.out.println("Camera handling event: " + event);
+        if(event.equals("CAMERA_SNAPSHOT")){
+            System.out.println("Security camera - taking snapshot");
+            takeSnapshot();
+        }
     }
 
     @Override

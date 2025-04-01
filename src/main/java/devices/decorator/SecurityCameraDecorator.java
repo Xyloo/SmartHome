@@ -1,10 +1,13 @@
 package devices.decorator;
 
 import devices.impl.security.SecurityCameraDevice;
+import devices.mediator.Mediator;
 
 //Tydzień 2, Wzorzec Decorator 2
 public class SecurityCameraDecorator implements SecurityCameraDevice {
     protected SecurityCameraDevice decorated;
+    private Mediator mediator;
+
     public SecurityCameraDecorator(SecurityCameraDevice decorated) {
         this.decorated = decorated;
     }
@@ -57,6 +60,18 @@ public class SecurityCameraDecorator implements SecurityCameraDevice {
     @Override
     public String getStatus() {
         return decorated.getStatus();
+    }
+
+    @Override
+    public void setMediator(Mediator mediator) {
+        this.mediator = mediator;
+    }
+
+    @Override
+    public void Handle(String event) {
+        if(event.equals("SECURITY_CAMERA_ON")){
+            turnOn();
+        }
     }
 }
 //Koniec Tydzień 2, Wzorzec Decorator 2

@@ -1,6 +1,7 @@
 package devices.impl.security;
 
 import devices.impl.SmartDevice;
+import devices.mediator.Mediator;
 
 import java.util.Scanner;
 
@@ -9,6 +10,7 @@ public class SecureDeviceProxy implements SmartDevice {
     private final SmartDevice realDevice;
     private final SecurityConfig config;
     private boolean isAuthenticated = false;
+    private Mediator mediator;
 
     public SecureDeviceProxy(SmartDevice realDevice, SecurityConfig config) {
         this.realDevice = realDevice;
@@ -56,6 +58,18 @@ public class SecureDeviceProxy implements SmartDevice {
             return realDevice.getStatus();
         else
             return "Access denied";
+    }
+
+    @Override
+    public void setMediator(Mediator mediator) {
+        this.mediator = mediator;
+    }
+
+    @Override
+    public void Handle(String event) {
+        if(event.equals("SECURE_DEVICE_TURN_OFF")){
+            turnOff();
+        }
     }
 }
 // Koniec Tydzień 3, Wzorzec Proxy 3

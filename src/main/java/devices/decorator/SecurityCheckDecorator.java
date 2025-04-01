@@ -1,12 +1,14 @@
 package devices.decorator;
 
 import devices.impl.SmartDevice;
+import devices.mediator.Mediator;
 import util.SmartLogger;
 
 //Tydzień 2, Wzorzec Decorator 3
 public class SecurityCheckDecorator implements SmartDevice {
     private SmartDevice decoratedDevice;
     private SmartLogger logger = SmartLogger.getInstance();
+    private Mediator mediator;
 
     public SecurityCheckDecorator(SmartDevice device) {
         this.decoratedDevice = device;
@@ -46,6 +48,18 @@ public class SecurityCheckDecorator implements SmartDevice {
     @Override
     public String getStatus() {
         return decoratedDevice.getStatus();
+    }
+
+    @Override
+    public void setMediator(Mediator mediator) {
+        this.mediator = mediator;
+    }
+
+    @Override
+    public void Handle(String event) {
+        if(event.equals("SECURITY_CHECK_TURN_ON")){
+            turnOn();
+        }
     }
 }
 //Koniec Tydzień 2, Wzorzec Decorator 3

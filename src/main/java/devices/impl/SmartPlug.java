@@ -1,6 +1,7 @@
 package devices.impl;
 
 import devices.configs.SmartPlugConfig;
+import devices.mediator.Mediator;
 import util.DeviceManager;
 
 // Tydzień 1, Wzorzec Prototype 1
@@ -8,6 +9,7 @@ import util.DeviceManager;
 // Umożliwia to tworzenie nowych obiektów na podstawie istniejących z zachowaniem ich stanu.
 public class SmartPlug extends AbstractSmartDevice implements SmartDevice, Cloneable {
     public static final String CONFIG_KEY = "SmartPlugConfig";
+    private Mediator mediator;
 
     public SmartPlug(){
         SmartPlugConfig config = DeviceManager.INSTANCE.getSetting(CONFIG_KEY, SmartPlugConfig.class);
@@ -25,6 +27,18 @@ public class SmartPlug extends AbstractSmartDevice implements SmartDevice, Clone
     @Override
     public String getStatus() {
         return name + " is " + (isOn ? "ON" : "OFF");
+    }
+
+    @Override
+    public void setMediator(Mediator mediator) {
+        this.mediator = mediator;
+    }
+
+    @Override
+    public void Handle(String event) {
+        if(event.equals("SMART_PLUG_OFF")){
+            this.turnOff();
+        }
     }
 
     @Override
