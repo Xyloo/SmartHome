@@ -4,6 +4,9 @@ import devices.impl.SecurityAlarm;
 import devices.impl.SmartDevice;
 import devices.impl.Thermostat;
 import devices.impl.lighting.Light;
+import devices.impl.security.lockingsystem.Blind;
+import devices.impl.security.sensors.MotionSensor;
+import devices.mediator.SmartHomeMediator;
 import notifications.NotificationGroup;
 import scenarios.SmartScenario;
 import scenarios.actions.GenericDeviceAction;
@@ -13,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class SmartHomeFacade {
+public class SmartHomeFacade implements SmartHomeMediator {
     private final SmartHome smartHome;
     private final NotificationGroup notificationGroup;
     private List<SmartScenario> scenarios;
@@ -75,4 +78,19 @@ public class SmartHomeFacade {
         }
     }
     // Koniec Tydzień 4, Wzorzec Iterator 3
+
+    // Tydzien 4, Wzorzec Mediator 1
+    @Override
+    public void notify(Object sender, String event) {
+        if(sender instanceof MotionSensor && event.equals("MOTION_DETECTED")){
+            System.out.println("Motion sensor performs action");
+            performAction(Light.class, Light::turnOn);
+            performAction(SecurityAlarm.class, SecurityAlarm::turnOn);
+        }
+        else if(sender instanceof Blind && event.equals("NIGHT_MODE")){
+            System.out.println("Night mode activated");
+            activateNightMode();
+        }
+    }
+    // Koniec Tydzien 4, Wzorzec Mediator 1
 }

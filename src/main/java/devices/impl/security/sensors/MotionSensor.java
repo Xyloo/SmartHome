@@ -1,5 +1,7 @@
 package devices.impl.security.sensors;
 
+import devices.mediator.SmartHomeMediator;
+
 // konkretny czujnik
 public class MotionSensor implements SecuritySensor{
 
@@ -7,6 +9,11 @@ public class MotionSensor implements SecuritySensor{
     private final String type;
     private final String model;
     private final String settings;
+    private SmartHomeMediator mediator;
+
+    public void setMediator(SmartHomeMediator mediator) {
+        this.mediator = mediator;
+    }
 
     public MotionSensor(String type, String model, String settings) {
         this.type = type;
@@ -17,6 +24,11 @@ public class MotionSensor implements SecuritySensor{
     @Override
     public void triggerAlarm(String location, boolean sendNotification) {
         System.out.println("ALARM! Czujnik "+model+" w lokalizacji: "+location+" wykrył podejrzany ruch!");
+
+        if (mediator != null) {
+            mediator.notify(this, "MOTION_DETECTED");
+        }
+
         if(sendNotification){
             System.out.println("Czujnik "+model+" rozsyła powiadomienia.");
         }

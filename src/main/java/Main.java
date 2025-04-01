@@ -9,6 +9,7 @@ import devices.impl.Thermostat;
 import devices.impl.lighting.ColorLight;
 import devices.impl.lighting.LightingDevice;
 import devices.impl.lighting.Light;
+import devices.impl.security.sensors.MotionSensor;
 import devices.impl.speakers.SmartSpeakerFacade;
 import devices.iterator.FilteringSmartDeviceIterator;
 import home.SmartHome;
@@ -173,7 +174,9 @@ public class Main
         System.out.println(SEPARATOR);
 
         // Tydzien 4, Wzorzec Mediator 1
-        
+        MotionSensor sensor = new MotionSensor("Video motion sensor","Xiaomi","high sensitive");
+        sensor.setMediator(smartHomeFacade);
+        sensor.triggerAlarm("Entrance",true);
         // Koniec Tydzien 4, Wzorzec Mediator 1
 
         System.out.println(SEPARATOR);
