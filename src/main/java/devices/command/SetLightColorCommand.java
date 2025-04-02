@@ -1,26 +1,35 @@
 package devices.command;
 
 import devices.impl.lighting.ColorLight;
+import devices.impl.lighting.LightingDevice;
 
 // Tydzien 4, Wzorzec Command 2
 public class SetLightColorCommand implements Command {
 
-    ColorLight light;
+    LightingDevice light;
     String color, previousColor;
 
-    public SetLightColorCommand(ColorLight light, String color) {
+    public SetLightColorCommand(LightingDevice light, String color) {
         this.light = light;
+        this.color = color;
     }
 
     @Override
     public void execute() {
-        previousColor = light.getColor();
-        light.setColor(color);
+        if(light instanceof ColorLight) {
+            ColorLight colorLight = (ColorLight) light;
+            previousColor = colorLight.getColor();
+            colorLight.setColor(color);
+        }
     }
 
     @Override
-    public void undo() {
-        light.setColor(previousColor);
+    public void undo()
+    {
+        if(light instanceof ColorLight) {
+            ColorLight colorLight = (ColorLight) light;
+            colorLight.setColor(previousColor);
+        }
     }
 }
 // Koniec Tydzien 4, Wzorzec Command 2

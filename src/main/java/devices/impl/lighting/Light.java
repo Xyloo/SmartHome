@@ -43,6 +43,14 @@ public class Light extends AbstractSmartDevice implements LightingDevice {
             System.out.println("Smart light - setting brightness to 0");
             setBrightness(0);
         }
+        else if(event.equals("activateSecurityMode")){
+            util.SmartLogger.getInstance().log("Event: activateSecurityMode; Turning on brightness");
+            turnOn();
+            setBrightness(50);
+        }else if(event.equals("deactivateSecurityMode")){
+            util.SmartLogger.getInstance().log("Event: deactivateSecurityMode; Turning off lights");
+            turnOff();
+        }
     }
 }
 
