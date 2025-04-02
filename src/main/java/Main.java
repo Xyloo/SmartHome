@@ -12,6 +12,9 @@ import devices.impl.security.SecurityCamera;
 import devices.impl.security.sensors.MotionSensor;
 import devices.impl.speakers.SmartSpeakerFacade;
 import devices.impl.window.SecureWindow;
+import devices.interpreter.CommandParser;
+import devices.interpreter.Context;
+import devices.interpreter.Expression;
 import devices.iterator.FilteringSmartDeviceIterator;
 import devices.mediator.SecurityMediator;
 import devices.mediator.SmartDeviceHandler;
@@ -90,9 +93,22 @@ public class Main
         // Koniec Tydzien 4, Wzorzec Command 3
 
         System.out.println(SEPARATOR);
+        System.out.println("Interpreter 1");
 
         // Tydzien 4, Wzorzec Interpreter 1
-        
+
+        System.out.println(lightDevice.getStatus());
+        Context context = new Context();
+        lightDevice.turnOff();
+        context.addDevice("LIGHT", lightDevice);
+        String command = "TURN_ON LIGHT";
+        Expression expression = CommandParser.parse(command);
+
+        if(expression != null){
+            expression.interpret(context);
+        }
+        System.out.println(lightDevice.getStatus());
+
         // Koniec Tydzien 4, Wzorzec Interpreter 1
 
         System.out.println(SEPARATOR);
