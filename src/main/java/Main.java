@@ -8,6 +8,9 @@ import devices.impl.doors.Door;
 import devices.impl.lighting.ColorLight;
 import devices.impl.lighting.LightingDevice;
 import devices.impl.lighting.Light;
+import devices.impl.security.lockingsystem.Blind;
+import devices.impl.security.lockingsystem.BlindType;
+import devices.impl.security.lockingsystem.LockingSystem;
 import devices.impl.security.SecurityCamera;
 import devices.impl.security.sensors.MotionSensor;
 import devices.impl.speakers.SmartSpeakerFacade;
@@ -89,7 +92,18 @@ public class Main
         System.out.println(SEPARATOR);
 
         // Tydzien 4, Wzorzec Command 3
-        
+        LockingSystem system = new LockingSystem();
+        system.installBlind("Sypialnia","Dzień-noc","Białe","Zaciemniające");
+        system.installBlind("Kuchnia","Dzień-noc","Białe","Termoizolacyjne");
+        system.installBlind("Salon","Dzień-noc","Białe","Zaciemniające");
+
+        Command closeAllRollersCommand = new CloseAllBlindsCommand(system.getBlinds());
+
+        // Wykonujemy komendę
+        closeAllRollersCommand.execute();
+
+        // Cofamy działanie (undo)
+        closeAllRollersCommand.undo();
         // Koniec Tydzien 4, Wzorzec Command 3
 
         System.out.println(SEPARATOR);

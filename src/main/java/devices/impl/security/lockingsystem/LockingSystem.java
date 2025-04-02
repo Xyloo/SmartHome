@@ -35,5 +35,8 @@ public class LockingSystem {
             blind.info();
         }
     }
+    public List<SmartBlind> getBlinds(){
+        return blinds;
+    }
 }
 // Koniec Tydzień 2, Wzorzec Flyweight 2
