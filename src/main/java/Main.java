@@ -1,7 +1,4 @@
-import devices.command.MacroCommand;
-import devices.command.SetBrightnessCommand;
-import devices.command.TurnOffDeviceCommand;
-import devices.command.TurnOnDeviceCommand;
+import devices.command.*;
 import devices.composite.LightingGroup;
 import devices.factory.DeviceFactory;
 import devices.impl.SecurityAlarm;
@@ -10,6 +7,9 @@ import devices.impl.Thermostat;
 import devices.impl.lighting.ColorLight;
 import devices.impl.lighting.LightingDevice;
 import devices.impl.lighting.Light;
+import devices.impl.security.lockingsystem.Blind;
+import devices.impl.security.lockingsystem.BlindType;
+import devices.impl.security.lockingsystem.LockingSystem;
 import devices.impl.security.sensors.MotionSensor;
 import devices.impl.speakers.SmartSpeakerFacade;
 import devices.iterator.FilteringSmartDeviceIterator;
@@ -23,6 +23,7 @@ import scenarios.SmartScenario;
 import scenarios.actions.GenericDeviceAction;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
@@ -82,7 +83,18 @@ public class Main
         System.out.println(SEPARATOR);
 
         // Tydzien 4, Wzorzec Command 3
-        
+        LockingSystem system = new LockingSystem();
+        system.installBlind("Sypialnia","Dzień-noc","Białe","Zaciemniające");
+        system.installBlind("Kuchnia","Dzień-noc","Białe","Termoizolacyjne");
+        system.installBlind("Salon","Dzień-noc","Białe","Zaciemniające");
+
+        Command closeAllRollersCommand = new CloseAllBlindsCommand(system.getBlinds());
+
+        // Wykonujemy komendę
+        closeAllRollersCommand.execute();
+
+        // Cofamy działanie (undo)
+        closeAllRollersCommand.undo();
         // Koniec Tydzien 4, Wzorzec Command 3
 
         System.out.println(SEPARATOR);
