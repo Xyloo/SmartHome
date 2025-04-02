@@ -1,7 +1,4 @@
-import devices.command.MacroCommand;
-import devices.command.SetBrightnessCommand;
-import devices.command.TurnOffDeviceCommand;
-import devices.command.TurnOnDeviceCommand;
+import devices.command.*;
 import devices.composite.LightingGroup;
 import devices.factory.DeviceFactory;
 import devices.impl.SecurityAlarm;
