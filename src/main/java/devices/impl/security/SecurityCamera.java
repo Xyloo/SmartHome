@@ -54,6 +54,16 @@ public class SecurityCamera extends AbstractSmartDevice implements SecurityCamer
         if(event.equals("CAMERA_SNAPSHOT")){
             System.out.println("Security camera - taking snapshot");
             takeSnapshot();
+        }else if(event.equals("activateSecurityMode")){
+            util.SmartLogger.getInstance ().log ("[Security camera] - turning on, start recording ");
+            turnOn();
+            startRecording();
+        }
+        else if(event.equals("deactivateSecurityMode")){
+            util.SmartLogger.getInstance ().log ("[Security camera] - stop recording, taking snapshot ");
+            stopRecording();
+            takeSnapshot();
+            turnOff();
         }
     }
 

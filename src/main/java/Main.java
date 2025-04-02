@@ -1,18 +1,19 @@
-import devices.command.MacroCommand;
-import devices.command.SetBrightnessCommand;
-import devices.command.TurnOffDeviceCommand;
-import devices.command.TurnOnDeviceCommand;
+import devices.command.*;
 import devices.composite.LightingGroup;
 import devices.factory.DeviceFactory;
 import devices.impl.SecurityAlarm;
 import devices.impl.SmartDevice;
 import devices.impl.Thermostat;
+import devices.impl.doors.Door;
 import devices.impl.lighting.ColorLight;
 import devices.impl.lighting.LightingDevice;
 import devices.impl.lighting.Light;
+import devices.impl.security.SecurityCamera;
 import devices.impl.security.sensors.MotionSensor;
 import devices.impl.speakers.SmartSpeakerFacade;
+import devices.impl.window.SecureWindow;
 import devices.iterator.FilteringSmartDeviceIterator;
+import devices.mediator.SecurityMediator;
 import devices.mediator.SmartDeviceHandler;
 import home.SmartHome;
 import home.SmartHomeFacade;
@@ -50,6 +51,7 @@ public class Main
         MacroCommand colorLightCommands = new MacroCommand();
         colorLightCommands.addCommand(new SetBrightnessCommand(colorLight, 10));
         colorLightCommands.addCommand(new TurnOnDeviceCommand(colorLight));
+        colorLightCommands.addCommand(new SetLightColorCommand(colorLight, "blue"));
         colorLightCommands.execute();
 
         System.out.println(colorLight.getStatus());
@@ -64,6 +66,8 @@ public class Main
         MacroCommand lightCommands = new MacroCommand();
         colorLightCommands.addCommand(new SetBrightnessCommand(lightDevice, 20));
         colorLightCommands.addCommand(new TurnOffDeviceCommand(lightDevice));
+
+        colorLightCommands.execute();
         System.out.println(colorLight.getStatus());
 
 
@@ -198,7 +202,20 @@ public class Main
         System.out.println(SEPARATOR);
 
         // Tydzien 4, Wzorzec Mediator 3
-        
+
+        SecurityMediator securityMediator = new SecurityMediator();
+        SmartDevice secureWindow = new SecureWindow("Secure Window", 2);
+        SmartDevice securityCamera = new SecurityCamera(3);
+
+        securityMediator.registerDevice(secureWindow);
+        securityMediator.registerDevice(light);
+        securityMediator.registerDevice(securityCamera);
+
+        SmartDevice door = new Door();
+        door.setMediator(securityMediator);
+        ((Door)door).simulateIncorrectPassword();
+
+        System.out.println("\n");
         // Koniec Tydzien 4, Wzorzec Mediator Mediator
     }
 }
