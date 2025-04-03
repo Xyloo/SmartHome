@@ -49,11 +49,19 @@
 - devices.impl.security.SecureDeviceProxy: 1-61
 # Tydzień 4
 ### Command
-- devices.impl.command.SetBrightnessCommand 1-26
+- devices.impl.command.SetBrightnessCommand: 1-26
+- scenarios.actions.GenericDeviceAction: 11-34
+- devices.command.SetLightColorCommand: 7-34
+- devices.command.TurnOnDeviceCommand: 6-23
 ### Interpreter
-
+- devices.interpreter.expressions.TurnOnExpression: 7-24
+- devices.interpreter.CommandParser: 5-23
+- devices.interpreter.Context: 9-19
 ### Iterator 
 - devices.impl.speakers.SmartSpeakerFacade: 40-50
 - home.SmartHomeFacade: 63-77
+- scenarios.iterator.SmartScenarioIterator: 7-34
+- devices.iterator.FilteringSmartDeviceIterator: 9-50
 ### Mediator
-
+- devices.mediator.SecurityMediator: 7-23
+- 

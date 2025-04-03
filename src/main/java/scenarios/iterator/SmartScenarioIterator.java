@@ -6,7 +6,7 @@ import java.util.List;
 
 public class SmartScenarioIterator {
     private List<SmartScenario> scenarios;
-    private List<String> scenarioNames;  // List of scenario names to filter by
+    private List<String> scenarioNames;
     private int currentIndex = 0;
 
     public SmartScenarioIterator(List<SmartScenario> scenarios, List<String> scenarioNames) {
@@ -15,7 +15,6 @@ public class SmartScenarioIterator {
     }
 
     public boolean hasNext() {
-        // Find the next scenario whose name is in the scenarioNames list
         while (currentIndex < scenarios.size()) {
             SmartScenario scenario = scenarios.get(currentIndex);
             if (scenarioNames.contains(scenario.getName())) {
@@ -30,6 +29,6 @@ public class SmartScenarioIterator {
         if (this.hasNext()) {
             return scenarios.get(currentIndex++);
         }
-        return null; // Or throw an exception if needed
+        return null;
     }
 }

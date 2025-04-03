@@ -40,13 +40,31 @@ public class Main
     public static void main(String[] args)
     {
         // Tydzien 4, Wzorzec Command 1
+        Light lightDevice1 = (Light)DeviceFactory.createDevice ("light");
+        Light lightDevice2 = (Light)DeviceFactory.createDevice ("light");
+        Light lightDevice3 = (Light)DeviceFactory.createDevice ("light");
+
+        System.out.println ("\n" + SEPARATOR + "\n");
+
+        System.out.println("Command 1");
+        System.out.println (lightDevice1.getStatus ());
+        System.out.println (lightDevice2.getStatus ());
+        System.out.println (lightDevice3.getStatus ());
+
+        SmartScenario smartScenario = new SmartScenario.Builder("My Scenario")
+                .addAction(new GenericDeviceAction<>(lightDevice1, Light::turnOn))
+                .addAction(new GenericDeviceAction<>(lightDevice2, Light::turnOff))
+                .addAction(new GenericDeviceAction<>(lightDevice3, Light::turnOn))
+                .build();
+
+        smartScenario.execute ();
 
 
-
+        System.out.println ( "\n" + lightDevice1.getStatus ());
+        System.out.println (lightDevice2.getStatus ());
+        System.out.println (lightDevice3.getStatus ());
 
         // Koniec Tydzien 4, Wzorzec Command 1
-
-        System.out.println(SEPARATOR);
 
         // Tydzien 4, Wzorzec Command 2
         System.out.println(SEPARATOR);
