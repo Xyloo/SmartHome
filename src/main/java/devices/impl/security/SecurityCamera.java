@@ -59,6 +59,10 @@ public class SecurityCamera extends AbstractSmartDevice implements SecurityCamer
             turnOn();
             startRecording();
         }
+        if(event.equals("LIGHT_TURN_OFF")){
+            // symulacja trybu nocnego
+            System.out.println("Security camera - lights turned off. Camera night mode activated.");
+        }
         else if(event.equals("deactivateSecurityMode")){
             util.SmartLogger.getInstance ().log ("[Security camera] - stop recording, taking snapshot ");
             stopRecording();

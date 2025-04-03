@@ -244,7 +244,6 @@ public class Main
         handler.addDevice(camera);
 
         handler.notify(light,"LIGHTS_TURN_OFF");
-        handler.notify(camera,"LIGHTS_TURN_OFF");
         // Koniec Tydzien 4, Wzorzec Mediator 2
 
         System.out.println(SEPARATOR);
