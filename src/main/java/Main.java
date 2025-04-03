@@ -13,7 +13,9 @@ import devices.impl.security.lockingsystem.BlindType;
 import devices.impl.security.lockingsystem.LockingSystem;
 import devices.impl.security.SecurityCamera;
 import devices.impl.security.sensors.MotionSensor;
+import devices.impl.speakers.SmartSpeaker;
 import devices.impl.speakers.SmartSpeakerFacade;
+import devices.impl.speakers.SmartSpeakerSystem;
 import devices.impl.window.SecureWindow;
 import devices.interpreter.CommandParser;
 import devices.interpreter.Context;
@@ -160,7 +162,24 @@ public class Main
         System.out.println(SEPARATOR);
 
         // Tydzien 4, Wzorzec Interpreter 3
-        
+
+        System.out.println ("Interpreter 3");
+        SmartSpeakerSystem speakerSystem = new SmartSpeakerSystem();
+
+        SmartSpeaker speaker1 = speakerSystem.installSpeaker("Living Room", "Echo Dot", "Amazon", true);
+        SmartSpeaker speaker2 = speakerSystem.installSpeaker("Kitchen", "Echo Dot", "Amazon", true);
+        SmartSpeaker speaker3 = speakerSystem.installSpeaker("Bedroom", "HomePod Mini", "Apple", false);
+
+        context.addDevice(speaker1.getLocation(),speaker1);
+        context.addDevice(speaker2.getLocation(),speaker2);
+        context.addDevice(speaker3.getLocation(),speaker3);
+
+        Expression expression3 = CommandParser.parse("SET_VOLUME KITCHEN 50");
+        if(expression3 != null)
+        {
+            expression3.interpret (context);
+        }
+
         // Koniec Tydzien 4, Wzorzec Interpreter 3
 
         System.out.println(SEPARATOR);

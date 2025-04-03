@@ -1,6 +1,7 @@
 package devices.interpreter;
 
 import devices.interpreter.expressions.SetBrightnessExpression;
+import devices.interpreter.expressions.SetSpeakerVolumeExpression;
 import devices.interpreter.expressions.TurnOnExpression;
 
 public class CommandParser {
@@ -23,6 +24,17 @@ public class CommandParser {
                         return new SetBrightnessExpression (tokens[1], brightness);
                     } catch (NumberFormatException e) {
                         System.out.println("Invalid brightness value: " + tokens[2]);
+                    }
+                }
+                break;
+
+            case "SET_VOLUME":
+                if (tokens.length >= 3) {
+                    try {
+                        int volume = Integer.parseInt(tokens[2]);
+                        return new SetSpeakerVolumeExpression(tokens[1], volume);
+                    } catch (NumberFormatException e) {
+                        System.out.println("Invalid volume value: " + tokens[2]);
                     }
                 }
                 break;

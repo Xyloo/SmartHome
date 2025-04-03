@@ -7,11 +7,12 @@ import java.util.List;
 public class SmartSpeakerSystem {
     private final List<SmartSpeaker> speakers = new ArrayList<>();
 
-    public void installSpeaker(String location, String model, String manufacturer, boolean voiceAssistantCapable) {
+    public SmartSpeaker installSpeaker(String location, String model, String manufacturer, boolean voiceAssistantCapable) {
         SpeakerType type = SpeakerFactory.getSpeakerType(model, manufacturer, voiceAssistantCapable);
         SmartSpeaker speaker = new SmartSpeaker(type, location);
         speakers.add(speaker);
         System.out.println("Installed " + model + " speaker at " + location);
+        return speaker;
     }
 
     public void playMusicOnAll(String song) {
