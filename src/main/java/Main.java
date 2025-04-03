@@ -67,11 +67,11 @@ public class Main
         // Koniec Tydzien 4, Wzorzec Command 1
 
         // Tydzien 4, Wzorzec Command 2
-        System.out.println(SEPARATOR);
+        System.out.println(SEPARATOR + "\n Command 2");
         LightingDevice colorLight = new ColorLight("red");
         System.out.println(colorLight.getStatus());
 
-        System.out.println(SEPARATOR);
+        System.out.println("\n");
         MacroCommand colorLightCommands = new MacroCommand();
         colorLightCommands.addCommand(new SetBrightnessCommand(colorLight, 10));
         colorLightCommands.addCommand(new TurnOnDeviceCommand(colorLight));
@@ -79,12 +79,12 @@ public class Main
         colorLightCommands.execute();
 
         System.out.println(colorLight.getStatus());
-        System.out.println(SEPARATOR);
+        System.out.println("\n");
 
         LightingDevice lightDevice = new Light();
         lightDevice.turnOn();
         System.out.println(lightDevice.getStatus());
-        System.out.println(SEPARATOR);
+        System.out.println("\n");
 
 
         MacroCommand lightCommands = new MacroCommand();
@@ -103,13 +103,13 @@ public class Main
 
         System.out.println(colorLight.getStatus());
         System.out.println(lightDevice.getStatus());
-        System.out.println(SEPARATOR);
+
 
         // Koniec Tydzien 4, Wzorzec Command 2
-        
-        System.out.println(SEPARATOR);
 
         // Tydzien 4, Wzorzec Command 3
+
+        System.out.println(SEPARATOR + "\n Command 3");
         LockingSystem system = new LockingSystem();
         system.installBlind("Sypialnia","Dzień-noc","Białe","Zaciemniające");
         system.installBlind("Kuchnia","Dzień-noc","Białe","Termoizolacyjne");
@@ -146,7 +146,15 @@ public class Main
         System.out.println(SEPARATOR);
 
         // Tydzien 4, Wzorzec Interpreter 2
-        
+        System.out.println ("Interpreter 2 \n Initial light status:" + lightDevice.getStatus ());
+        Expression expression2 = CommandParser.parse("SET_BRIGHTNESS LIGHT 99");
+        if(expression2 != null)
+        {
+            expression2.interpret (context);
+        }
+
+        System.out.println (lightDevice.getStatus ());
+
         // Koniec Tydzien 4, Wzorzec Interpreter 2
 
         System.out.println(SEPARATOR);
@@ -175,10 +183,10 @@ public class Main
 
         // Koniec Tydzien 4, Wzorzec Iterator 1
 
-        System.out.println(SEPARATOR);
+
 
         // Tydzien 4, Wzorzec Iterator 2
-
+        System.out.println(SEPARATOR + "\n Iterator 2");
         SmartSpeakerFacade speakerFacade = new SmartSpeakerFacade();
 
         speakerFacade.installSpeaker("Living Room", "Xl5S", "LG", true);
@@ -191,9 +199,10 @@ public class Main
 
         // Koniec Tydzien 4, Wzorzec Iterator 2
 
-        System.out.println(SEPARATOR);
+
 
         // Tydzien 4, Wzorzec Iterator 3
+        System.out.println(SEPARATOR + "\n Iterator 3");
         NotificationGroup notificationGroup = new NotificationGroup();
         notificationGroup.addNotification(Notificator.create(NotificationChannels.App));
         SecurityAlarm alarm1 = new SecurityAlarm(notificationGroup);
@@ -225,17 +234,19 @@ public class Main
         smartHomeFacade.executeScenarios(scenariosToExecute);
         // Koniec Tydzien 4, Wzorzec Iterator Iterator 3
 
-        System.out.println(SEPARATOR);
+
 
         // Tydzien 4, Wzorzec Mediator 1
+        System.out.println(SEPARATOR + "\n Mediator 1");
         MotionSensor sensor = new MotionSensor("Video motion sensor","Xiaomi","high sensitive");
         sensor.setMediator(smartHomeFacade);
         sensor.triggerAlarm("Entrance",true);
         // Koniec Tydzien 4, Wzorzec Mediator 1
 
-        System.out.println(SEPARATOR);
+
 
         // Tydzien 4, Wzorzec Mediator 2
+        System.out.println(SEPARATOR + "\n Mediator 2");
         SmartDeviceHandler handler = new SmartDeviceHandler();
         SmartDevice light = DeviceFactory.createDevice("light");
         SmartDevice camera = DeviceFactory.createDevice("camera");
@@ -246,10 +257,10 @@ public class Main
         handler.notify(light,"LIGHTS_TURN_OFF");
         // Koniec Tydzien 4, Wzorzec Mediator 2
 
-        System.out.println(SEPARATOR);
+
 
         // Tydzien 4, Wzorzec Mediator 3
-
+        System.out.println(SEPARATOR + "\n Mediator 3");
         SecurityMediator securityMediator = new SecurityMediator();
         SmartDevice secureWindow = new SecureWindow("Secure Window", 2);
         SmartDevice securityCamera = new SecurityCamera(3);
