@@ -46,7 +46,7 @@
 ### Proxy
 - devices.proxy.CameraProxy: 1-34
 - devices.proxy.CloudStorageProxy: 1-27
-- devices.impl.security.SecureDeviceProxy: 1-61
+- devices.impl.security.SecureDeviceProxy: s1-61
 # Tydzień 4
 ### Command
 - devices.impl.command.SetBrightnessCommand: 1-26
@@ -64,4 +64,5 @@
 - devices.iterator.FilteringSmartDeviceIterator: 9-50
 ### Mediator
 - devices.mediator.SecurityMediator: 7-23
-- 
+- home.SmartHomeFacade: 84-95
+- devices.mediator.SmartDeviceHandler: 8-20
