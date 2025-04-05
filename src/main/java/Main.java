@@ -1,39 +1,3 @@
-import devices.command.*;
-import devices.composite.LightingGroup;
-import devices.factory.DeviceFactory;
-import devices.impl.SecurityAlarm;
-import devices.impl.SmartDevice;
-import devices.impl.Thermostat;
-import devices.impl.doors.Door;
-import devices.impl.lighting.ColorLight;
-import devices.impl.lighting.LightingDevice;
-import devices.impl.lighting.Light;
-import devices.impl.security.lockingsystem.Blind;
-import devices.impl.security.lockingsystem.BlindType;
-import devices.impl.security.lockingsystem.LockingSystem;
-import devices.impl.security.SecurityCamera;
-import devices.impl.security.sensors.MotionSensor;
-import devices.impl.speakers.SmartSpeaker;
-import devices.impl.speakers.SmartSpeakerFacade;
-import devices.impl.speakers.SmartSpeakerSystem;
-import devices.impl.window.SecureWindow;
-import devices.interpreter.CommandParser;
-import devices.interpreter.Context;
-import devices.interpreter.Expression;
-import devices.iterator.FilteringSmartDeviceIterator;
-import devices.mediator.SecurityMediator;
-import devices.mediator.SmartDeviceHandler;
-import home.SmartHome;
-import home.SmartHomeFacade;
-import notifications.NotificationChannels;
-import notifications.NotificationGroup;
-import notifications.Notificator;
-import scenarios.SmartScenario;
-import scenarios.actions.GenericDeviceAction;
-
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 
 public class Main
 {
@@ -41,259 +5,75 @@ public class Main
 
     public static void main(String[] args)
     {
-        // Tydzien 4, Wzorzec Command 1
-        Light lightDevice1 = (Light)DeviceFactory.createDevice ("light");
-        Light lightDevice2 = (Light)DeviceFactory.createDevice ("light");
-        Light lightDevice3 = (Light)DeviceFactory.createDevice ("light");
-
-        System.out.println ("\n" + SEPARATOR + "\n");
-
-        System.out.println("Command 1");
-        System.out.println (lightDevice1.getStatus ());
-        System.out.println (lightDevice2.getStatus ());
-        System.out.println (lightDevice3.getStatus ());
-
-        SmartScenario smartScenario = new SmartScenario.Builder("My Scenario")
-                .addAction(new GenericDeviceAction<>(lightDevice1, Light::turnOn))
-                .addAction(new GenericDeviceAction<>(lightDevice2, Light::turnOff))
-                .addAction(new GenericDeviceAction<>(lightDevice3, Light::turnOn))
-                .build();
-
-        smartScenario.execute ();
-
-
-        System.out.println ( "\n" + lightDevice1.getStatus ());
-        System.out.println (lightDevice2.getStatus ());
-        System.out.println (lightDevice3.getStatus ());
-
-        // Koniec Tydzien 4, Wzorzec Command 1
-
-        // Tydzien 4, Wzorzec Command 2
-        System.out.println(SEPARATOR + "\n Command 2");
-        LightingDevice colorLight = new ColorLight("red");
-        System.out.println(colorLight.getStatus());
-
-        System.out.println("\n");
-        MacroCommand colorLightCommands = new MacroCommand();
-        colorLightCommands.addCommand(new SetBrightnessCommand(colorLight, 10));
-        colorLightCommands.addCommand(new TurnOnDeviceCommand(colorLight));
-        colorLightCommands.addCommand(new SetLightColorCommand(colorLight, "blue"));
-        colorLightCommands.execute();
-
-        System.out.println(colorLight.getStatus());
-        System.out.println("\n");
-
-        LightingDevice lightDevice = new Light();
-        lightDevice.turnOn();
-        System.out.println(lightDevice.getStatus());
-        System.out.println("\n");
-
-
-        MacroCommand lightCommands = new MacroCommand();
-        colorLightCommands.addCommand(new SetBrightnessCommand(lightDevice, 20));
-        colorLightCommands.addCommand(new TurnOffDeviceCommand(lightDevice));
-
-        colorLightCommands.execute();
-        System.out.println(colorLight.getStatus());
-
-
-        System.out.println("CommandsWrapper");
-        MacroCommand commandsWrapper = new MacroCommand();
-        commandsWrapper.addCommand(colorLightCommands);
-        commandsWrapper.addCommand(lightCommands);
-        commandsWrapper.execute();
-
-        System.out.println(colorLight.getStatus());
-        System.out.println(lightDevice.getStatus());
-
-
-        // Koniec Tydzien 4, Wzorzec Command 2
-
-        // Tydzien 4, Wzorzec Command 3
-
-        System.out.println(SEPARATOR + "\n Command 3");
-        LockingSystem system = new LockingSystem();
-        system.installBlind("Sypialnia","Dzień-noc","Białe","Zaciemniające");
-        system.installBlind("Kuchnia","Dzień-noc","Białe","Termoizolacyjne");
-        system.installBlind("Salon","Dzień-noc","Białe","Zaciemniające");
-
-        Command closeAllRollersCommand = new CloseAllBlindsCommand(system.getBlinds());
-
-        // Wykonujemy komendę
-        closeAllRollersCommand.execute();
-
-        // Cofamy działanie (undo)
-        closeAllRollersCommand.undo();
-        // Koniec Tydzien 4, Wzorzec Command 3
-
-        System.out.println(SEPARATOR);
-        System.out.println("Interpreter 1");
-
-        // Tydzien 4, Wzorzec Interpreter 1
-
-        System.out.println(lightDevice.getStatus());
-        Context context = new Context();
-        lightDevice.turnOff();
-        context.addDevice("LIGHT", lightDevice);
-        String command = "TURN_ON LIGHT";
-        Expression expression = CommandParser.parse(command);
-
-        if(expression != null){
-            expression.interpret(context);
-        }
-        System.out.println(lightDevice.getStatus());
-
-        // Koniec Tydzien 4, Wzorzec Interpreter 1
+        //Tydzień 5, Wzorzec Observer 1
+        System.out.println("Wzorzec Observer 1");
+        //Koniec Tydzien 5, Wzorzec Observer 1
 
         System.out.println(SEPARATOR);
 
-        // Tydzien 4, Wzorzec Interpreter 2
-        System.out.println ("Interpreter 2 \n Initial light status:" + lightDevice.getStatus ());
-        Expression expression2 = CommandParser.parse("SET_BRIGHTNESS LIGHT 99");
-        if(expression2 != null)
-        {
-            expression2.interpret (context);
-        }
-
-        System.out.println (lightDevice.getStatus ());
-
-        // Koniec Tydzien 4, Wzorzec Interpreter 2
+        //Tydzień 5, Wzorzec Observer 2
+        System.out.println("Wzorzec Observer 2");
+        //Koniec Tydzien 5, Wzorzec Observer 2
 
         System.out.println(SEPARATOR);
 
-        // Tydzien 4, Wzorzec Interpreter 3
-
-        System.out.println ("Interpreter 3");
-        SmartSpeakerSystem speakerSystem = new SmartSpeakerSystem();
-
-        SmartSpeaker speaker1 = speakerSystem.installSpeaker("Living Room", "Echo Dot", "Amazon", true);
-        SmartSpeaker speaker2 = speakerSystem.installSpeaker("Kitchen", "Echo Dot", "Amazon", true);
-        SmartSpeaker speaker3 = speakerSystem.installSpeaker("Bedroom", "HomePod Mini", "Apple", false);
-
-        context.addDevice(speaker1.getLocation(),speaker1);
-        context.addDevice(speaker2.getLocation(),speaker2);
-        context.addDevice(speaker3.getLocation(),speaker3);
-
-        Expression expression3 = CommandParser.parse("SET_VOLUME KITCHEN 50");
-        if(expression3 != null)
-        {
-            expression3.interpret (context);
-        }
-
-        // Koniec Tydzien 4, Wzorzec Interpreter 3
+        //Tydzień 5, Wzorzec Observer 3
+        System.out.println("Wzorzec Observer 3");
+        //Koniec Tydzien 5, Wzorzec Observer 3
 
         System.out.println(SEPARATOR);
 
-        // Tydzien 4, Wzorzec Iterator 1
+        //Tydzień 5, Wzorzec State 1
+        System.out.println("Wzorzec State 1");
+        //Koniec Tydzien 5, Wzorzec State 1
 
-        System.out.println("Iterator 1");
-        LightingGroup lightingGroup = new LightingGroup();
-        lightingGroup.addDevice(colorLight);
-        lightingGroup.addDevice(lightDevice);
+        System.out.println(SEPARATOR);
 
-        Iterator<SmartDevice> smartDeviceIterator = new FilteringSmartDeviceIterator(
-                lightingGroup.iterator(),
-                device -> device instanceof ColorLight
-        );
+        //Tydzień 5, Wzorzec State 2
+        System.out.println("Wzorzec State 2");
+        //Koniec Tydzien 5, Wzorzec State 2
 
-        while (smartDeviceIterator.hasNext()) {
-            System.out.println(smartDeviceIterator.next().getStatus());
-        }
+        System.out.println(SEPARATOR);
 
-        // Koniec Tydzien 4, Wzorzec Iterator 1
+        //Tydzień 5, Wzorzec State 3
+        System.out.println("Wzorzec State 3");
+        //Koniec Tydzien 5, Wzorzec State 3
 
+        System.out.println(SEPARATOR);
+        
+        //Tydzień 5, Wzorzec Strategy 1
+        System.out.println("Wzorzec Strategy 1");
+        //Koniec Tydzien 5, Wzorzec Strategy 1
+        
+        System.out.println(SEPARATOR);
+        
+        //Tydzień 5, Wzorzec Strategy 2
+        System.out.println("Wzorzec Strategy 2");
+        //Koniec Tydzien 5, Wzorzec Strategy 2
+        
+        System.out.println(SEPARATOR);
+        
+        //Tydzień 5, Wzorzec Strategy 3
+        System.out.println("Wzorzec Strategy 3");
+        //Koniec Tydzien 5, Wzorzec Strategy 3
+        
+        System.out.println(SEPARATOR);
+        
+        //Tydzień 5, Wzorzec Template 1
+        System.out.println("Wzorzec Template 1");
+        //Koniec Tydzien 5, Wzorzec Template 1
 
+        System.out.println(SEPARATOR);
 
-        // Tydzien 4, Wzorzec Iterator 2
-        System.out.println(SEPARATOR + "\n Iterator 2");
-        SmartSpeakerFacade speakerFacade = new SmartSpeakerFacade();
+        //Tydzień 5, Wzorzec Template 2
+        System.out.println("Wzorzec Template 2");
+        //Koniec Tydzien 5, Wzorzec Template 2
 
-        speakerFacade.installSpeaker("Living Room", "Xl5S", "LG", true);
-        speakerFacade.installSpeaker("Kitchen", "TD22", "Sony", false);
-        speakerFacade.installSpeaker("Living Room", "Acton III", "Marshall", true);
+        System.out.println(SEPARATOR);
 
-        speakerFacade.playMusicOnSpeaker("Living Room", "Nirvana - Come as You Are");
-        speakerFacade.playMusicOnSpeaker("Kitchen", "Linkin Park - Numb");
-        speakerFacade.playMusicOnSpeaker("Bedroom", "Metallica - Nothing else matters");
-
-        // Koniec Tydzien 4, Wzorzec Iterator 2
-
-
-
-        // Tydzien 4, Wzorzec Iterator 3
-        System.out.println(SEPARATOR + "\n Iterator 3");
-        NotificationGroup notificationGroup = new NotificationGroup();
-        notificationGroup.addNotification(Notificator.create(NotificationChannels.App));
-        SecurityAlarm alarm1 = new SecurityAlarm(notificationGroup);
-        SecurityAlarm alarm2 = new SecurityAlarm(notificationGroup);
-        Light light1 = new Light();
-        Light light2 = new Light();
-        Light light3 = new Light();
-        Thermostat thermostat1 = new Thermostat();
-        SmartHome smartHome1 = new SmartHome.Builder("Smart Home 1")
-                .location("Nadbystrzycka 38")
-                .addDevice(light1)
-                .addDevice(light2)
-                .addDevice(light3)
-                .addDevice(thermostat1)
-                .addDevice(alarm1)
-                .addDevice(alarm2)
-                .build();
-        SmartScenario smartScenario1 = new SmartScenario.Builder("My Scenario")
-                .addAction(new GenericDeviceAction<>(light1, Light::turnOn))
-                .addAction(new GenericDeviceAction<>(light2, Light::turnOff))
-                .addAction(new GenericDeviceAction<>(light3, Light::turnOn))
-                .build();
-        SmartHomeFacade smartHomeFacade = new SmartHomeFacade(smartHome1, notificationGroup, smartScenario1);
-
-        List<String> scenariosToExecute = new ArrayList<>();
-        scenariosToExecute.add("NightMode");
-        scenariosToExecute.add("My Scenario");
-
-        smartHomeFacade.executeScenarios(scenariosToExecute);
-        // Koniec Tydzien 4, Wzorzec Iterator Iterator 3
-
-
-
-        // Tydzien 4, Wzorzec Mediator 1
-        System.out.println(SEPARATOR + "\n Mediator 1");
-        MotionSensor sensor = new MotionSensor("Video motion sensor","Xiaomi","high sensitive");
-        sensor.setMediator(smartHomeFacade);
-        sensor.triggerAlarm("Entrance",true);
-        // Koniec Tydzien 4, Wzorzec Mediator 1
-
-
-
-        // Tydzien 4, Wzorzec Mediator 2
-        System.out.println(SEPARATOR + "\n Mediator 2");
-        SmartDeviceHandler handler = new SmartDeviceHandler();
-        SmartDevice light = DeviceFactory.createDevice("light");
-        SmartDevice camera = DeviceFactory.createDevice("camera");
-
-        handler.addDevice(light);
-        handler.addDevice(camera);
-
-        handler.notify(light,"LIGHTS_TURN_OFF");
-        // Koniec Tydzien 4, Wzorzec Mediator 2
-
-
-
-        // Tydzien 4, Wzorzec Mediator 3
-        System.out.println(SEPARATOR + "\n Mediator 3");
-        SecurityMediator securityMediator = new SecurityMediator();
-        SmartDevice secureWindow = new SecureWindow("Secure Window", 2);
-        SmartDevice securityCamera = new SecurityCamera(3);
-
-        securityMediator.registerDevice(secureWindow);
-        securityMediator.registerDevice(light);
-        securityMediator.registerDevice(securityCamera);
-
-        SmartDevice door = new Door();
-        door.setMediator(securityMediator);
-        ((Door)door).simulateIncorrectPassword();
-
-        System.out.println("\n");
-        // Koniec Tydzien 4, Wzorzec Mediator Mediator
+        //Tydzien 5, Wzorzec Template 3
+        System.out.println("Wzorzec Template 3");
+        //Koniec Tydzien 5, Wzorzec Template 3
     }
 }
 
@@ -730,4 +510,261 @@ public class Main
         speakerFacade.turnOffAllSpeakers();
         // Koniec, Tydzień 3, Wzorzec Facade 3
     }
+private void tydzien4(){
+// Tydzien 4, Wzorzec Command 1
+        Light lightDevice1 = (Light)DeviceFactory.createDevice ("light");
+        Light lightDevice2 = (Light)DeviceFactory.createDevice ("light");
+        Light lightDevice3 = (Light)DeviceFactory.createDevice ("light");
+
+        System.out.println ("\n" + SEPARATOR + "\n");
+
+        System.out.println("Command 1");
+        System.out.println (lightDevice1.getStatus ());
+        System.out.println (lightDevice2.getStatus ());
+        System.out.println (lightDevice3.getStatus ());
+
+        SmartScenario smartScenario = new SmartScenario.Builder("My Scenario")
+                .addAction(new GenericDeviceAction<>(lightDevice1, Light::turnOn))
+                .addAction(new GenericDeviceAction<>(lightDevice2, Light::turnOff))
+                .addAction(new GenericDeviceAction<>(lightDevice3, Light::turnOn))
+                .build();
+
+        smartScenario.execute ();
+
+
+        System.out.println ( "\n" + lightDevice1.getStatus ());
+        System.out.println (lightDevice2.getStatus ());
+        System.out.println (lightDevice3.getStatus ());
+
+        // Koniec Tydzien 4, Wzorzec Command 1
+
+        // Tydzien 4, Wzorzec Command 2
+        System.out.println(SEPARATOR + "\n Command 2");
+        LightingDevice colorLight = new ColorLight("red");
+        System.out.println(colorLight.getStatus());
+
+        System.out.println("\n");
+        MacroCommand colorLightCommands = new MacroCommand();
+        colorLightCommands.addCommand(new SetBrightnessCommand(colorLight, 10));
+        colorLightCommands.addCommand(new TurnOnDeviceCommand(colorLight));
+        colorLightCommands.addCommand(new SetLightColorCommand(colorLight, "blue"));
+        colorLightCommands.execute();
+
+        System.out.println(colorLight.getStatus());
+        System.out.println("\n");
+
+        LightingDevice lightDevice = new Light();
+        lightDevice.turnOn();
+        System.out.println(lightDevice.getStatus());
+        System.out.println("\n");
+
+
+        MacroCommand lightCommands = new MacroCommand();
+        colorLightCommands.addCommand(new SetBrightnessCommand(lightDevice, 20));
+        colorLightCommands.addCommand(new TurnOffDeviceCommand(lightDevice));
+
+        colorLightCommands.execute();
+        System.out.println(colorLight.getStatus());
+
+
+        System.out.println("CommandsWrapper");
+        MacroCommand commandsWrapper = new MacroCommand();
+        commandsWrapper.addCommand(colorLightCommands);
+        commandsWrapper.addCommand(lightCommands);
+        commandsWrapper.execute();
+
+        System.out.println(colorLight.getStatus());
+        System.out.println(lightDevice.getStatus());
+
+
+        // Koniec Tydzien 4, Wzorzec Command 2
+
+        // Tydzien 4, Wzorzec Command 3
+
+        System.out.println(SEPARATOR + "\n Command 3");
+        LockingSystem system = new LockingSystem();
+        system.installBlind("Sypialnia","Dzień-noc","Białe","Zaciemniające");
+        system.installBlind("Kuchnia","Dzień-noc","Białe","Termoizolacyjne");
+        system.installBlind("Salon","Dzień-noc","Białe","Zaciemniające");
+
+        Command closeAllRollersCommand = new CloseAllBlindsCommand(system.getBlinds());
+
+        // Wykonujemy komendę
+        closeAllRollersCommand.execute();
+
+        // Cofamy działanie (undo)
+        closeAllRollersCommand.undo();
+        // Koniec Tydzien 4, Wzorzec Command 3
+
+        System.out.println(SEPARATOR);
+        System.out.println("Interpreter 1");
+
+        // Tydzien 4, Wzorzec Interpreter 1
+
+        System.out.println(lightDevice.getStatus());
+        Context context = new Context();
+        lightDevice.turnOff();
+        context.addDevice("LIGHT", lightDevice);
+        String command = "TURN_ON LIGHT";
+        Expression expression = CommandParser.parse(command);
+
+        if(expression != null){
+            expression.interpret(context);
+        }
+        System.out.println(lightDevice.getStatus());
+
+        // Koniec Tydzien 4, Wzorzec Interpreter 1
+
+        System.out.println(SEPARATOR);
+
+        // Tydzien 4, Wzorzec Interpreter 2
+        System.out.println ("Interpreter 2 \n Initial light status:" + lightDevice.getStatus ());
+        Expression expression2 = CommandParser.parse("SET_BRIGHTNESS LIGHT 99");
+        if(expression2 != null)
+        {
+            expression2.interpret (context);
+        }
+
+        System.out.println (lightDevice.getStatus ());
+
+        // Koniec Tydzien 4, Wzorzec Interpreter 2
+
+        System.out.println(SEPARATOR);
+
+        // Tydzien 4, Wzorzec Interpreter 3
+
+        System.out.println ("Interpreter 3");
+        SmartSpeakerSystem speakerSystem = new SmartSpeakerSystem();
+
+        SmartSpeaker speaker1 = speakerSystem.installSpeaker("Living Room", "Echo Dot", "Amazon", true);
+        SmartSpeaker speaker2 = speakerSystem.installSpeaker("Kitchen", "Echo Dot", "Amazon", true);
+        SmartSpeaker speaker3 = speakerSystem.installSpeaker("Bedroom", "HomePod Mini", "Apple", false);
+
+        context.addDevice(speaker1.getLocation(),speaker1);
+        context.addDevice(speaker2.getLocation(),speaker2);
+        context.addDevice(speaker3.getLocation(),speaker3);
+
+        Expression expression3 = CommandParser.parse("SET_VOLUME KITCHEN 50");
+        if(expression3 != null)
+        {
+            expression3.interpret (context);
+        }
+
+        // Koniec Tydzien 4, Wzorzec Interpreter 3
+
+        System.out.println(SEPARATOR);
+
+        // Tydzien 4, Wzorzec Iterator 1
+
+        System.out.println("Iterator 1");
+        LightingGroup lightingGroup = new LightingGroup();
+        lightingGroup.addDevice(colorLight);
+        lightingGroup.addDevice(lightDevice);
+
+        Iterator<SmartDevice> smartDeviceIterator = new FilteringSmartDeviceIterator(
+                lightingGroup.iterator(),
+                device -> device instanceof ColorLight
+        );
+
+        while (smartDeviceIterator.hasNext()) {
+            System.out.println(smartDeviceIterator.next().getStatus());
+        }
+
+        // Koniec Tydzien 4, Wzorzec Iterator 1
+
+
+
+        // Tydzien 4, Wzorzec Iterator 2
+        System.out.println(SEPARATOR + "\n Iterator 2");
+        SmartSpeakerFacade speakerFacade = new SmartSpeakerFacade();
+
+        speakerFacade.installSpeaker("Living Room", "Xl5S", "LG", true);
+        speakerFacade.installSpeaker("Kitchen", "TD22", "Sony", false);
+        speakerFacade.installSpeaker("Living Room", "Acton III", "Marshall", true);
+
+        speakerFacade.playMusicOnSpeaker("Living Room", "Nirvana - Come as You Are");
+        speakerFacade.playMusicOnSpeaker("Kitchen", "Linkin Park - Numb");
+        speakerFacade.playMusicOnSpeaker("Bedroom", "Metallica - Nothing else matters");
+
+        // Koniec Tydzien 4, Wzorzec Iterator 2
+
+
+
+        // Tydzien 4, Wzorzec Iterator 3
+        System.out.println(SEPARATOR + "\n Iterator 3");
+        NotificationGroup notificationGroup = new NotificationGroup();
+        notificationGroup.addNotification(Notificator.create(NotificationChannels.App));
+        SecurityAlarm alarm1 = new SecurityAlarm(notificationGroup);
+        SecurityAlarm alarm2 = new SecurityAlarm(notificationGroup);
+        Light light1 = new Light();
+        Light light2 = new Light();
+        Light light3 = new Light();
+        Thermostat thermostat1 = new Thermostat();
+        SmartHome smartHome1 = new SmartHome.Builder("Smart Home 1")
+                .location("Nadbystrzycka 38")
+                .addDevice(light1)
+                .addDevice(light2)
+                .addDevice(light3)
+                .addDevice(thermostat1)
+                .addDevice(alarm1)
+                .addDevice(alarm2)
+                .build();
+        SmartScenario smartScenario1 = new SmartScenario.Builder("My Scenario")
+                .addAction(new GenericDeviceAction<>(light1, Light::turnOn))
+                .addAction(new GenericDeviceAction<>(light2, Light::turnOff))
+                .addAction(new GenericDeviceAction<>(light3, Light::turnOn))
+                .build();
+        SmartHomeFacade smartHomeFacade = new SmartHomeFacade(smartHome1, notificationGroup, smartScenario1);
+
+        List<String> scenariosToExecute = new ArrayList<>();
+        scenariosToExecute.add("NightMode");
+        scenariosToExecute.add("My Scenario");
+
+        smartHomeFacade.executeScenarios(scenariosToExecute);
+        // Koniec Tydzien 4, Wzorzec Iterator Iterator 3
+
+
+
+        // Tydzien 4, Wzorzec Mediator 1
+        System.out.println(SEPARATOR + "\n Mediator 1");
+        MotionSensor sensor = new MotionSensor("Video motion sensor","Xiaomi","high sensitive");
+        sensor.setMediator(smartHomeFacade);
+        sensor.triggerAlarm("Entrance",true);
+        // Koniec Tydzien 4, Wzorzec Mediator 1
+
+
+
+        // Tydzien 4, Wzorzec Mediator 2
+        System.out.println(SEPARATOR + "\n Mediator 2");
+        SmartDeviceHandler handler = new SmartDeviceHandler();
+        SmartDevice light = DeviceFactory.createDevice("light");
+        SmartDevice camera = DeviceFactory.createDevice("camera");
+
+        handler.addDevice(light);
+        handler.addDevice(camera);
+
+        handler.notify(light,"LIGHTS_TURN_OFF");
+        // Koniec Tydzien 4, Wzorzec Mediator 2
+
+
+
+        // Tydzien 4, Wzorzec Mediator 3
+        System.out.println(SEPARATOR + "\n Mediator 3");
+        SecurityMediator securityMediator = new SecurityMediator();
+        SmartDevice secureWindow = new SecureWindow("Secure Window", 2);
+        SmartDevice securityCamera = new SecurityCamera(3);
+
+        securityMediator.registerDevice(secureWindow);
+        securityMediator.registerDevice(light);
+        securityMediator.registerDevice(securityCamera);
+
+        SmartDevice door = new Door();
+        door.setMediator(securityMediator);
+        ((Door)door).simulateIncorrectPassword();
+
+        System.out.println("\n");
+        // Koniec Tydzien 4, Wzorzec Mediator Mediator
+
+
+}
     */
