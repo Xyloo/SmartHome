@@ -1,3 +1,6 @@
+import devices.impl.HeatingSystem.CoolingSystem;
+import devices.impl.HeatingSystem.HeatingSystem;
+import devices.impl.Thermostat;
 
 public class Main
 {
@@ -7,6 +10,13 @@ public class Main
     {
         //Tydzień 5, Wzorzec Observer 1
         System.out.println("Wzorzec Observer 1");
+        var thermostat = new Thermostat();
+        thermostat.registerObserver(new CoolingSystem());
+        thermostat.registerObserver(new HeatingSystem());
+
+        thermostat.setTemperature(30);
+        thermostat.setTemperature(19);
+
         //Koniec Tydzien 5, Wzorzec Observer 1
 
         System.out.println(SEPARATOR);

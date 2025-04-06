@@ -1,10 +1,16 @@
 package devices.impl;
 
 import devices.mediator.Mediator;
+import devices.observer.Observer;
+import devices.observer.Subject;
 
-public class Thermostat extends AbstractSmartDevice implements SmartDevice {
+import java.util.ArrayList;
+import java.util.List;
+
+public class Thermostat extends AbstractSmartDevice implements SmartDevice, Subject {
     private int temperature = 20; // default temperature
     private Mediator mediator;
+    private List<Observer> observers = new ArrayList<>();
 
     @Override
     public void turnOn() {
@@ -37,10 +43,30 @@ public class Thermostat extends AbstractSmartDevice implements SmartDevice {
 
     public void setTemperature(int temperature) {
         this.temperature = temperature;
+        notifyObservers();
     }
 
     public int getTemperature() {
         return temperature;
     }
+
+    // Tydzień 5, Wzorzec Observer 1
+    @Override
+    public void registerObserver(Observer o) {
+        observers.add(o);
+    }
+
+    @Override
+    public void removeObserver(Observer o) {
+        observers.remove(o);
+    }
+
+    @Override
+    public void notifyObservers() {
+        for (Observer o : observers) {
+            o.update(temperature);
+        }
+    }
+    // Koniec Tydzień 5 Observer 1
 }
 

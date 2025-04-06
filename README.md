@@ -66,3 +66,19 @@
 - devices.mediator.SecurityMediator: 7-23
 - home.SmartHomeFacade: 84-95
 - devices.mediator.SmartDeviceHandler: 8-20
+### Observer
+- devices.impl.Thermostat: 53-70
+- 
+- 
+### State
+- 
+- 
+- 
+### Strategy
+- 
+- 
+- 
+### Template
+- 
+- 
+- 
