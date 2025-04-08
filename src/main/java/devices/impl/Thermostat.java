@@ -72,6 +72,7 @@ public class Thermostat extends AbstractSmartDevice implements SmartDevice, Subj
     }
     // Koniec Tydzień 5 Observer 1
 
+    // Tydzień 5, Wzorzec Strategy 1
     public void setStrategy(TemperatureControlStrategy strategy) {
         this.strategy = strategy;
     }
@@ -83,5 +84,6 @@ public class Thermostat extends AbstractSmartDevice implements SmartDevice, Subj
             SmartLogger.getInstance().log(this, "Temperature control strategy not set.");
         }
     }
+    // Koniec Tydzień 5, Wzorzec Strategy 1
 }
 

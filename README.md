@@ -69,14 +69,14 @@
 # Tydzień 5
 ### Observer
 - devices.impl.Thermostat: 53-70
-- 
+- devices.observer.BatteryWarningDisplay: 1-14
 - 
 ### State
 - devices.state.AlarmState: 1-10, devices.impl.SecurityAlarm: 51-66
 - 
 - 
 ### Strategy
-- 
+- devices.impl.Thermostat: 75-87
 - 
 - 
 ### Template

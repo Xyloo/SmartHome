@@ -2,6 +2,8 @@ import devices.impl.HeatingSystem.CoolingSystem;
 import devices.impl.HeatingSystem.HeatingSystem;
 import devices.impl.SecurityAlarm;
 import devices.impl.Thermostat;
+import devices.observer.BatterySubject;
+import devices.observer.BatteryWarningDisplay;
 import devices.strategy.ComfortModeStrategy;
 import devices.strategy.EcoModeStrategy;
 import notifications.NotificationChannels;
@@ -29,6 +31,14 @@ public class Main
 
         //Tydzień 5, Wzorzec Observer 2
         System.out.println("Wzorzec Observer 2");
+        BatterySubject batterySensor = new BatterySubject();
+        BatteryWarningDisplay display = new BatteryWarningDisplay();
+
+        batterySensor.registerObserver(display);
+
+        batterySensor.setBatteryLevel(15);  // Should trigger a low battery warning
+        batterySensor.setBatteryLevel(80);  // Should indicate a stable battery level
+
         //Koniec Tydzien 5, Wzorzec Observer 2
 
         System.out.println(SEPARATOR);
