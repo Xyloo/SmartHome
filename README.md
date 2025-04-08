@@ -66,12 +66,13 @@
 - devices.mediator.SecurityMediator: 7-23
 - home.SmartHomeFacade: 84-95
 - devices.mediator.SmartDeviceHandler: 8-20
+# Tydzień 5
 ### Observer
 - devices.impl.Thermostat: 53-70
 - 
 - 
 ### State
-- 
+- devices.state.AlarmState: 1-10, devices.impl.SecurityAlarm: 51-66
 - 
 - 
 ### Strategy

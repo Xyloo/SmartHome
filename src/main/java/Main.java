@@ -1,6 +1,10 @@
 import devices.impl.HeatingSystem.CoolingSystem;
 import devices.impl.HeatingSystem.HeatingSystem;
+import devices.impl.SecurityAlarm;
 import devices.impl.Thermostat;
+import notifications.NotificationChannels;
+import notifications.NotificationGroup;
+import notifications.Notificator;
 
 public class Main
 {
@@ -35,6 +39,14 @@ public class Main
 
         //Tydzień 5, Wzorzec State 1
         System.out.println("Wzorzec State 1");
+        NotificationGroup notificationGroup = new NotificationGroup();
+        notificationGroup.addNotification(Notificator.create(NotificationChannels.App));
+
+        SecurityAlarm alarm = new SecurityAlarm(notificationGroup);
+        alarm.arm();
+        alarm.trigger();
+        alarm.disarm();
+        System.out.println(alarm.getStatus());
         //Koniec Tydzien 5, Wzorzec State 1
 
         System.out.println(SEPARATOR);
