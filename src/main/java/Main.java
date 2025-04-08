@@ -2,6 +2,8 @@ import devices.impl.HeatingSystem.CoolingSystem;
 import devices.impl.HeatingSystem.HeatingSystem;
 import devices.impl.SecurityAlarm;
 import devices.impl.Thermostat;
+import devices.strategy.ComfortModeStrategy;
+import devices.strategy.EcoModeStrategy;
 import notifications.NotificationChannels;
 import notifications.NotificationGroup;
 import notifications.Notificator;
@@ -65,6 +67,13 @@ public class Main
         
         //Tydzień 5, Wzorzec Strategy 1
         System.out.println("Wzorzec Strategy 1");
+        Thermostat thermostat2 = new Thermostat();
+        thermostat2.setStrategy(new EcoModeStrategy());
+        thermostat2.adjustTemperature();  // Sets to 18°C
+
+        thermostat2.setStrategy(new ComfortModeStrategy());
+        thermostat2.adjustTemperature();  // Sets to 22°C
+
         //Koniec Tydzien 5, Wzorzec Strategy 1
         
         System.out.println(SEPARATOR);
