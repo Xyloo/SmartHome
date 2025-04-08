@@ -80,6 +80,6 @@
 - 
 - 
 ### Template
-- 
+- devices.template.FirmwareUpdateTemplate: 1-31
 - 
 - 

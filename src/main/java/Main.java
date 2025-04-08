@@ -2,10 +2,16 @@ import devices.impl.HeatingSystem.CoolingSystem;
 import devices.impl.HeatingSystem.HeatingSystem;
 import devices.impl.SecurityAlarm;
 import devices.impl.Thermostat;
+import devices.impl.security.SecurityCamera;
+import devices.impl.security.SecurityCameraFirmwareUpdate;
+import devices.impl.speakers.SmartSpeaker;
+import devices.impl.speakers.SmartSpeakerFirmwareUpdate;
+import devices.impl.speakers.SpeakerFactory;
 import devices.observer.BatterySubject;
 import devices.observer.BatteryWarningDisplay;
 import devices.strategy.ComfortModeStrategy;
 import devices.strategy.EcoModeStrategy;
+import devices.template.FirmwareUpdateTemplate;
 import notifications.NotificationChannels;
 import notifications.NotificationGroup;
 import notifications.Notificator;
@@ -102,6 +108,13 @@ public class Main
         
         //Tydzień 5, Wzorzec Template 1
         System.out.println("Wzorzec Template 1");
+        SmartSpeaker speaker = new SmartSpeaker(SpeakerFactory.getSpeakerType("Echo Dot", "Amazon", true), "Living Room");
+        FirmwareUpdateTemplate speakerUpdate = new SmartSpeakerFirmwareUpdate(speaker);
+        speakerUpdate.performFirmwareUpdate();
+
+        SecurityCamera camera = new SecurityCamera();
+        FirmwareUpdateTemplate cameraUpdate = new SecurityCameraFirmwareUpdate(camera);
+        cameraUpdate.performFirmwareUpdate();
         //Koniec Tydzien 5, Wzorzec Template 1
 
         System.out.println(SEPARATOR);
