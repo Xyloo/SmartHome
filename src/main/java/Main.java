@@ -2,6 +2,7 @@ import devices.impl.HeatingSystem.CoolingSystem;
 import devices.impl.HeatingSystem.HeatingSystem;
 import devices.impl.SecurityAlarm;
 import devices.impl.Thermostat;
+import devices.impl.speakers.SmartSpeakerSystem;
 import devices.impl.sprinklers.Sprinkler;
 import devices.impl.security.SecurityCamera;
 import devices.impl.security.SecurityCameraFirmwareUpdate;
@@ -12,6 +13,8 @@ import devices.observer.BatterySubject;
 import devices.observer.BatteryWarningDisplay;
 import devices.strategy.ComfortModeStrategy;
 import devices.strategy.EcoModeStrategy;
+import devices.strategy.LofiModeSpeaker;
+import devices.strategy.PartyModeSpeaker;
 import devices.template.FirmwareUpdateTemplate;
 import notifications.NotificationChannels;
 import notifications.NotificationGroup;
@@ -101,6 +104,14 @@ public class Main
         
         //Tydzień 5, Wzorzec Strategy 2
         System.out.println("Wzorzec Strategy 2");
+        SmartSpeakerSystem speakerSystem = new SmartSpeakerSystem();
+        SmartSpeaker strategySpeaker = speakerSystem.installSpeaker("Living Room", "Echo Dot", "Amazon", true);
+
+        strategySpeaker.setStrategy(new LofiModeSpeaker());
+        strategySpeaker.playPlaylist();
+
+        strategySpeaker.setStrategy(new PartyModeSpeaker());
+        strategySpeaker.playPlaylist();
         //Koniec Tydzien 5, Wzorzec Strategy 2
         
         System.out.println(SEPARATOR);

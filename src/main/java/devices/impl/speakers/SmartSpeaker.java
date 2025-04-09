@@ -2,6 +2,7 @@ package devices.impl.speakers;
 
 import devices.impl.SmartDevice;
 import devices.mediator.Mediator;
+import devices.strategy.SpeakersModeStrategy;
 import util.SmartLogger;
 
 public class SmartSpeaker implements SmartDevice
@@ -12,12 +13,27 @@ public class SmartSpeaker implements SmartDevice
     private boolean isPlaying = false;
     private final SmartLogger logger = SmartLogger.getInstance();
     private Mediator mediator;
+    private SpeakersModeStrategy strategy;
 
     public SmartSpeaker(SpeakerType speakerType, String location) {
         this.speakerType = speakerType;
         this.location = location;
         this.volume = 50; // default volume level
     }
+
+    //Tydzień 5, Wzorzec Strategy 2
+    public void setStrategy(SpeakersModeStrategy strategy) {
+        this.strategy = strategy;
+    }
+
+    public void playPlaylist(){
+        if (strategy != null) {
+            strategy.play(this);
+        } else {
+            SmartLogger.getInstance().log(this, "Speakers modes strategy not set.");
+        }
+    }
+    //Koniec Tydzień 5, Wzorzec Strategy 2
 
     public void playMusic(String song) {
         isPlaying = true;
