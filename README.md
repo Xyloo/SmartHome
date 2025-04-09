@@ -73,13 +73,13 @@
 - 
 ### State
 - devices.state.AlarmState: 1-10, devices.impl.SecurityAlarm: 51-66
-- 
+- devices.impl.sprinklers.Sprinkler: 5-24
 - 
 ### Strategy
 - devices.impl.Thermostat: 75-87
-- 
+- devices.impl.speakers.SmartSpeaker: 24-36
 - 
 ### Template
 - devices.template.FirmwareUpdateTemplate: 1-31
-- 
+- devices.impl.security.checks.SecurityCheck: 4-32
 - 

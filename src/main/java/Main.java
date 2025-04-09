@@ -2,6 +2,9 @@ import devices.impl.HeatingSystem.CoolingSystem;
 import devices.impl.HeatingSystem.HeatingSystem;
 import devices.impl.SecurityAlarm;
 import devices.impl.Thermostat;
+import devices.impl.security.checks.AwaySecurityCheck;
+import devices.impl.security.checks.NightSecurityCheck;
+import devices.impl.security.checks.SecurityCheck;
 import devices.impl.speakers.SmartSpeakerSystem;
 import devices.impl.sprinklers.Sprinkler;
 import devices.impl.security.SecurityCamera;
@@ -137,6 +140,15 @@ public class Main
 
         //Tydzień 5, Wzorzec Template 2
         System.out.println("Wzorzec Template 2");
+
+        System.out.println("\nNight Mode Check:");
+        SecurityCheck nightCheck = new NightSecurityCheck();
+        nightCheck.performSecurityCheck();
+
+        System.out.println("\nAway Security Check:");
+        SecurityCheck awayCheck = new AwaySecurityCheck();
+        awayCheck.performSecurityCheck();
+
         //Koniec Tydzien 5, Wzorzec Template 2
 
         System.out.println(SEPARATOR);
