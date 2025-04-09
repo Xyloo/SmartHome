@@ -1,6 +1,7 @@
 import devices.impl.HeatingSystem.CoolingSystem;
 import devices.impl.HeatingSystem.HeatingSystem;
 import devices.impl.Thermostat;
+import devices.impl.sprinklers.Sprinkler;
 
 public class Main
 {
@@ -41,6 +42,10 @@ public class Main
 
         //Tydzień 5, Wzorzec State 2
         System.out.println("Wzorzec State 2");
+        Sprinkler sprinkler = new Sprinkler();
+
+        sprinkler.startWatering();
+        sprinkler.turnOffSprinkler();
         //Koniec Tydzien 5, Wzorzec State 2
 
         System.out.println(SEPARATOR);
