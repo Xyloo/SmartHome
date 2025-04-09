@@ -1,10 +1,15 @@
+import devices.factory.DeviceFactory;
 import devices.impl.HeatingSystem.CoolingSystem;
 import devices.impl.HeatingSystem.HeatingSystem;
 import devices.impl.SecurityAlarm;
+import devices.impl.SmartDevice;
 import devices.impl.Thermostat;
+import devices.impl.lighting.Light;
+import devices.impl.lighting.LightingDevice;
 import devices.impl.security.checks.AwaySecurityCheck;
 import devices.impl.security.checks.NightSecurityCheck;
 import devices.impl.security.checks.SecurityCheck;
+import devices.impl.security.sensors.MotionSensor;
 import devices.impl.speakers.SmartSpeakerSystem;
 import devices.impl.sprinklers.Sprinkler;
 import devices.impl.security.SecurityCamera;
@@ -54,10 +59,22 @@ public class Main
 
         //Koniec Tydzien 5, Wzorzec Observer 2
 
-        System.out.println(SEPARATOR);
-
         //Tydzień 5, Wzorzec Observer 3
+        System.out.println(SEPARATOR);
         System.out.println("Wzorzec Observer 3");
+
+        Light light = new Light();
+        SecurityCamera camera = new SecurityCamera();
+        MotionSensor sensor = new MotionSensor("Video motion sensor","Xiaomi","high sensitive");
+
+        sensor.registerObserver(camera);
+        sensor.registerObserver(light);
+
+        sensor.triggerAlarm("Backdoor");
+
+        System.out.println(light.getStatus());
+        System.out.println(camera.getStatus());
+
         //Koniec Tydzien 5, Wzorzec Observer 3
 
         System.out.println(SEPARATOR);
@@ -131,7 +148,6 @@ public class Main
         FirmwareUpdateTemplate speakerUpdate = new SmartSpeakerFirmwareUpdate(speaker);
         speakerUpdate.performFirmwareUpdate();
 
-        SecurityCamera camera = new SecurityCamera();
         FirmwareUpdateTemplate cameraUpdate = new SecurityCameraFirmwareUpdate(camera);
         cameraUpdate.performFirmwareUpdate();
         //Koniec Tydzien 5, Wzorzec Template 1

@@ -3,9 +3,10 @@ package devices.impl.lighting;
 import devices.impl.AbstractSmartDevice;
 import devices.configs.LightConfig;
 import devices.mediator.Mediator;
+import devices.observer.Observer;
 import util.DeviceManager;
 
-public class Light extends AbstractSmartDevice implements LightingDevice {
+public class Light extends AbstractSmartDevice implements LightingDevice, Observer {
     public static final String CONFIG_KEY = "Light";
     private int brightness;
     private Mediator mediator;
@@ -50,6 +51,14 @@ public class Light extends AbstractSmartDevice implements LightingDevice {
         }else if(event.equals("deactivateSecurityMode")){
             util.SmartLogger.getInstance().log("Event: deactivateSecurityMode; Turning off lights");
             turnOff();
+        }
+    }
+
+    @Override
+    public void update(Object value) {
+        if(value instanceof String && value.equals("MOTION_DETECTED")) {
+            turnOn();
+            setBrightness(80);
         }
     }
 }

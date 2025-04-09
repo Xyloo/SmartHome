@@ -3,11 +3,12 @@ package devices.impl.security;
 import devices.impl.AbstractSmartDevice;
 import devices.configs.SecurityCameraConfig;
 import devices.mediator.Mediator;
+import devices.observer.Observer;
 import util.DeviceManager;
 
 import java.util.UUID;
 
-public class SecurityCamera extends AbstractSmartDevice implements SecurityCameraDevice {
+public class SecurityCamera extends AbstractSmartDevice implements SecurityCameraDevice, Observer {
     public static final String CONFIG_KEY = "SecurityCamera";
     private boolean isRecording;
     private boolean isMotionDetectionEnabled;
@@ -17,8 +18,6 @@ public class SecurityCamera extends AbstractSmartDevice implements SecurityCamer
     public SecurityCamera() {
         SecurityCameraConfig config = DeviceManager.INSTANCE.getSetting(CONFIG_KEY, SecurityCameraConfig.class);
         isRecording = config.isRecording();
-
-        util.SmartLogger.getInstance ().log ("TEST..............");
     }
     public SecurityCamera(int locationId){
         super(locationId);
@@ -93,5 +92,13 @@ public class SecurityCamera extends AbstractSmartDevice implements SecurityCamer
 
     @Override
     public boolean isAutoRecordingEnabled() { return isAutoRecordingEnabled; }
+
+    @Override
+    public void update(Object value) {
+        if(value instanceof String && value.equals("MOTION_DETECTED")) {
+            turnOn();
+            startRecording();
+        }
+    }
 }
 
