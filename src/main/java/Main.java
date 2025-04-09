@@ -1,7 +1,21 @@
 import devices.impl.HeatingSystem.CoolingSystem;
 import devices.impl.HeatingSystem.HeatingSystem;
+import devices.impl.SecurityAlarm;
 import devices.impl.Thermostat;
 import devices.impl.sprinklers.Sprinkler;
+import devices.impl.security.SecurityCamera;
+import devices.impl.security.SecurityCameraFirmwareUpdate;
+import devices.impl.speakers.SmartSpeaker;
+import devices.impl.speakers.SmartSpeakerFirmwareUpdate;
+import devices.impl.speakers.SpeakerFactory;
+import devices.observer.BatterySubject;
+import devices.observer.BatteryWarningDisplay;
+import devices.strategy.ComfortModeStrategy;
+import devices.strategy.EcoModeStrategy;
+import devices.template.FirmwareUpdateTemplate;
+import notifications.NotificationChannels;
+import notifications.NotificationGroup;
+import notifications.Notificator;
 
 public class Main
 {
@@ -24,6 +38,14 @@ public class Main
 
         //Tydzień 5, Wzorzec Observer 2
         System.out.println("Wzorzec Observer 2");
+        BatterySubject batterySensor = new BatterySubject();
+        BatteryWarningDisplay display = new BatteryWarningDisplay();
+
+        batterySensor.registerObserver(display);
+
+        batterySensor.setBatteryLevel(15);  // Should trigger a low battery warning
+        batterySensor.setBatteryLevel(80);  // Should indicate a stable battery level
+
         //Koniec Tydzien 5, Wzorzec Observer 2
 
         System.out.println(SEPARATOR);
@@ -36,6 +58,14 @@ public class Main
 
         //Tydzień 5, Wzorzec State 1
         System.out.println("Wzorzec State 1");
+        NotificationGroup notificationGroup = new NotificationGroup();
+        notificationGroup.addNotification(Notificator.create(NotificationChannels.App));
+
+        SecurityAlarm alarm = new SecurityAlarm(notificationGroup);
+        alarm.arm();
+        alarm.trigger();
+        alarm.disarm();
+        System.out.println(alarm.getStatus());
         //Koniec Tydzien 5, Wzorzec State 1
 
         System.out.println(SEPARATOR);
@@ -58,6 +88,13 @@ public class Main
         
         //Tydzień 5, Wzorzec Strategy 1
         System.out.println("Wzorzec Strategy 1");
+        Thermostat thermostat2 = new Thermostat();
+        thermostat2.setStrategy(new EcoModeStrategy());
+        thermostat2.adjustTemperature();  // Sets to 18°C
+
+        thermostat2.setStrategy(new ComfortModeStrategy());
+        thermostat2.adjustTemperature();  // Sets to 22°C
+
         //Koniec Tydzien 5, Wzorzec Strategy 1
         
         System.out.println(SEPARATOR);
@@ -76,6 +113,13 @@ public class Main
         
         //Tydzień 5, Wzorzec Template 1
         System.out.println("Wzorzec Template 1");
+        SmartSpeaker speaker = new SmartSpeaker(SpeakerFactory.getSpeakerType("Echo Dot", "Amazon", true), "Living Room");
+        FirmwareUpdateTemplate speakerUpdate = new SmartSpeakerFirmwareUpdate(speaker);
+        speakerUpdate.performFirmwareUpdate();
+
+        SecurityCamera camera = new SecurityCamera();
+        FirmwareUpdateTemplate cameraUpdate = new SecurityCameraFirmwareUpdate(camera);
+        cameraUpdate.performFirmwareUpdate();
         //Koniec Tydzien 5, Wzorzec Template 1
 
         System.out.println(SEPARATOR);

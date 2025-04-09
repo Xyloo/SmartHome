@@ -9,7 +9,7 @@ public class SmartSpeaker implements SmartDevice
     private final SpeakerType speakerType; // intrinsic state
     private final String location;         // extrinsic state
     private int volume;
-    private boolean isOn = false;
+    private boolean isPlaying = false;
     private final SmartLogger logger = SmartLogger.getInstance();
     private Mediator mediator;
 
@@ -20,8 +20,14 @@ public class SmartSpeaker implements SmartDevice
     }
 
     public void playMusic(String song) {
-        isOn = true;
+        isPlaying = true;
         logger.log(this,"Playing \"" + song + "\" on "
+                + speakerType.getModel() + " at " + location);
+    }
+
+    public void stopMusic() {
+        isPlaying = false;
+        logger.log(this,"Stopping music on "
                 + speakerType.getModel() + " at " + location);
     }
 
@@ -35,21 +41,21 @@ public class SmartSpeaker implements SmartDevice
     @Override
     public void turnOn()
     {
-        isOn = true;
+        isPlaying = true;
         logger.log(this, "Turning on " + speakerType.getModel() + " at " + location);
     }
 
     @Override
     public void turnOff()
     {
-        isOn = false;
+        isPlaying = false;
         logger.log(this, "Turning off " + speakerType.getModel() + " at " + location);
     }
 
     @Override
     public String getStatus()
     {
-        return "Speaker is " + (isOn ? "ON" : "OFF") + " at " + location;
+        return "Speaker is " + (isPlaying ? "ON" : "OFF") + " at " + location;
     }
 
     @Override

@@ -3,6 +3,8 @@ package devices.impl;
 import devices.mediator.Mediator;
 import devices.observer.Observer;
 import devices.observer.Subject;
+import devices.strategy.TemperatureControlStrategy;
+import util.SmartLogger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +13,7 @@ public class Thermostat extends AbstractSmartDevice implements SmartDevice, Subj
     private int temperature = 20; // default temperature
     private Mediator mediator;
     private List<Observer> observers = new ArrayList<>();
+    private TemperatureControlStrategy strategy;
 
     @Override
     public void turnOn() {
@@ -68,5 +71,19 @@ public class Thermostat extends AbstractSmartDevice implements SmartDevice, Subj
         }
     }
     // Koniec Tydzień 5 Observer 1
+
+    // Tydzień 5, Wzorzec Strategy 1
+    public void setStrategy(TemperatureControlStrategy strategy) {
+        this.strategy = strategy;
+    }
+
+    public void adjustTemperature() {
+        if (strategy != null) {
+            strategy.adjustTemperature(this);
+        } else {
+            SmartLogger.getInstance().log(this, "Temperature control strategy not set.");
+        }
+    }
+    // Koniec Tydzień 5, Wzorzec Strategy 1
 }
 

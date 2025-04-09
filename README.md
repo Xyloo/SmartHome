@@ -66,19 +66,20 @@
 - devices.mediator.SecurityMediator: 7-23
 - home.SmartHomeFacade: 84-95
 - devices.mediator.SmartDeviceHandler: 8-20
+# Tydzień 5
 ### Observer
 - devices.impl.Thermostat: 53-70
-- 
+- devices.observer.BatteryWarningDisplay: 1-14
 - 
 ### State
-- 
+- devices.state.AlarmState: 1-10, devices.impl.SecurityAlarm: 51-66
 - 
 - 
 ### Strategy
-- 
+- devices.impl.Thermostat: 75-87
 - 
 - 
 ### Template
-- 
+- devices.template.FirmwareUpdateTemplate: 1-31
 - 
 - 
