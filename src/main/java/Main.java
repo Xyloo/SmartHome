@@ -19,6 +19,7 @@ import devices.impl.speakers.SmartSpeakerFirmwareUpdate;
 import devices.impl.speakers.SpeakerFactory;
 import devices.observer.BatterySubject;
 import devices.observer.BatteryWarningDisplay;
+import devices.state.lockings.SmartLock;
 import devices.strategy.ComfortModeStrategy;
 import devices.strategy.EcoModeStrategy;
 import devices.strategy.LofiModeSpeaker;
@@ -105,6 +106,13 @@ public class Main
 
         //Tydzień 5, Wzorzec State 3
         System.out.println("Wzorzec State 3");
+        SmartLock frontDoorLock = new SmartLock("Front Door Lock", 101);
+        System.out.println(frontDoorLock.getStatus());
+        frontDoorLock.unlock();
+        System.out.println(frontDoorLock.getStatus());
+        frontDoorLock.lock();
+        System.out.println(frontDoorLock.getStatus());
+
         //Koniec Tydzien 5, Wzorzec State 3
 
         System.out.println(SEPARATOR);
