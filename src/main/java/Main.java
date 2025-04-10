@@ -9,6 +9,7 @@ import devices.impl.security.lockingsystem.BlindType;
 import devices.impl.speakers.SmartSpeaker;
 import devices.impl.speakers.SpeakerFactory;
 import devices.memento.BlindsCaretaker;
+import devices.memento.ThermostatMemento;
 import devices.visitor.StatusReportVisitor;
 import home.SmartHome;
 
@@ -38,6 +39,15 @@ public class Main
 
         // Tydzień 6, Wzorzec Memento 2
         System.out.println("Wzorzec Memento 2");
+        Thermostat thermostat = new Thermostat();
+        thermostat.turnOn();
+        thermostat.setTemperature(22);
+        ThermostatMemento thermostatMemento = thermostat.saveState();
+
+        thermostat.setTemperature(35);
+        System.out.println(thermostat.getStatus());
+
+        thermostat.restoreState(thermostatMemento);
         // Koniec Tydzień 6, Wzorzec Memento 2
 
         System.out.println(SEPARATOR);

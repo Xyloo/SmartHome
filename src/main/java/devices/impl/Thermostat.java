@@ -1,6 +1,7 @@
 package devices.impl;
 
 import devices.mediator.Mediator;
+import devices.memento.ThermostatMemento;
 import devices.observer.Observer;
 import devices.observer.Subject;
 import devices.strategy.TemperatureControlStrategy;
@@ -92,5 +93,19 @@ public class Thermostat extends AbstractSmartDevice implements SmartDevice, Subj
     {
         visitor.visit(this);
     }
+
+    // Tydzień 6, Wzorzec Memento 2
+    public ThermostatMemento saveState() {
+        System.out.println("Saving state: " + getStatus());
+        return new ThermostatMemento(temperature, isOn);
+    }
+
+    // Restore the state from the memento.
+    public void restoreState(ThermostatMemento memento) {
+        this.temperature = memento.temperature();
+        this.isOn = memento.isOn();
+        System.out.println("State restored: " + getStatus());
+    }
+    // Koniec Tydzień 6, Wzorzec Memento 2
 }
 
