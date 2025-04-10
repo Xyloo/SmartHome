@@ -1,210 +1,87 @@
-import devices.factory.DeviceFactory;
-import devices.impl.HeatingSystem.CoolingSystem;
-import devices.impl.HeatingSystem.HeatingSystem;
-import devices.impl.SecurityAlarm;
-import devices.impl.SmartDevice;
-import devices.impl.Thermostat;
-import devices.impl.lighting.Light;
-import devices.impl.lighting.LightingDevice;
-import devices.impl.security.SecurityCameraDevice;
-import devices.impl.security.checks.AwaySecurityCheck;
-import devices.impl.security.checks.NightSecurityCheck;
-import devices.impl.security.checks.SecurityCheck;
-import devices.impl.security.sensors.MotionSensor;
-import devices.impl.speakers.SmartSpeakerSystem;
-import devices.impl.sprinklers.Sprinkler;
-import devices.impl.security.SecurityCamera;
-import devices.impl.security.SecurityCameraFirmwareUpdate;
-import devices.impl.speakers.SmartSpeaker;
-import devices.impl.speakers.SmartSpeakerFirmwareUpdate;
-import devices.impl.speakers.SpeakerFactory;
-import devices.observer.BatterySubject;
-import devices.observer.BatteryWarningDisplay;
-import devices.state.lockings.SmartLock;
-import devices.strategy.ComfortModeStrategy;
-import devices.strategy.EcoModeStrategy;
-import devices.strategy.LofiModeSpeaker;
-import devices.strategy.PartyModeSpeaker;
-import devices.strategy.lighting.BrightnessStrategy;
-import devices.strategy.lighting.EnergySavingStrategy;
-import devices.strategy.lighting.FullBrightnessStrategy;
-import devices.template.DeviceRoutine;
-import devices.template.EveningLightingRoutine;
-import devices.template.FirmwareUpdateTemplate;
-import devices.template.NightSecurityRoutine;
-import notifications.NotificationChannels;
-import notifications.NotificationGroup;
-import notifications.Notificator;
-
 public class Main
 {
     private static final String SEPARATOR = "----------------------------------------";
 
-    public static void main(String[] args)
-    {
-        //Tydzień 5, Wzorzec Observer 1
-        System.out.println("Wzorzec Observer 1");
-        var thermostat = new Thermostat();
-        thermostat.registerObserver(new CoolingSystem());
-        thermostat.registerObserver(new HeatingSystem());
-
-        thermostat.setTemperature(30);
-        thermostat.setTemperature(19);
-
-        //Koniec Tydzien 5, Wzorzec Observer 1
+    public static void main(String[] args) {
+        // Tydzień 6, Wzorzec Memento 1
+        System.out.println("Wzorzec Memento 1");
+        // Koniec Tydzień 6, Wzorzec Memento 1
 
         System.out.println(SEPARATOR);
 
-        //Tydzień 5, Wzorzec Observer 2
-        System.out.println("Wzorzec Observer 2");
-        BatterySubject batterySensor = new BatterySubject();
-        BatteryWarningDisplay display = new BatteryWarningDisplay();
-
-        batterySensor.registerObserver(display);
-
-        batterySensor.setBatteryLevel(15);  // Should trigger a low battery warning
-        batterySensor.setBatteryLevel(80);  // Should indicate a stable battery level
-
-        //Koniec Tydzien 5, Wzorzec Observer 2
-
-        //Tydzień 5, Wzorzec Observer 3
-        System.out.println(SEPARATOR);
-        System.out.println("Wzorzec Observer 3");
-
-        Light light = new Light();
-        SecurityCamera camera = new SecurityCamera();
-        MotionSensor sensor = new MotionSensor("Video motion sensor","Xiaomi","high sensitive");
-
-        sensor.registerObserver(camera);
-        sensor.registerObserver(light);
-
-        sensor.triggerAlarm("Backdoor");
-
-        System.out.println(light.getStatus());
-        System.out.println(camera.getStatus());
-
-        //Koniec Tydzien 5, Wzorzec Observer 3
+        // Tydzień 6, Wzorzec Memento 2
+        System.out.println("Wzorzec Memento 2");
+        // Koniec Tydzień 6, Wzorzec Memento 2
 
         System.out.println(SEPARATOR);
 
-        //Tydzień 5, Wzorzec State 1
-        System.out.println("Wzorzec State 1");
-        NotificationGroup notificationGroup = new NotificationGroup();
-        notificationGroup.addNotification(Notificator.create(NotificationChannels.App));
+        // Tydzień 6, Wzorzec Memento 3
+        System.out.println("Wzorzec Memento 3");
 
-        SecurityAlarm alarm = new SecurityAlarm(notificationGroup);
-        alarm.arm();
-        alarm.trigger();
-        alarm.disarm();
-        System.out.println(alarm.getStatus());
-        //Koniec Tydzien 5, Wzorzec State 1
+        // Koniec Tydzień 6, Wzorzec Memento 3
 
         System.out.println(SEPARATOR);
 
-        //Tydzień 5, Wzorzec State 2
-        System.out.println("Wzorzec State 2");
-        Sprinkler sprinkler = new Sprinkler();
+        // Tydzień 6, Wzorzec Visitor 1
+        System.out.println("Wzorzec Visitor 1");
 
-        sprinkler.startWatering();
-        sprinkler.turnOffSprinkler();
-        //Koniec Tydzien 5, Wzorzec State 2
+        // Koniec Tydzień 6, Wzorzec Visitor 1
 
         System.out.println(SEPARATOR);
 
-        //Tydzień 5, Wzorzec State 3
-        System.out.println("Wzorzec State 3");
-        SmartLock frontDoorLock = new SmartLock("Front Door Lock", 101);
-        System.out.println(frontDoorLock.getStatus());
-        frontDoorLock.unlock();
-        System.out.println(frontDoorLock.getStatus());
-        frontDoorLock.lock();
-        System.out.println(frontDoorLock.getStatus());
+        // Tydzień 6, Wzorzec Visitor 2
+        System.out.println("Wzorzec Visitor 2");
 
-        //Koniec Tydzien 5, Wzorzec State 3
-
-        System.out.println(SEPARATOR);
-        
-        //Tydzień 5, Wzorzec Strategy 1
-        System.out.println("Wzorzec Strategy 1");
-        Thermostat thermostat2 = new Thermostat();
-        thermostat2.setStrategy(new EcoModeStrategy());
-        thermostat2.adjustTemperature();  // Sets to 18°C
-
-        thermostat2.setStrategy(new ComfortModeStrategy());
-        thermostat2.adjustTemperature();  // Sets to 22°C
-
-        //Koniec Tydzien 5, Wzorzec Strategy 1
-        
-        System.out.println(SEPARATOR);
-        
-        //Tydzień 5, Wzorzec Strategy 2
-        System.out.println("Wzorzec Strategy 2");
-        SmartSpeakerSystem speakerSystem = new SmartSpeakerSystem();
-        SmartSpeaker strategySpeaker = speakerSystem.installSpeaker("Living Room", "Echo Dot", "Amazon", true);
-
-        strategySpeaker.setStrategy(new LofiModeSpeaker());
-        strategySpeaker.playPlaylist();
-
-        strategySpeaker.setStrategy(new PartyModeSpeaker());
-        strategySpeaker.playPlaylist();
-        //Koniec Tydzien 5, Wzorzec Strategy 2
-        
-        System.out.println(SEPARATOR);
-        
-        //Tydzień 5, Wzorzec Strategy 3
-        System.out.println("Wzorzec Strategy 3");
-        BrightnessStrategy ecoMode = new EnergySavingStrategy();
-        BrightnessStrategy partyMode = new FullBrightnessStrategy();
-
-        light.turnOn();
-        ((Light) light).applyBrightnessStrategy(ecoMode);
-        System.out.println(light.getStatus());
-
-        ((Light) light).applyBrightnessStrategy(partyMode);
-        System.out.println(light.getStatus());
-        
-        System.out.println(SEPARATOR);
-        
-        //Tydzień 5, Wzorzec Template 1
-        System.out.println("Wzorzec Template 1");
-        SmartSpeaker speaker = new SmartSpeaker(SpeakerFactory.getSpeakerType("Echo Dot", "Amazon", true), "Living Room");
-        FirmwareUpdateTemplate speakerUpdate = new SmartSpeakerFirmwareUpdate(speaker);
-        speakerUpdate.performFirmwareUpdate();
-
-        FirmwareUpdateTemplate cameraUpdate = new SecurityCameraFirmwareUpdate(camera);
-        cameraUpdate.performFirmwareUpdate();
-        //Koniec Tydzien 5, Wzorzec Template 1
+        // Koniec Tydzień 6, Wzorzec Visitor 2
 
         System.out.println(SEPARATOR);
 
-        //Tydzień 5, Wzorzec Template 2
-        System.out.println("Wzorzec Template 2");
+        // Tydzień 6, Wzorzec Visitor 3
+        System.out.println("Wzorzec Visitor 3");
 
-        System.out.println("\nNight Mode Check:");
-        SecurityCheck nightCheck = new NightSecurityCheck();
-        nightCheck.performSecurityCheck();
-
-        System.out.println("\nAway Security Check:");
-        SecurityCheck awayCheck = new AwaySecurityCheck();
-        awayCheck.performSecurityCheck();
-
-        //Koniec Tydzien 5, Wzorzec Template 2
+        // Koniec Tydzień 6, Wzorzec Visitor 3
 
         System.out.println(SEPARATOR);
 
-        //Tydzien 5, Wzorzec Template 3
-        System.out.println("Wzorzec Template 3");
+        // Tydzień 6, SOLID - Single-Responsibility 1
+        System.out.println("SOLID - Single-Responsibility 1");
 
-        LightingDevice livingRoomLight = new Light();
-        DeviceRoutine lightingRoutine = new EveningLightingRoutine(livingRoomLight);
-        lightingRoutine.executeRoutine();
-        System.out.println(livingRoomLight.getStatus());
+        // Koniec Tydzień 6, SOLID - Single-Responsibility 1
 
-        DeviceRoutine securityRoutine = new NightSecurityRoutine(camera);
-        securityRoutine.executeRoutine();
-        System.out.println(camera.getStatus());
+        System.out.println(SEPARATOR);
 
-        //Koniec Tydzien 5, Wzorzec Template 3
+        // Tydzień 6, SOLID - Single-Responsibility 2
+        System.out.println("SOLID - Single-Responsibility 2");
+
+        // Koniec Tydzień 6, SOLID - Single-Responsibility 2
+
+        System.out.println(SEPARATOR);
+
+        // Tydzień 6, SOLID - Single-Responsibility 3
+        System.out.println("SOLID - Single-Responsibility 3");
+
+        // Koniec Tydzień 6, SOLID - Single-Responsibility 3
+
+        System.out.println(SEPARATOR);
+
+        // Tydzień 6, SOLID - Open-Close 1
+        System.out.println("SOLID - Open-Close 1");
+
+        // Koniec Tydzień 6, SOLID - Open-Close 1
+
+        System.out.println(SEPARATOR);
+
+        // Tydzień 6, SOLID - Open-Close 2
+        System.out.println("SOLID - Open-Close 2");
+
+        // Koniec Tydzień 6, SOLID - Open-Close 2
+
+        System.out.println(SEPARATOR);
+
+        // Tydzień 6, SOLID - Open-Close 3
+        System.out.println("SOLID - Open-Close 3");
+
+        // Koniec Tydzień 6, SOLID - Open-Close 3
     }
 }
 
@@ -896,6 +773,168 @@ private void tydzien4(){
         System.out.println("\n");
         // Koniec Tydzien 4, Wzorzec Mediator Mediator
 
+        //Tydzień 5, Wzorzec Observer 1
+        System.out.println("Wzorzec Observer 1");
+        var thermostat = new Thermostat();
+        thermostat.registerObserver(new CoolingSystem());
+        thermostat.registerObserver(new HeatingSystem());
 
-}
-    */
+        thermostat.setTemperature(30);
+        thermostat.setTemperature(19);
+
+        //Koniec Tydzien 5, Wzorzec Observer 1
+
+        System.out.println(SEPARATOR);
+
+        //Tydzień 5, Wzorzec Observer 2
+        System.out.println("Wzorzec Observer 2");
+        BatterySubject batterySensor = new BatterySubject();
+        BatteryWarningDisplay display = new BatteryWarningDisplay();
+
+        batterySensor.registerObserver(display);
+
+        batterySensor.setBatteryLevel(15);  // Should trigger a low battery warning
+        batterySensor.setBatteryLevel(80);  // Should indicate a stable battery level
+
+        //Koniec Tydzien 5, Wzorzec Observer 2
+
+        //Tydzień 5, Wzorzec Observer 3
+        System.out.println(SEPARATOR);
+        System.out.println("Wzorzec Observer 3");
+
+        Light light = new Light();
+        SecurityCamera camera = new SecurityCamera();
+        MotionSensor sensor = new MotionSensor("Video motion sensor","Xiaomi","high sensitive");
+
+        sensor.registerObserver(camera);
+        sensor.registerObserver(light);
+
+        sensor.triggerAlarm("Backdoor");
+
+        System.out.println(light.getStatus());
+        System.out.println(camera.getStatus());
+
+        //Koniec Tydzien 5, Wzorzec Observer 3
+
+        System.out.println(SEPARATOR);
+
+        //Tydzień 5, Wzorzec State 1
+        System.out.println("Wzorzec State 1");
+        NotificationGroup notificationGroup = new NotificationGroup();
+        notificationGroup.addNotification(Notificator.create(NotificationChannels.App));
+
+        SecurityAlarm alarm = new SecurityAlarm(notificationGroup);
+        alarm.arm();
+        alarm.trigger();
+        alarm.disarm();
+        System.out.println(alarm.getStatus());
+        //Koniec Tydzien 5, Wzorzec State 1
+
+        System.out.println(SEPARATOR);
+
+        //Tydzień 5, Wzorzec State 2
+        System.out.println("Wzorzec State 2");
+        Sprinkler sprinkler = new Sprinkler();
+
+        sprinkler.startWatering();
+        sprinkler.turnOffSprinkler();
+        //Koniec Tydzien 5, Wzorzec State 2
+
+        System.out.println(SEPARATOR);
+
+        //Tydzień 5, Wzorzec State 3
+        System.out.println("Wzorzec State 3");
+        SmartLock frontDoorLock = new SmartLock("Front Door Lock", 101);
+        System.out.println(frontDoorLock.getStatus());
+        frontDoorLock.unlock();
+        System.out.println(frontDoorLock.getStatus());
+        frontDoorLock.lock();
+        System.out.println(frontDoorLock.getStatus());
+
+        //Koniec Tydzien 5, Wzorzec State 3
+
+        System.out.println(SEPARATOR);
+
+        //Tydzień 5, Wzorzec Strategy 1
+        System.out.println("Wzorzec Strategy 1");
+        Thermostat thermostat2 = new Thermostat();
+        thermostat2.setStrategy(new EcoModeStrategy());
+        thermostat2.adjustTemperature();  // Sets to 18°C
+
+        thermostat2.setStrategy(new ComfortModeStrategy());
+        thermostat2.adjustTemperature();  // Sets to 22°C
+
+        //Koniec Tydzien 5, Wzorzec Strategy 1
+
+        System.out.println(SEPARATOR);
+
+        //Tydzień 5, Wzorzec Strategy 2
+        System.out.println("Wzorzec Strategy 2");
+        SmartSpeakerSystem speakerSystem = new SmartSpeakerSystem();
+        SmartSpeaker strategySpeaker = speakerSystem.installSpeaker("Living Room", "Echo Dot", "Amazon", true);
+
+        strategySpeaker.setStrategy(new LofiModeSpeaker());
+        strategySpeaker.playPlaylist();
+
+        strategySpeaker.setStrategy(new PartyModeSpeaker());
+        strategySpeaker.playPlaylist();
+        //Koniec Tydzien 5, Wzorzec Strategy 2
+
+        System.out.println(SEPARATOR);
+
+        //Tydzień 5, Wzorzec Strategy 3
+        System.out.println("Wzorzec Strategy 3");
+        BrightnessStrategy ecoMode = new EnergySavingStrategy();
+        BrightnessStrategy partyMode = new FullBrightnessStrategy();
+
+        light.turnOn();
+        ((Light) light).applyBrightnessStrategy(ecoMode);
+        System.out.println(light.getStatus());
+
+        ((Light) light).applyBrightnessStrategy(partyMode);
+        System.out.println(light.getStatus());
+
+        System.out.println(SEPARATOR);
+
+        //Tydzień 5, Wzorzec Template 1
+        System.out.println("Wzorzec Template 1");
+        SmartSpeaker speaker = new SmartSpeaker(SpeakerFactory.getSpeakerType("Echo Dot", "Amazon", true), "Living Room");
+        FirmwareUpdateTemplate speakerUpdate = new SmartSpeakerFirmwareUpdate(speaker);
+        speakerUpdate.performFirmwareUpdate();
+
+        FirmwareUpdateTemplate cameraUpdate = new SecurityCameraFirmwareUpdate(camera);
+        cameraUpdate.performFirmwareUpdate();
+        //Koniec Tydzien 5, Wzorzec Template 1
+
+        System.out.println(SEPARATOR);
+
+        //Tydzień 5, Wzorzec Template 2
+        System.out.println("Wzorzec Template 2");
+
+        System.out.println("\nNight Mode Check:");
+        SecurityCheck nightCheck = new NightSecurityCheck();
+        nightCheck.performSecurityCheck();
+
+        System.out.println("\nAway Security Check:");
+        SecurityCheck awayCheck = new AwaySecurityCheck();
+        awayCheck.performSecurityCheck();
+
+        //Koniec Tydzien 5, Wzorzec Template 2
+
+        System.out.println(SEPARATOR);
+
+        //Tydzien 5, Wzorzec Template 3
+        System.out.println("Wzorzec Template 3");
+
+        LightingDevice livingRoomLight = new Light();
+        DeviceRoutine lightingRoutine = new EveningLightingRoutine(livingRoomLight);
+        lightingRoutine.executeRoutine();
+        System.out.println(livingRoomLight.getStatus());
+
+        DeviceRoutine securityRoutine = new NightSecurityRoutine(camera);
+        securityRoutine.executeRoutine();
+        System.out.println(camera.getStatus());
+
+        //Koniec Tydzien 5, Wzorzec Template 3
+    }
+ */
