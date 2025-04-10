@@ -4,6 +4,7 @@ import devices.impl.AbstractSmartDevice;
 import devices.impl.SmartDevice;
 import devices.impl.lighting.BasicLight;
 import devices.mediator.Mediator;
+import devices.visitor.SmartDeviceVisitor;
 import util.SmartLogger;
 
 //Tydzień 2, Wzorzec Adapter 1
@@ -44,6 +45,11 @@ public class ExternalBasicLightAdapter extends AbstractSmartDevice implements Sm
         if(event.equals("EXTERNAL_LIGHT_ON")){
             turnOn();
         }
+    }
+    @Override
+    public void acceptVisitor(SmartDeviceVisitor visitor)
+    {
+        visitor.visit(this);
     }
 }
 //Koniec Tydzień 2, Adapter 1

@@ -2,6 +2,7 @@ package devices.impl;
 
 import devices.configs.SmartPlugConfig;
 import devices.mediator.Mediator;
+import devices.visitor.SmartDeviceVisitor;
 import util.DeviceManager;
 
 // Tydzień 1, Wzorzec Prototype 1
@@ -49,5 +50,12 @@ public class SmartPlug extends AbstractSmartDevice implements SmartDevice, Clone
             throw new AssertionError("Cloning not supported");
         }
     }
+
+    @Override
+    public void acceptVisitor(SmartDeviceVisitor visitor)
+    {
+        visitor.visit(this);
+    }
+
 }
 // Koniec, Tydzień 1, Wzorzec Prototype 1

@@ -4,6 +4,7 @@ import devices.impl.AbstractSmartDevice;
 import devices.impl.SmartDevice;
 import devices.impl.Thermostat;
 import devices.mediator.Mediator;
+import devices.visitor.SmartDeviceVisitor;
 import util.SmartLogger;
 
 //Tydzień 2, Wzorzec Adapter 3
@@ -44,6 +45,12 @@ public class ExternalThermostatAdapter extends AbstractSmartDevice implements Sm
         if(event.equals("EXTERNAL_THERMOSTAT_ON")){
             turnOn();
         }
+    }
+
+    @Override
+    public void acceptVisitor(SmartDeviceVisitor visitor)
+    {
+        visitor.visit(this);
     }
 }
 //Koniec Tydzień 2, Wzorzec Adapter 1

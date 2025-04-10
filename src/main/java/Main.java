@@ -1,6 +1,19 @@
+import devices.adapter.ExternalThermostatAdapter;
+import devices.impl.AbstractSmartDevice;
+import devices.impl.SmartPlug;
+import devices.impl.Thermostat;
+import devices.impl.lighting.Light;
+import devices.impl.security.SecurityCamera;
 import devices.impl.security.lockingsystem.Blind;
 import devices.impl.security.lockingsystem.BlindType;
+import devices.impl.speakers.SmartSpeaker;
+import devices.impl.speakers.SpeakerFactory;
 import devices.memento.BlindsCaretaker;
+import devices.visitor.StatusReportVisitor;
+import home.SmartHome;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class Main
 {
@@ -38,7 +51,33 @@ public class Main
 
         // Tydzień 6, Wzorzec Visitor 1
         System.out.println("Wzorzec Visitor 1");
+        StatusReportVisitor visitor = new StatusReportVisitor();
+        Light light1 = new Light();
+        Thermostat thermostat1 = new Thermostat();
+        ExternalThermostatAdapter eta1 = new ExternalThermostatAdapter(thermostat1);
+        SecurityCamera camera1 = new SecurityCamera();
+        SmartPlug plug1 = new SmartPlug();
 
+        //Metoda 1
+        List<AbstractSmartDevice> abstractSmartDevices = Arrays.asList(light1, thermostat1, eta1, camera1, plug1);
+        for (var device: abstractSmartDevices)
+        {
+            device.acceptVisitor(visitor);
+        }
+        System.out.println(SEPARATOR);
+        // Metoda 2
+        SmartSpeaker speaker1 = new SmartSpeaker(SpeakerFactory.getSpeakerType("Echo Dot", "Amazon", true), "Lokalizacja 1");
+        //SmartSpeaker nie dziedziczy po AbstractSmartDevice, więc SmartHome nie pozwoli, aby visitor do niego dotarł
+        SmartHome home = new SmartHome.Builder("Dom 1")
+                .location("Nadbystrzycka")
+                .addDevice(light1)
+                .addDevice(thermostat1)
+                .addDevice(eta1)
+                .addDevice(camera1)
+                .addDevice(plug1)
+                .addDevice(speaker1)
+                .build();
+        home.acceptVisitor(visitor);
         // Koniec Tydzień 6, Wzorzec Visitor 1
 
         System.out.println(SEPARATOR);

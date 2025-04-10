@@ -4,6 +4,7 @@ import devices.impl.AbstractSmartDevice;
 import devices.impl.security.ExternalSecurityCamera;
 import devices.impl.security.SecurityCameraDevice;
 import devices.mediator.Mediator;
+import devices.visitor.SmartDeviceVisitor;
 
 
 //Tydzień 2, Wzorzec Adapter 2
@@ -72,6 +73,12 @@ public class ExternalSecurityCameraAdapter extends AbstractSmartDevice implement
     @Override
     public boolean isAutoRecordingEnabled() {
         return device.isAutoRecording();
+    }
+
+    @Override
+    public void acceptVisitor(SmartDeviceVisitor visitor)
+    {
+        visitor.visit(this);
     }
 }
 

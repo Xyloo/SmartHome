@@ -5,6 +5,7 @@ import devices.configs.LightConfig;
 import devices.mediator.Mediator;
 import devices.observer.Observer;
 import devices.strategy.lighting.BrightnessStrategy;
+import devices.visitor.SmartDeviceVisitor;
 import util.DeviceManager;
 
 public class Light extends AbstractSmartDevice implements LightingDevice, Observer {
@@ -65,6 +66,12 @@ public class Light extends AbstractSmartDevice implements LightingDevice, Observ
 
     public void applyBrightnessStrategy(BrightnessStrategy strategy) {
         strategy.apply(this);
+    }
+
+    @Override
+    public void acceptVisitor(SmartDeviceVisitor visitor)
+    {
+        visitor.visit(this);
     }
 }
 

@@ -1,8 +1,8 @@
 package devices.state.lockings;
 
 import devices.impl.AbstractSmartDevice;
-import devices.impl.security.lockingsystem.LockingSystemDevice;
 import devices.mediator.Mediator;
+import devices.visitor.SmartDeviceVisitor;
 
 public class SmartLock extends AbstractSmartDevice implements Lockable {
     private LockState state;
@@ -41,5 +41,11 @@ public class SmartLock extends AbstractSmartDevice implements Lockable {
     @Override
     public void Handle(String event) {
 
+    }
+
+    @Override
+    public void acceptVisitor(SmartDeviceVisitor visitor)
+    {
+        visitor.visit(this);
     }
 }

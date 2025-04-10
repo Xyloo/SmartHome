@@ -4,6 +4,7 @@ import devices.impl.AbstractSmartDevice;
 import devices.configs.SecurityCameraConfig;
 import devices.mediator.Mediator;
 import devices.observer.Observer;
+import devices.visitor.SmartDeviceVisitor;
 import util.DeviceManager;
 
 import java.util.UUID;
@@ -99,6 +100,12 @@ public class SecurityCamera extends AbstractSmartDevice implements SecurityCamer
             turnOn();
             startRecording();
         }
+    }
+
+    @Override
+    public void acceptVisitor(SmartDeviceVisitor visitor)
+    {
+        visitor.visit(this);
     }
 }
 

@@ -1,6 +1,7 @@
 package devices.impl.lighting;
 
-import java.awt.*;
+import devices.visitor.SmartDeviceVisitor;
+
 
 public class ColorLight extends Light implements ColorLightingDevice {
     private String color;
@@ -12,7 +13,7 @@ public class ColorLight extends Light implements ColorLightingDevice {
 
     @Override
     public void setColor(String color) {
-        color = color.toLowerCase();
+        this.color = color.toLowerCase();
     }
 
     @Override
@@ -23,5 +24,11 @@ public class ColorLight extends Light implements ColorLightingDevice {
     @Override
     public String getStatus(){
         return super.getStatus() + ", Color: " + color;
+    }
+
+    @Override
+    public void acceptVisitor(SmartDeviceVisitor visitor)
+    {
+        visitor.visit(this);
     }
 }

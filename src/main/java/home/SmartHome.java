@@ -1,6 +1,8 @@
 package home;
 
+import devices.impl.AbstractSmartDevice;
 import devices.impl.SmartDevice;
+import devices.visitor.SmartDeviceVisitor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,6 +62,15 @@ public class SmartHome {
                 ", location='" + location + '\'' +
                 ", devices=" + devices.size() +
                 '}';
+    }
+
+    public void acceptVisitor(SmartDeviceVisitor visitor)
+    {
+        var abstractSmartDevices = getDevicesOfType(AbstractSmartDevice.class);
+        for (var device : abstractSmartDevices)
+        {
+            device.acceptVisitor(visitor);
+        }
     }
 }
 // Koniec, Tydzień 1, Wzorzec Builder 1

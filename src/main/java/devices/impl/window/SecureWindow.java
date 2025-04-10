@@ -4,10 +4,8 @@ import devices.impl.AbstractSmartDevice;
 import devices.impl.SmartDevice;
 import devices.impl.security.lockingsystem.Blind;
 import devices.impl.security.lockingsystem.BlindType;
-import devices.impl.security.lockingsystem.SmartBlind;
 import devices.mediator.Mediator;
-
-import javax.print.attribute.standard.Media;
+import devices.visitor.SmartDeviceVisitor;
 
 public class SecureWindow extends AbstractSmartDevice implements SmartDevice {
     private final Blind blind;
@@ -52,5 +50,11 @@ public class SecureWindow extends AbstractSmartDevice implements SmartDevice {
             locked = false;
             turnOn();
         }
+    }
+
+    @Override
+    public void acceptVisitor(SmartDeviceVisitor visitor)
+    {
+        visitor.visit(this);
     }
 }

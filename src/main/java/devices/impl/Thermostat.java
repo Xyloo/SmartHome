@@ -4,6 +4,7 @@ import devices.mediator.Mediator;
 import devices.observer.Observer;
 import devices.observer.Subject;
 import devices.strategy.TemperatureControlStrategy;
+import devices.visitor.SmartDeviceVisitor;
 import util.SmartLogger;
 
 import java.util.ArrayList;
@@ -85,5 +86,11 @@ public class Thermostat extends AbstractSmartDevice implements SmartDevice, Subj
         }
     }
     // Koniec Tydzień 5, Wzorzec Strategy 1
+
+    @Override
+    public void acceptVisitor(SmartDeviceVisitor visitor)
+    {
+        visitor.visit(this);
+    }
 }
 

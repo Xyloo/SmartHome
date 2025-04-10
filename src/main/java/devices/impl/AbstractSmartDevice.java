@@ -1,5 +1,7 @@
 package devices.impl;
 
+import devices.visitor.SmartDeviceVisitor;
+
 import java.util.UUID;
 
 public abstract class AbstractSmartDevice implements SmartDevice {
@@ -52,4 +54,8 @@ public abstract class AbstractSmartDevice implements SmartDevice {
     public void setLocationId(int locationId) {
         this.locationId = locationId;
     }
+
+    // Tydzień 6, Wzorzec Visitor 1
+    public abstract void acceptVisitor(SmartDeviceVisitor visitor);
+    // Koniec Tydzień 6, Wzorzec Visitor 1
 }

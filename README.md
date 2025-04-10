@@ -70,19 +70,25 @@
 ### Observer
 - devices.impl.Thermostat: 53-70
 - devices.observer.BatteryWarningDisplay: 1-14
-- 
+- devices.impl.security.sensors.MotionSensor: 59-81
 ### State
 - devices.state.AlarmState: 1-10, devices.impl.SecurityAlarm: 51-66
 - devices.impl.sprinklers.Sprinkler: 5-24
-- 
+- devices.state.lockings.LockedState: 1-20
 ### Strategy
 - devices.impl.Thermostat: 75-87
 - devices.impl.speakers.SmartSpeaker: 24-36
-- 
+- devices.impl.lighting.Light: 66-69
 ### Template
 - devices.template.FirmwareUpdateTemplate: 1-31
 - devices.impl.security.checks.SecurityCheck: 4-32
-
+- devices.template.EveningLightningRoutine: 1-18
 # Tydzień 6
-### Memento
+## Memento
 - devices.memento.BlindMemento:1-21
+-
+-
+## Visitor
+- devices.visitor.SmartDeviceVisitor: 1-28, devices.impl.AbstractSmartDevice: 58-60, devices.visitor.StatusReportVisitor: 1-80
+-
+- 
