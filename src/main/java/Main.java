@@ -6,6 +6,7 @@ import devices.impl.SmartDevice;
 import devices.impl.Thermostat;
 import devices.impl.lighting.Light;
 import devices.impl.lighting.LightingDevice;
+import devices.impl.security.SecurityCameraDevice;
 import devices.impl.security.checks.AwaySecurityCheck;
 import devices.impl.security.checks.NightSecurityCheck;
 import devices.impl.security.checks.SecurityCheck;
@@ -24,7 +25,13 @@ import devices.strategy.ComfortModeStrategy;
 import devices.strategy.EcoModeStrategy;
 import devices.strategy.LofiModeSpeaker;
 import devices.strategy.PartyModeSpeaker;
+import devices.strategy.lighting.BrightnessStrategy;
+import devices.strategy.lighting.EnergySavingStrategy;
+import devices.strategy.lighting.FullBrightnessStrategy;
+import devices.template.DeviceRoutine;
+import devices.template.EveningLightingRoutine;
 import devices.template.FirmwareUpdateTemplate;
+import devices.template.NightSecurityRoutine;
 import notifications.NotificationChannels;
 import notifications.NotificationGroup;
 import notifications.Notificator;
@@ -146,7 +153,15 @@ public class Main
         
         //Tydzień 5, Wzorzec Strategy 3
         System.out.println("Wzorzec Strategy 3");
-        //Koniec Tydzien 5, Wzorzec Strategy 3
+        BrightnessStrategy ecoMode = new EnergySavingStrategy();
+        BrightnessStrategy partyMode = new FullBrightnessStrategy();
+
+        light.turnOn();
+        ((Light) light).applyBrightnessStrategy(ecoMode);
+        System.out.println(light.getStatus());
+
+        ((Light) light).applyBrightnessStrategy(partyMode);
+        System.out.println(light.getStatus());
         
         System.out.println(SEPARATOR);
         
@@ -179,6 +194,16 @@ public class Main
 
         //Tydzien 5, Wzorzec Template 3
         System.out.println("Wzorzec Template 3");
+
+        LightingDevice livingRoomLight = new Light();
+        DeviceRoutine lightingRoutine = new EveningLightingRoutine(livingRoomLight);
+        lightingRoutine.executeRoutine();
+        System.out.println(livingRoomLight.getStatus());
+
+        DeviceRoutine securityRoutine = new NightSecurityRoutine(camera);
+        securityRoutine.executeRoutine();
+        System.out.println(camera.getStatus());
+
         //Koniec Tydzien 5, Wzorzec Template 3
     }
 }
