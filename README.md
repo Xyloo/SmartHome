@@ -82,4 +82,7 @@
 ### Template
 - devices.template.FirmwareUpdateTemplate: 1-31
 - devices.impl.security.checks.SecurityCheck: 4-32
-- 
+
+# Tydzień 6
+### Memento
+- devices.memento.BlindMemento:1-21

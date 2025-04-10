@@ -1,3 +1,7 @@
+import devices.impl.security.lockingsystem.Blind;
+import devices.impl.security.lockingsystem.BlindType;
+import devices.memento.BlindsCaretaker;
+
 public class Main
 {
     private static final String SEPARATOR = "----------------------------------------";
@@ -5,6 +9,16 @@ public class Main
     public static void main(String[] args) {
         // Tydzień 6, Wzorzec Memento 1
         System.out.println("Wzorzec Memento 1");
+        BlindsCaretaker caretaker = new BlindsCaretaker();
+        Blind blind = new Blind(new BlindType("white", "Day-Night", ""),"Kitchen");
+        caretaker.save(blind);
+
+        blind.info();
+        blind.setState(45,"manual");
+        blind.info();
+
+        caretaker.undo(blind);
+        blind.info();
         // Koniec Tydzień 6, Wzorzec Memento 1
 
         System.out.println(SEPARATOR);
