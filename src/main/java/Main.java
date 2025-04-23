@@ -10,6 +10,7 @@ import devices.impl.speakers.SmartSpeaker;
 import devices.impl.speakers.SpeakerFactory;
 import devices.memento.BlindsCaretaker;
 import devices.memento.ThermostatMemento;
+import devices.visitor.DeviceResetVisitor;
 import devices.visitor.StatusReportVisitor;
 import devices.visitor.TurnOnVisitor;
 import home.SmartHome;
@@ -106,6 +107,16 @@ public class Main
 
         // Tydzień 6, Wzorzec Visitor 3
         System.out.println("Wzorzec Visitor 3");
+        DeviceResetVisitor resetVisitor = new DeviceResetVisitor();
+        for (var device: abstractSmartDevices)
+        {
+            device.acceptVisitor(resetVisitor);
+        }
+
+        for (var device: abstractSmartDevices)
+        {
+            System.out.println(device.getStatus());
+        }
 
         // Koniec Tydzień 6, Wzorzec Visitor 3
 
