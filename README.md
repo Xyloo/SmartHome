@@ -90,5 +90,5 @@
 -
 ## Visitor
 - devices.visitor.SmartDeviceVisitor: 1-28, devices.impl.AbstractSmartDevice: 58-60, devices.visitor.StatusReportVisitor: 1-80
--
+- devices.visitor.TurnOnVisitor: 1-80
 - 

@@ -11,6 +11,7 @@ import devices.impl.speakers.SpeakerFactory;
 import devices.memento.BlindsCaretaker;
 import devices.memento.ThermostatMemento;
 import devices.visitor.StatusReportVisitor;
+import devices.visitor.TurnOnVisitor;
 import home.SmartHome;
 
 import java.util.Arrays;
@@ -94,7 +95,11 @@ public class Main
 
         // Tydzień 6, Wzorzec Visitor 2
         System.out.println("Wzorzec Visitor 2");
-
+        TurnOnVisitor visitor2 = new TurnOnVisitor();
+        for (var device: abstractSmartDevices)
+        {
+            device.acceptVisitor(visitor2);
+        }
         // Koniec Tydzień 6, Wzorzec Visitor 2
 
         System.out.println(SEPARATOR);
