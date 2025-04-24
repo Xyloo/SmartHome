@@ -18,6 +18,7 @@ import devices.visitor.DeviceResetVisitor;
 import devices.visitor.StatusReportVisitor;
 import devices.visitor.TurnOnVisitor;
 import home.SmartHome;
+import util.SmartLogger;
 
 import java.util.Arrays;
 import java.util.List;
@@ -57,6 +58,10 @@ public class Main
         // Koniec Tydzień 6, Wzorzec Memento 2
 
         System.out.println(SEPARATOR);
+
+        // Tydzień 6, Wzorzec Memento 3
+        System.out.println("Wzorzec Memento 3");
+
         SmartDevice light = DeviceFactory.createDevice("light");
         LightStateHistory history = new LightStateHistory();
 
@@ -73,9 +78,6 @@ public class Main
             ((Light)light).restore(previous);
             System.out.println("Restored: " + light.getStatus());
         }
-
-        // Tydzień 6, Wzorzec Memento 3
-        System.out.println("Wzorzec Memento 3");
 
         // Koniec Tydzień 6, Wzorzec Memento 3
 
@@ -144,7 +146,8 @@ public class Main
 
         // Tydzień 6, SOLID - Single-Responsibility 1
         System.out.println("SOLID - Single-Responsibility 1");
-
+        SmartLogger logger = SmartLogger.getInstance();
+        logger.log("SOLID - Single-Responsibility 1");
         // Koniec Tydzień 6, SOLID - Single-Responsibility 1
 
         System.out.println(SEPARATOR);
