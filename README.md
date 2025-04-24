@@ -87,8 +87,8 @@
 ## Memento
 - devices.memento.BlindMemento:1-21
 - devices.memento.ThermostatMemento: 1-20
--
+- devices.memento.LightMemento: 1-20
 ## Visitor
 - devices.visitor.SmartDeviceVisitor: 1-28, devices.impl.AbstractSmartDevice: 58-60, devices.visitor.StatusReportVisitor: 1-80
 - devices.visitor.TurnOnVisitor: 1-80
-- 
+- devices.visitor.DeviceResetVisitor: 1=81
