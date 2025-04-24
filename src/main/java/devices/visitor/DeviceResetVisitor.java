@@ -14,6 +14,7 @@ import devices.state.lockings.SmartLock;
 
 import java.awt.*;
 
+// Tydzień 6, Wzorzec Visitor 3
 public class DeviceResetVisitor implements SmartDeviceVisitor
 {
 
@@ -79,3 +80,4 @@ public class DeviceResetVisitor implements SmartDeviceVisitor
         thermostat.turnOff();
     }
 }
+// Koniec Tydzień 6, Wzorzec Visitor 3

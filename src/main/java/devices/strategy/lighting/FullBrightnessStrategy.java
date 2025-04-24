@@ -2,6 +2,7 @@ package devices.strategy.lighting;
 
 import devices.impl.lighting.LightingDevice;
 
+//Tydzień 5, Wzorzec Strategy 3
 public class FullBrightnessStrategy implements BrightnessStrategy {
     @Override
     public void apply(LightingDevice light) {
@@ -9,3 +10,4 @@ public class FullBrightnessStrategy implements BrightnessStrategy {
         System.out.println("Strategy: Set full brightness.");
     }
 }
+//Koniec Tydzień 5, Wzorzec Strategy 3
