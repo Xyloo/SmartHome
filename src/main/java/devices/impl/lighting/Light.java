@@ -3,6 +3,7 @@ package devices.impl.lighting;
 import devices.impl.AbstractSmartDevice;
 import devices.configs.LightConfig;
 import devices.mediator.Mediator;
+import devices.memento.LightMemento;
 import devices.observer.Observer;
 import devices.strategy.lighting.BrightnessStrategy;
 import devices.visitor.SmartDeviceVisitor;
@@ -73,5 +74,15 @@ public class Light extends AbstractSmartDevice implements LightingDevice, Observ
     {
         visitor.visit(this);
     }
+
+    public LightMemento save(){
+        return new LightMemento(isOn, brightness);
+    }
+
+    public void restore(LightMemento memento){
+        isOn = memento.isOn();
+        brightness = memento.getBrightness();
+    }
+
 }
 

@@ -1,5 +1,7 @@
 import devices.adapter.ExternalThermostatAdapter;
+import devices.factory.DeviceFactory;
 import devices.impl.AbstractSmartDevice;
+import devices.impl.SmartDevice;
 import devices.impl.SmartPlug;
 import devices.impl.Thermostat;
 import devices.impl.lighting.Light;
@@ -9,6 +11,8 @@ import devices.impl.security.lockingsystem.BlindType;
 import devices.impl.speakers.SmartSpeaker;
 import devices.impl.speakers.SpeakerFactory;
 import devices.memento.BlindsCaretaker;
+import devices.memento.LightMemento;
+import devices.memento.LightStateHistory;
 import devices.memento.ThermostatMemento;
 import devices.visitor.DeviceResetVisitor;
 import devices.visitor.StatusReportVisitor;
@@ -53,6 +57,22 @@ public class Main
         // Koniec Tydzień 6, Wzorzec Memento 2
 
         System.out.println(SEPARATOR);
+        SmartDevice light = DeviceFactory.createDevice("light");
+        LightStateHistory history = new LightStateHistory();
+
+        light.turnOn();
+        ((Light)light).setBrightness(100);
+        history.saveState(((Light)light).save());
+
+        ((Light)light).setBrightness(30);
+        light.turnOff();
+        System.out.println("Modified: " + light.getStatus());
+
+        LightMemento previous = history.undo();
+        if (previous != null) {
+            ((Light)light).restore(previous);
+            System.out.println("Restored: " + light.getStatus());
+        }
 
         // Tydzień 6, Wzorzec Memento 3
         System.out.println("Wzorzec Memento 3");
