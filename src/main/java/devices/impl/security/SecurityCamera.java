@@ -24,9 +24,6 @@ public class SecurityCamera extends AbstractSmartDevice implements SecurityCamer
         super(locationId);
     }
 
-    //zmienic konstruktor ewentualnie oddzielna methoda wrzucajaca konfig oddzielnie
-    // do kazdego konstrutkora???
-
     @Override
     public void turnOff(){
         stopRecording();

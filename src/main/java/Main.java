@@ -1,26 +1,43 @@
 import devices.adapter.ExternalThermostatAdapter;
+import devices.composite.AbstractDeviceGroup;
+import devices.composite.LightingGroup;
+import devices.composite.SecurityGroup;
+import devices.configs.ConfigFactory;
+import devices.configs.DeviceConfig;
 import devices.factory.DeviceFactory;
 import devices.impl.AbstractSmartDevice;
 import devices.impl.SmartDevice;
 import devices.impl.SmartPlug;
 import devices.impl.Thermostat;
+import devices.impl.doors.Door;
+import devices.impl.lighting.ColorLight;
 import devices.impl.lighting.Light;
 import devices.impl.security.SecurityCamera;
 import devices.impl.security.lockingsystem.Blind;
 import devices.impl.security.lockingsystem.BlindType;
 import devices.impl.speakers.SmartSpeaker;
+import devices.impl.speakers.SmartSpeakerSystem;
 import devices.impl.speakers.SpeakerFactory;
+import devices.iterator.FilteringSmartDeviceIterator;
 import devices.memento.BlindsCaretaker;
 import devices.memento.LightMemento;
 import devices.memento.LightStateHistory;
 import devices.memento.ThermostatMemento;
+import devices.state.lockings.SmartLock;
+import devices.strategy.LofiModeSpeaker;
+import devices.strategy.PartyModeSpeaker;
+import devices.strategy.SpeakersModeStrategy;
 import devices.visitor.DeviceResetVisitor;
 import devices.visitor.StatusReportVisitor;
 import devices.visitor.TurnOnVisitor;
 import home.SmartHome;
+import notifications.*;
+import scenarios.actions.GenericDeviceAction;
 import util.SmartLogger;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
 public class Main
@@ -154,13 +171,28 @@ public class Main
 
         // Tydzień 6, SOLID - Single-Responsibility 2
         System.out.println("SOLID - Single-Responsibility 2");
+        LightingGroup lightingGroup = new LightingGroup();
+        ColorLight colorLight = new ColorLight("red");
+        Light lightDevice = new Light();
+        lightingGroup.addDevice(colorLight);
+        lightingGroup.addDevice(lightDevice);
 
+        Iterator<SmartDevice> smartDeviceIterator = new FilteringSmartDeviceIterator(
+                lightingGroup.iterator(),
+                device -> device instanceof ColorLight
+        );
+
+        while (smartDeviceIterator.hasNext()) {
+            System.out.println(smartDeviceIterator.next().getStatus());
+        }
         // Koniec Tydzień 6, SOLID - Single-Responsibility 2
 
         System.out.println(SEPARATOR);
 
         // Tydzień 6, SOLID - Single-Responsibility 3
         System.out.println("SOLID - Single-Responsibility 3");
+        DeviceConfig deviceConfig = ConfigFactory.createConfig("light");
+        DeviceConfig smartPlugConfig = ConfigFactory.createConfig("smartPlug");
 
         // Koniec Tydzień 6, SOLID - Single-Responsibility 3
 
@@ -168,6 +200,9 @@ public class Main
 
         // Tydzień 6, SOLID - Open-Close 1
         System.out.println("SOLID - Open-Close 1");
+        GenericDeviceAction<Light> action = new GenericDeviceAction<>(light1, Light::turnOn);
+        action.execute();
+        light1.getStatus();
 
         // Koniec Tydzień 6, SOLID - Open-Close 1
 
@@ -175,6 +210,19 @@ public class Main
 
         // Tydzień 6, SOLID - Open-Close 2
         System.out.println("SOLID - Open-Close 2");
+        NotificationService notificationService = NotificationService.getInstance(NotificationChannels.App);
+        Notification notification = new Notification.NotificationBuilder("Uwaga! Wykryto niespodziewany ruch w salonie!")
+                .setPriority(1)
+                .setType("Warning")
+                .addTitle("Uwaga! Wykryto ruch!")
+                .build();
+        notificationService.Notify(notification);
+        NotificationGroup notificationGroup = new NotificationGroup();
+        notificationGroup.addNotification(Notificator.create(NotificationChannels.App));
+        notificationGroup.addNotification(Notificator.create(NotificationChannels.Sms));
+        notificationGroup.addNotification(Notificator.create(NotificationChannels.Email));
+
+        notificationGroup.send("Uwaga! Wykryto niespodziewany ruch w salonie!");
 
         // Koniec Tydzień 6, SOLID - Open-Close 2
 
@@ -182,6 +230,23 @@ public class Main
 
         // Tydzień 6, SOLID - Open-Close 3
         System.out.println("SOLID - Open-Close 3");
+        SmartSpeakerSystem speakerSystem = new SmartSpeakerSystem();
+        speakerSystem.installSpeaker("Living Room", "Echo Dot", "Amazon", true);
+        speakerSystem.installSpeaker("Kitchen", "Echo Dot", "Amazon", true);
+        speakerSystem.installSpeaker("Bedroom", "HomePod Mini", "Apple", false);
+        speakerSystem.installSpeaker("Bathroom", "Sonos One", "Sonos", true);
+        speakerSystem.installSpeaker("Garage", "Google Nest Mini", "Google", true);
+
+        List<SpeakersModeStrategy> strategies = new ArrayList<>();
+        strategies.add(new PartyModeSpeaker());
+        strategies.add(new LofiModeSpeaker());
+
+        speakerSystem.setStrategies(strategies);
+        speakerSystem.applyStrategies();
+        System.out.println(SEPARATOR);
+        speakerSystem.activatePartyMode();
+        System.out.println(SEPARATOR);
+        speakerSystem.setStrategyToAllSpeakers(new LofiModeSpeaker());
 
         // Koniec Tydzień 6, SOLID - Open-Close 3
     }
