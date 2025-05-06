@@ -1,3 +1,8 @@
+import devices.impl.SmartDevice;
+import devices.impl.Thermostat;
+import devices.impl.lighting.Light;
+import devices.visitor.SmartDeviceVisitor;
+
 public class Main
 {
     private static final String SEPARATOR = "----------------------------------------";
@@ -5,6 +10,11 @@ public class Main
     public static void main(String[] args) {
         // Tydzień 6, SOLID - Liskov Substitution 1
         System.out.println("SOLID - Liskov Substitution 1");
+        SmartDevice light = new Light();
+        SmartDevice thermostat = new Thermostat();
+
+        getDeviceStatus(light);
+        getDeviceStatus(thermostat);
 
         // Koniec Tydzień 6, SOLID - Liskov Substitution 1
 
@@ -51,6 +61,10 @@ public class Main
         System.out.println("SOLID - Dependency Inversion 3");
 
         // Koniec Tydzień 6, SOLID - Dependency Inversion 3
+    }
+    private static void getDeviceStatus(SmartDevice device){
+        System.out.println("Status: ");
+        System.out.println(device.getStatus());
     }
 }
 
