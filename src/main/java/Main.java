@@ -3,6 +3,9 @@ import devices.impl.SmartDevice;
 import devices.impl.Thermostat;
 import devices.impl.doors.Door;
 import devices.impl.lighting.Light;
+import devices.state.lockings.SmartLock;
+import devices.visitor.EnableSecurityVisitor;
+import devices.visitor.TurnOnVisitor;
 
 public class Main
 {
@@ -48,6 +51,14 @@ public class Main
 
         // Tydzień 7, SOLID - Interface Segregation 1
         System.out.println("SOLID - Interface Segregation 1");
+
+        SmartLock smartLock = new SmartLock("Front Door", 1);
+
+        EnableSecurityVisitor securityVisitor = new EnableSecurityVisitor();
+        smartLock.acceptVisitor(securityVisitor); // only security behavior is triggered
+
+        TurnOnVisitor turnOnVisitor = new TurnOnVisitor();
+        smartLock.acceptVisitor(turnOnVisitor);
 
         // Koniec Tydzień 7, SOLID - Interface Segregation 1
 

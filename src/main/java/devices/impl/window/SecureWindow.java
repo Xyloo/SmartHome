@@ -37,6 +37,18 @@ public class SecureWindow extends AbstractSmartDevice implements SmartDevice {
         this.mediator = mediator;
     }
 
+    public void lock() {
+        locked = true;
+        blind.close();
+        util.SmartLogger.getInstance().log("[SecureWindow] - Window locked");
+    }
+
+    public void unlock() {
+        locked = false;
+        blind.open();
+        util.SmartLogger.getInstance().log("[SecureWindow] - Window unlocked");
+    }
+
     @Override
     public void Handle(String event) {
         if(event.equals("activateSecurityMode")){
