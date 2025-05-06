@@ -1,14 +1,15 @@
+import devices.impl.AbstractSmartDevice;
 import devices.impl.SmartDevice;
 import devices.impl.Thermostat;
+import devices.impl.doors.Door;
 import devices.impl.lighting.Light;
-import devices.visitor.SmartDeviceVisitor;
 
 public class Main
 {
     private static final String SEPARATOR = "----------------------------------------";
 
     public static void main(String[] args) {
-        // Tydzień 6, SOLID - Liskov Substitution 1
+        // Tydzień 7, SOLID - Liskov Substitution 1
         System.out.println("SOLID - Liskov Substitution 1");
         SmartDevice light = new Light();
         SmartDevice thermostat = new Thermostat();
@@ -16,53 +17,81 @@ public class Main
         getDeviceStatus(light);
         getDeviceStatus(thermostat);
 
-        // Koniec Tydzień 6, SOLID - Liskov Substitution 1
+        // Koniec Tydzień 7, SOLID - Liskov Substitution 1
 
-        // Tydzień 6, SOLID - Liskov Substitution 2
+        System.out.println(SEPARATOR);
+
+        // Tydzień 7, SOLID - Liskov Substitution 2
         System.out.println("SOLID - Liskov Substitution 2");
+        Light light2 = new Light();
+        AbstractSmartDevice abstractSmartDevice = light2;
 
-        // Koniec Tydzień 6, SOLID - Liskov Substitution 2
+        getDeviceStatus(light2);
+        getDeviceStatus(abstractSmartDevice);
 
-        // Tydzień 6, SOLID - Liskov Substitution 3
+        Door door = new Door();
+        abstractSmartDevice = door;
+
+        getDeviceStatus(door);
+        getDeviceStatus(abstractSmartDevice);
+
+        // Koniec Tydzień 7, SOLID - Liskov Substitution 2
+
+        System.out.println(SEPARATOR);
+
+        // Tydzień 7, SOLID - Liskov Substitution 3
         System.out.println("SOLID - Liskov Substitution 3");
 
-        // Koniec Tydzień 6, SOLID - Liskov Substitution 3
+        // Koniec Tydzień 7, SOLID - Liskov Substitution 3
 
         System.out.println(SEPARATOR);
 
-        // Tydzień 6, SOLID - Interface Segregation 1
+        // Tydzień 7, SOLID - Interface Segregation 1
         System.out.println("SOLID - Interface Segregation 1");
 
-        // Koniec Tydzień 6, SOLID - Interface Segregation 1
-
-        // Tydzień 6, SOLID - Interface Segregation 2
-        System.out.println("SOLID - Interface Segregation 2");
-
-        // Koniec Tydzień 6, SOLID - Interface Segregation 2
-
-        // Tydzień 6, SOLID - Interface Segregation 3
-        System.out.println("SOLID - Interface Segregation 3");
-
-        // Koniec Tydzień 6, SOLID - Interface Segregation 3
+        // Koniec Tydzień 7, SOLID - Interface Segregation 1
 
         System.out.println(SEPARATOR);
 
-        // Tydzień 6, SOLID - Dependency Inversion 1
+        // Tydzień 7, SOLID - Interface Segregation 2
+        System.out.println("SOLID - Interface Segregation 2");
+
+        // Koniec Tydzień 7, SOLID - Interface Segregation 2
+
+        System.out.println(SEPARATOR);
+
+        // Tydzień 7, SOLID - Interface Segregation 3
+        System.out.println("SOLID - Interface Segregation 3");
+
+        // Koniec Tydzień 7, SOLID - Interface Segregation 3
+
+        System.out.println(SEPARATOR);
+
+        // Tydzień 7, SOLID - Dependency Inversion 1
         System.out.println("SOLID - Dependency Inversion 1");
 
-        // Koniec Tydzień 6, SOLID - Dependency Inversion 1
+        // Koniec Tydzień 7, SOLID - Dependency Inversion 1
 
-        // Tydzień 6, SOLID - Dependency Inversion 2
+        System.out.println(SEPARATOR);
+
+        // Tydzień 7, SOLID - Dependency Inversion 2
         System.out.println("SOLID - Dependency Inversion 2");
 
-        // Koniec Tydzień 6, SOLID - Dependency Inversion 2
+        // Koniec Tydzień 7, SOLID - Dependency Inversion 2
 
-        // Tydzień 6, SOLID - Dependency Inversion 3
+        System.out.println(SEPARATOR);
+
+        // Tydzień 7, SOLID - Dependency Inversion 3
         System.out.println("SOLID - Dependency Inversion 3");
 
-        // Koniec Tydzień 6, SOLID - Dependency Inversion 3
+        // Koniec Tydzień 7, SOLID - Dependency Inversion 3
     }
     private static void getDeviceStatus(SmartDevice device){
+        System.out.println("Status: ");
+        System.out.println(device.getStatus());
+    }
+
+    private static void getDeviceStatus(AbstractSmartDevice device){
         System.out.println("Status: ");
         System.out.println(device.getStatus());
     }
