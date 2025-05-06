@@ -1,254 +1,56 @@
-import devices.adapter.ExternalThermostatAdapter;
-import devices.composite.AbstractDeviceGroup;
-import devices.composite.LightingGroup;
-import devices.composite.SecurityGroup;
-import devices.configs.ConfigFactory;
-import devices.configs.DeviceConfig;
-import devices.factory.DeviceFactory;
-import devices.impl.AbstractSmartDevice;
-import devices.impl.SmartDevice;
-import devices.impl.SmartPlug;
-import devices.impl.Thermostat;
-import devices.impl.doors.Door;
-import devices.impl.lighting.ColorLight;
-import devices.impl.lighting.Light;
-import devices.impl.security.SecurityCamera;
-import devices.impl.security.lockingsystem.Blind;
-import devices.impl.security.lockingsystem.BlindType;
-import devices.impl.speakers.SmartSpeaker;
-import devices.impl.speakers.SmartSpeakerSystem;
-import devices.impl.speakers.SpeakerFactory;
-import devices.iterator.FilteringSmartDeviceIterator;
-import devices.memento.BlindsCaretaker;
-import devices.memento.LightMemento;
-import devices.memento.LightStateHistory;
-import devices.memento.ThermostatMemento;
-import devices.state.lockings.SmartLock;
-import devices.strategy.LofiModeSpeaker;
-import devices.strategy.PartyModeSpeaker;
-import devices.strategy.SpeakersModeStrategy;
-import devices.visitor.DeviceResetVisitor;
-import devices.visitor.StatusReportVisitor;
-import devices.visitor.TurnOnVisitor;
-import home.SmartHome;
-import notifications.*;
-import scenarios.actions.GenericDeviceAction;
-import util.SmartLogger;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
-
 public class Main
 {
     private static final String SEPARATOR = "----------------------------------------";
 
     public static void main(String[] args) {
-        // Tydzień 6, Wzorzec Memento 1
-        System.out.println("Wzorzec Memento 1");
-        BlindsCaretaker caretaker = new BlindsCaretaker();
-        Blind blind = new Blind(new BlindType("white", "Day-Night", ""),"Kitchen");
-        caretaker.save(blind);
+        // Tydzień 6, SOLID - Liskov Substitution 1
+        System.out.println("SOLID - Liskov Substitution 1");
 
-        blind.info();
-        blind.setState(45,"manual");
-        blind.info();
+        // Koniec Tydzień 6, SOLID - Liskov Substitution 1
 
-        caretaker.undo(blind);
-        blind.info();
-        // Koniec Tydzień 6, Wzorzec Memento 1
+        // Tydzień 6, SOLID - Liskov Substitution 2
+        System.out.println("SOLID - Liskov Substitution 2");
 
-        System.out.println(SEPARATOR);
+        // Koniec Tydzień 6, SOLID - Liskov Substitution 2
 
-        // Tydzień 6, Wzorzec Memento 2
-        System.out.println("Wzorzec Memento 2");
-        Thermostat thermostat = new Thermostat();
-        thermostat.turnOn();
-        thermostat.setTemperature(22);
-        ThermostatMemento thermostatMemento = thermostat.saveState();
+        // Tydzień 6, SOLID - Liskov Substitution 3
+        System.out.println("SOLID - Liskov Substitution 3");
 
-        thermostat.setTemperature(35);
-        System.out.println(thermostat.getStatus());
-
-        thermostat.restoreState(thermostatMemento);
-        // Koniec Tydzień 6, Wzorzec Memento 2
+        // Koniec Tydzień 6, SOLID - Liskov Substitution 3
 
         System.out.println(SEPARATOR);
 
-        // Tydzień 6, Wzorzec Memento 3
-        System.out.println("Wzorzec Memento 3");
+        // Tydzień 6, SOLID - Interface Segregation 1
+        System.out.println("SOLID - Interface Segregation 1");
 
-        SmartDevice light = DeviceFactory.createDevice("light");
-        LightStateHistory history = new LightStateHistory();
+        // Koniec Tydzień 6, SOLID - Interface Segregation 1
 
-        light.turnOn();
-        ((Light)light).setBrightness(100);
-        history.saveState(((Light)light).save());
+        // Tydzień 6, SOLID - Interface Segregation 2
+        System.out.println("SOLID - Interface Segregation 2");
 
-        ((Light)light).setBrightness(30);
-        light.turnOff();
-        System.out.println("Modified: " + light.getStatus());
+        // Koniec Tydzień 6, SOLID - Interface Segregation 2
 
-        LightMemento previous = history.undo();
-        if (previous != null) {
-            ((Light)light).restore(previous);
-            System.out.println("Restored: " + light.getStatus());
-        }
+        // Tydzień 6, SOLID - Interface Segregation 3
+        System.out.println("SOLID - Interface Segregation 3");
 
-        // Koniec Tydzień 6, Wzorzec Memento 3
+        // Koniec Tydzień 6, SOLID - Interface Segregation 3
 
         System.out.println(SEPARATOR);
 
-        // Tydzień 6, Wzorzec Visitor 1
-        System.out.println("Wzorzec Visitor 1");
-        StatusReportVisitor visitor = new StatusReportVisitor();
-        Light light1 = new Light();
-        Thermostat thermostat1 = new Thermostat();
-        ExternalThermostatAdapter eta1 = new ExternalThermostatAdapter(thermostat1);
-        SecurityCamera camera1 = new SecurityCamera();
-        SmartPlug plug1 = new SmartPlug();
+        // Tydzień 6, SOLID - Dependency Inversion 1
+        System.out.println("SOLID - Dependency Inversion 1");
 
-        //Metoda 1
-        List<AbstractSmartDevice> abstractSmartDevices = Arrays.asList(light1, thermostat1, eta1, camera1, plug1);
-        for (var device: abstractSmartDevices)
-        {
-            device.acceptVisitor(visitor);
-        }
-        System.out.println(SEPARATOR);
-        // Metoda 2
-        SmartSpeaker speaker1 = new SmartSpeaker(SpeakerFactory.getSpeakerType("Echo Dot", "Amazon", true), "Lokalizacja 1");
-        //SmartSpeaker nie dziedziczy po AbstractSmartDevice, więc SmartHome nie pozwoli, aby visitor do niego dotarł
-        SmartHome home = new SmartHome.Builder("Dom 1")
-                .location("Nadbystrzycka")
-                .addDevice(light1)
-                .addDevice(thermostat1)
-                .addDevice(eta1)
-                .addDevice(camera1)
-                .addDevice(plug1)
-                .addDevice(speaker1)
-                .build();
-        home.acceptVisitor(visitor);
-        // Koniec Tydzień 6, Wzorzec Visitor 1
+        // Koniec Tydzień 6, SOLID - Dependency Inversion 1
 
-        System.out.println(SEPARATOR);
+        // Tydzień 6, SOLID - Dependency Inversion 2
+        System.out.println("SOLID - Dependency Inversion 2");
 
-        // Tydzień 6, Wzorzec Visitor 2
-        System.out.println("Wzorzec Visitor 2");
-        TurnOnVisitor visitor2 = new TurnOnVisitor();
-        for (var device: abstractSmartDevices)
-        {
-            device.acceptVisitor(visitor2);
-        }
-        // Koniec Tydzień 6, Wzorzec Visitor 2
+        // Koniec Tydzień 6, SOLID - Dependency Inversion 2
 
-        System.out.println(SEPARATOR);
+        // Tydzień 6, SOLID - Dependency Inversion 3
+        System.out.println("SOLID - Dependency Inversion 3");
 
-        // Tydzień 6, Wzorzec Visitor 3
-        System.out.println("Wzorzec Visitor 3");
-        DeviceResetVisitor resetVisitor = new DeviceResetVisitor();
-        for (var device: abstractSmartDevices)
-        {
-            device.acceptVisitor(resetVisitor);
-        }
-
-        for (var device: abstractSmartDevices)
-        {
-            System.out.println(device.getStatus());
-        }
-
-        // Koniec Tydzień 6, Wzorzec Visitor 3
-
-        System.out.println(SEPARATOR);
-
-        // Tydzień 6, SOLID - Single-Responsibility 1
-        System.out.println("SOLID - Single-Responsibility 1");
-        SmartLogger logger = SmartLogger.getInstance();
-        logger.log("SOLID - Single-Responsibility 1");
-        // Koniec Tydzień 6, SOLID - Single-Responsibility 1
-
-        System.out.println(SEPARATOR);
-
-        // Tydzień 6, SOLID - Single-Responsibility 2
-        System.out.println("SOLID - Single-Responsibility 2");
-        LightingGroup lightingGroup = new LightingGroup();
-        ColorLight colorLight = new ColorLight("red");
-        Light lightDevice = new Light();
-        lightingGroup.addDevice(colorLight);
-        lightingGroup.addDevice(lightDevice);
-
-        Iterator<SmartDevice> smartDeviceIterator = new FilteringSmartDeviceIterator(
-                lightingGroup.iterator(),
-                device -> device instanceof ColorLight
-        );
-
-        while (smartDeviceIterator.hasNext()) {
-            System.out.println(smartDeviceIterator.next().getStatus());
-        }
-        // Koniec Tydzień 6, SOLID - Single-Responsibility 2
-
-        System.out.println(SEPARATOR);
-
-        // Tydzień 6, SOLID - Single-Responsibility 3
-        System.out.println("SOLID - Single-Responsibility 3");
-        DeviceConfig deviceConfig = ConfigFactory.createConfig("light");
-        DeviceConfig smartPlugConfig = ConfigFactory.createConfig("smartPlug");
-
-        // Koniec Tydzień 6, SOLID - Single-Responsibility 3
-
-        System.out.println(SEPARATOR);
-
-        // Tydzień 6, SOLID - Open-Close 1
-        System.out.println("SOLID - Open-Close 1");
-        GenericDeviceAction<Light> action = new GenericDeviceAction<>(light1, Light::turnOn);
-        action.execute();
-        light1.getStatus();
-
-        // Koniec Tydzień 6, SOLID - Open-Close 1
-
-        System.out.println(SEPARATOR);
-
-        // Tydzień 6, SOLID - Open-Close 2
-        System.out.println("SOLID - Open-Close 2");
-        NotificationService notificationService = NotificationService.getInstance(NotificationChannels.App);
-        Notification notification = new Notification.NotificationBuilder("Uwaga! Wykryto niespodziewany ruch w salonie!")
-                .setPriority(1)
-                .setType("Warning")
-                .addTitle("Uwaga! Wykryto ruch!")
-                .build();
-        notificationService.Notify(notification);
-        NotificationGroup notificationGroup = new NotificationGroup();
-        notificationGroup.addNotification(Notificator.create(NotificationChannels.App));
-        notificationGroup.addNotification(Notificator.create(NotificationChannels.Sms));
-        notificationGroup.addNotification(Notificator.create(NotificationChannels.Email));
-
-        notificationGroup.send("Uwaga! Wykryto niespodziewany ruch w salonie!");
-
-        // Koniec Tydzień 6, SOLID - Open-Close 2
-
-        System.out.println(SEPARATOR);
-
-        // Tydzień 6, SOLID - Open-Close 3
-        System.out.println("SOLID - Open-Close 3");
-        SmartSpeakerSystem speakerSystem = new SmartSpeakerSystem();
-        speakerSystem.installSpeaker("Living Room", "Echo Dot", "Amazon", true);
-        speakerSystem.installSpeaker("Kitchen", "Echo Dot", "Amazon", true);
-        speakerSystem.installSpeaker("Bedroom", "HomePod Mini", "Apple", false);
-        speakerSystem.installSpeaker("Bathroom", "Sonos One", "Sonos", true);
-        speakerSystem.installSpeaker("Garage", "Google Nest Mini", "Google", true);
-
-        List<SpeakersModeStrategy> strategies = new ArrayList<>();
-        strategies.add(new PartyModeSpeaker());
-        strategies.add(new LofiModeSpeaker());
-
-        speakerSystem.setStrategies(strategies);
-        speakerSystem.applyStrategies();
-        System.out.println(SEPARATOR);
-        speakerSystem.activatePartyMode();
-        System.out.println(SEPARATOR);
-        speakerSystem.setStrategyToAllSpeakers(new LofiModeSpeaker());
-
-        // Koniec Tydzień 6, SOLID - Open-Close 3
+        // Koniec Tydzień 6, SOLID - Dependency Inversion 3
     }
 }
 
@@ -1103,5 +905,211 @@ private void tydzien4(){
         System.out.println(camera.getStatus());
 
         //Koniec Tydzien 5, Wzorzec Template 3
+    }
+    private void tydzien6(){
+    / Tydzień 6, Wzorzec Memento 1
+        System.out.println("Wzorzec Memento 1");
+        BlindsCaretaker caretaker = new BlindsCaretaker();
+        Blind blind = new Blind(new BlindType("white", "Day-Night", ""),"Kitchen");
+        caretaker.save(blind);
+
+        blind.info();
+        blind.setState(45,"manual");
+        blind.info();
+
+        caretaker.undo(blind);
+        blind.info();
+        // Koniec Tydzień 6, Wzorzec Memento 1
+
+        System.out.println(SEPARATOR);
+
+        // Tydzień 6, Wzorzec Memento 2
+        System.out.println("Wzorzec Memento 2");
+        Thermostat thermostat = new Thermostat();
+        thermostat.turnOn();
+        thermostat.setTemperature(22);
+        ThermostatMemento thermostatMemento = thermostat.saveState();
+
+        thermostat.setTemperature(35);
+        System.out.println(thermostat.getStatus());
+
+        thermostat.restoreState(thermostatMemento);
+        // Koniec Tydzień 6, Wzorzec Memento 2
+
+        System.out.println(SEPARATOR);
+
+        // Tydzień 6, Wzorzec Memento 3
+        System.out.println("Wzorzec Memento 3");
+
+        SmartDevice light = DeviceFactory.createDevice("light");
+        LightStateHistory history = new LightStateHistory();
+
+        light.turnOn();
+        ((Light)light).setBrightness(100);
+        history.saveState(((Light)light).save());
+
+        ((Light)light).setBrightness(30);
+        light.turnOff();
+        System.out.println("Modified: " + light.getStatus());
+
+        LightMemento previous = history.undo();
+        if (previous != null) {
+            ((Light)light).restore(previous);
+            System.out.println("Restored: " + light.getStatus());
+        }
+
+        // Koniec Tydzień 6, Wzorzec Memento 3
+
+        System.out.println(SEPARATOR);
+
+        // Tydzień 6, Wzorzec Visitor 1
+        System.out.println("Wzorzec Visitor 1");
+        StatusReportVisitor visitor = new StatusReportVisitor();
+        Light light1 = new Light();
+        Thermostat thermostat1 = new Thermostat();
+        ExternalThermostatAdapter eta1 = new ExternalThermostatAdapter(thermostat1);
+        SecurityCamera camera1 = new SecurityCamera();
+        SmartPlug plug1 = new SmartPlug();
+
+        //Metoda 1
+        List<AbstractSmartDevice> abstractSmartDevices = Arrays.asList(light1, thermostat1, eta1, camera1, plug1);
+        for (var device: abstractSmartDevices)
+        {
+            device.acceptVisitor(visitor);
+        }
+        System.out.println(SEPARATOR);
+        // Metoda 2
+        SmartSpeaker speaker1 = new SmartSpeaker(SpeakerFactory.getSpeakerType("Echo Dot", "Amazon", true), "Lokalizacja 1");
+        //SmartSpeaker nie dziedziczy po AbstractSmartDevice, więc SmartHome nie pozwoli, aby visitor do niego dotarł
+        SmartHome home = new SmartHome.Builder("Dom 1")
+                .location("Nadbystrzycka")
+                .addDevice(light1)
+                .addDevice(thermostat1)
+                .addDevice(eta1)
+                .addDevice(camera1)
+                .addDevice(plug1)
+                .addDevice(speaker1)
+                .build();
+        home.acceptVisitor(visitor);
+        // Koniec Tydzień 6, Wzorzec Visitor 1
+
+        System.out.println(SEPARATOR);
+
+        // Tydzień 6, Wzorzec Visitor 2
+        System.out.println("Wzorzec Visitor 2");
+        TurnOnVisitor visitor2 = new TurnOnVisitor();
+        for (var device: abstractSmartDevices)
+        {
+            device.acceptVisitor(visitor2);
+        }
+        // Koniec Tydzień 6, Wzorzec Visitor 2
+
+        System.out.println(SEPARATOR);
+
+        // Tydzień 6, Wzorzec Visitor 3
+        System.out.println("Wzorzec Visitor 3");
+        DeviceResetVisitor resetVisitor = new DeviceResetVisitor();
+        for (var device: abstractSmartDevices)
+        {
+            device.acceptVisitor(resetVisitor);
+        }
+
+        for (var device: abstractSmartDevices)
+        {
+            System.out.println(device.getStatus());
+        }
+
+        // Koniec Tydzień 6, Wzorzec Visitor 3
+
+        System.out.println(SEPARATOR);
+
+        // Tydzień 6, SOLID - Single-Responsibility 1
+        System.out.println("SOLID - Single-Responsibility 1");
+        SmartLogger logger = SmartLogger.getInstance();
+        logger.log("SOLID - Single-Responsibility 1");
+        // Koniec Tydzień 6, SOLID - Single-Responsibility 1
+
+        System.out.println(SEPARATOR);
+
+        // Tydzień 6, SOLID - Single-Responsibility 2
+        System.out.println("SOLID - Single-Responsibility 2");
+        LightingGroup lightingGroup = new LightingGroup();
+        ColorLight colorLight = new ColorLight("red");
+        Light lightDevice = new Light();
+        lightingGroup.addDevice(colorLight);
+        lightingGroup.addDevice(lightDevice);
+
+        Iterator<SmartDevice> smartDeviceIterator = new FilteringSmartDeviceIterator(
+                lightingGroup.iterator(),
+                device -> device instanceof ColorLight
+        );
+
+        while (smartDeviceIterator.hasNext()) {
+            System.out.println(smartDeviceIterator.next().getStatus());
+        }
+        // Koniec Tydzień 6, SOLID - Single-Responsibility 2
+
+        System.out.println(SEPARATOR);
+
+        // Tydzień 6, SOLID - Single-Responsibility 3
+        System.out.println("SOLID - Single-Responsibility 3");
+        DeviceConfig deviceConfig = ConfigFactory.createConfig("light");
+        DeviceConfig smartPlugConfig = ConfigFactory.createConfig("smartPlug");
+
+        // Koniec Tydzień 6, SOLID - Single-Responsibility 3
+
+        System.out.println(SEPARATOR);
+
+        // Tydzień 6, SOLID - Open-Close 1
+        System.out.println("SOLID - Open-Close 1");
+        GenericDeviceAction<Light> action = new GenericDeviceAction<>(light1, Light::turnOn);
+        action.execute();
+        light1.getStatus();
+
+        // Koniec Tydzień 6, SOLID - Open-Close 1
+
+        System.out.println(SEPARATOR);
+
+        // Tydzień 6, SOLID - Open-Close 2
+        System.out.println("SOLID - Open-Close 2");
+        NotificationService notificationService = NotificationService.getInstance(NotificationChannels.App);
+        Notification notification = new Notification.NotificationBuilder("Uwaga! Wykryto niespodziewany ruch w salonie!")
+                .setPriority(1)
+                .setType("Warning")
+                .addTitle("Uwaga! Wykryto ruch!")
+                .build();
+        notificationService.Notify(notification);
+        NotificationGroup notificationGroup = new NotificationGroup();
+        notificationGroup.addNotification(Notificator.create(NotificationChannels.App));
+        notificationGroup.addNotification(Notificator.create(NotificationChannels.Sms));
+        notificationGroup.addNotification(Notificator.create(NotificationChannels.Email));
+
+        notificationGroup.send("Uwaga! Wykryto niespodziewany ruch w salonie!");
+
+        // Koniec Tydzień 6, SOLID - Open-Close 2
+
+        System.out.println(SEPARATOR);
+
+        // Tydzień 6, SOLID - Open-Close 3
+        System.out.println("SOLID - Open-Close 3");
+        SmartSpeakerSystem speakerSystem = new SmartSpeakerSystem();
+        speakerSystem.installSpeaker("Living Room", "Echo Dot", "Amazon", true);
+        speakerSystem.installSpeaker("Kitchen", "Echo Dot", "Amazon", true);
+        speakerSystem.installSpeaker("Bedroom", "HomePod Mini", "Apple", false);
+        speakerSystem.installSpeaker("Bathroom", "Sonos One", "Sonos", true);
+        speakerSystem.installSpeaker("Garage", "Google Nest Mini", "Google", true);
+
+        List<SpeakersModeStrategy> strategies = new ArrayList<>();
+        strategies.add(new PartyModeSpeaker());
+        strategies.add(new LofiModeSpeaker());
+
+        speakerSystem.setStrategies(strategies);
+        speakerSystem.applyStrategies();
+        System.out.println(SEPARATOR);
+        speakerSystem.activatePartyMode();
+        System.out.println(SEPARATOR);
+        speakerSystem.setStrategyToAllSpeakers(new LofiModeSpeaker());
+
+        // Koniec Tydzień 6, SOLID - Open-Close 3
     }
  */
