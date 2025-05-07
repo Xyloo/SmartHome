@@ -3,6 +3,7 @@ import devices.command.Command;
 import devices.command.MacroCommand;
 import devices.command.TurnOffDeviceCommand;
 import devices.command.TurnOnDeviceCommand;
+import devices.configs.*;
 import devices.impl.AbstractSmartDevice;
 import devices.impl.SmartDevice;
 import devices.impl.Thermostat;
@@ -140,12 +141,20 @@ public class Main
         // Tydzień 7, SOLID - Dependency Inversion 2
         System.out.println("SOLID - Dependency Inversion 2");
 
+        DeviceConfigRepository repo = new InMemoryConfigRepository();
+        DeviceManager.init(repo);
+
+        var config = DeviceManager.getInstance().getSetting("Light", LightConfig.class);
+        System.out.println(config.toString());
+
         // Koniec Tydzień 7, SOLID - Dependency Inversion 2
 
         System.out.println(SEPARATOR);
 
         // Tydzień 7, SOLID - Dependency Inversion 3
         System.out.println("SOLID - Dependency Inversion 3");
+
+
 
         // Koniec Tydzień 7, SOLID - Dependency Inversion 3
     }
