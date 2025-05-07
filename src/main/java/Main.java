@@ -1,3 +1,4 @@
+import devices.adapter.ExternalSecurityCameraAdapter;
 import devices.command.Command;
 import devices.command.MacroCommand;
 import devices.command.TurnOffDeviceCommand;
@@ -7,9 +8,15 @@ import devices.impl.SmartDevice;
 import devices.impl.Thermostat;
 import devices.impl.doors.Door;
 import devices.impl.lighting.Light;
+import devices.impl.security.ExternalSecurityCamera;
+import devices.impl.security.SecurityCamera;
+import devices.impl.security.SecurityCameraDevice;
 import devices.state.lockings.SmartLock;
 import devices.visitor.EnableSecurityVisitor;
 import devices.visitor.TurnOnVisitor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Main
 {
@@ -48,6 +55,24 @@ public class Main
 
         // Tydzień 7, SOLID - Liskov Substitution 3
         System.out.println("SOLID - Liskov Substitution 3");
+
+        SecurityCameraDevice securityCamera = new SecurityCamera();
+        ExternalSecurityCamera externalSecurityCamera = new ExternalSecurityCamera();
+        SecurityCameraDevice externalCam = new ExternalSecurityCameraAdapter(externalSecurityCamera);
+
+        List<SecurityCameraDevice> cameras = new ArrayList<>();
+        cameras.add(securityCamera);
+        cameras.add(externalCam);
+
+        for (SecurityCameraDevice cam : cameras) {
+            cam.turnOn();
+            cam.startRecording();
+            cam.takeSnapshot();
+            System.out.println("Status → " + cam.getStatus());
+            cam.stopRecording();
+            cam.turnOff();
+            System.out.println();
+        }
 
         // Koniec Tydzień 7, SOLID - Liskov Substitution 3
 
