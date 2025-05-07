@@ -8,7 +8,9 @@ import devices.impl.SmartDevice;
 import devices.impl.Thermostat;
 import devices.impl.doors.Door;
 import devices.impl.lighting.Light;
+import devices.impl.security.BasicCamera;
 import devices.impl.security.ExternalSecurityCamera;
+import devices.impl.security.Interfaces.Recordable;
 import devices.impl.security.SecurityCamera;
 import devices.impl.security.SecurityCameraDevice;
 import devices.state.lockings.SmartLock;
@@ -66,10 +68,8 @@ public class Main
 
         for (SecurityCameraDevice cam : cameras) {
             cam.turnOn();
-            cam.startRecording();
             cam.takeSnapshot();
             System.out.println("Status → " + cam.getStatus());
-            cam.stopRecording();
             cam.turnOff();
             System.out.println();
         }
@@ -97,6 +97,21 @@ public class Main
         System.out.println("SOLID - Interface Segregation 2");
 
         // Koniec Tydzień 7, SOLID - Interface Segregation 2
+
+        BasicCamera basicCamera = new BasicCamera();
+        List<Recordable> recordables = new ArrayList<>();
+        basicCamera.stopRecording();
+        externalCam.stopRecording();
+        securityCamera.stopRecording();
+        recordables.add(basicCamera);
+        recordables.add(externalCam);
+        recordables.add(securityCamera);
+        System.out.println("\n");
+
+        for (Recordable recordable : recordables) {
+            recordable.startRecording();
+            System.out.println("Recordable status:" + ((SmartDevice)recordable).getStatus());
+        }
 
         System.out.println(SEPARATOR);
 

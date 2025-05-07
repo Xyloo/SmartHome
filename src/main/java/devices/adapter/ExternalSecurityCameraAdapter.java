@@ -2,13 +2,15 @@ package devices.adapter;
 
 import devices.impl.AbstractSmartDevice;
 import devices.impl.security.ExternalSecurityCamera;
+import devices.impl.security.Interfaces.AutoRecordable;
+import devices.impl.security.Interfaces.MotionDetectable;
 import devices.impl.security.SecurityCameraDevice;
 import devices.mediator.Mediator;
 import devices.visitor.SmartDeviceVisitor;
 
 
 //Tydzień 2, Wzorzec Adapter 2
-public class ExternalSecurityCameraAdapter extends AbstractSmartDevice implements SecurityCameraDevice {
+public class ExternalSecurityCameraAdapter extends AbstractSmartDevice implements SecurityCameraDevice, AutoRecordable, MotionDetectable {
     protected ExternalSecurityCamera device;
     private Mediator mediator;
 

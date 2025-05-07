@@ -2,6 +2,9 @@ package devices.impl.security;
 
 import devices.impl.AbstractSmartDevice;
 import devices.configs.SecurityCameraConfig;
+import devices.impl.security.Interfaces.AutoRecordable;
+import devices.impl.security.Interfaces.MotionDetectable;
+import devices.impl.security.Interfaces.Recordable;
 import devices.mediator.Mediator;
 import devices.observer.Observer;
 import devices.visitor.SmartDeviceVisitor;
@@ -9,7 +12,11 @@ import util.DeviceManager;
 
 import java.util.UUID;
 
-public class SecurityCamera extends AbstractSmartDevice implements SecurityCameraDevice, Observer {
+public class SecurityCamera extends AbstractSmartDevice implements SecurityCameraDevice,
+        Observer,
+        AutoRecordable,
+        MotionDetectable,
+        Recordable {
     public static final String CONFIG_KEY = "SecurityCamera";
     private boolean isRecording;
     private boolean isMotionDetectionEnabled;
