@@ -1,3 +1,7 @@
+import devices.command.Command;
+import devices.command.MacroCommand;
+import devices.command.TurnOffDeviceCommand;
+import devices.command.TurnOnDeviceCommand;
 import devices.impl.AbstractSmartDevice;
 import devices.impl.SmartDevice;
 import devices.impl.Thermostat;
@@ -80,6 +84,14 @@ public class Main
 
         // Tydzień 7, SOLID - Dependency Inversion 1
         System.out.println("SOLID - Dependency Inversion 1");
+        Thermostat thermostat1 = new Thermostat();
+        Command turnOnDevice = new TurnOnDeviceCommand(thermostat1);
+        Command turnOffDevice = new TurnOffDeviceCommand(thermostat1);
+
+        MacroCommand macro = new MacroCommand();
+        macro.addCommand(turnOnDevice);
+        macro.addCommand(turnOffDevice);
+        macro.execute();
 
         // Koniec Tydzień 7, SOLID - Dependency Inversion 1
 
