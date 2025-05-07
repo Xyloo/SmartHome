@@ -1,3 +1,4 @@
+import devices.InterfaceSegregation.EcoThermostat;
 import devices.adapter.ExternalSecurityCameraAdapter;
 import devices.command.Command;
 import devices.command.MacroCommand;
@@ -118,7 +119,13 @@ public class Main
 
         // Tydzień 7, SOLID - Interface Segregation 3
         System.out.println("SOLID - Interface Segregation 3");
+        Thermostat basicThermostat = new Thermostat();
+        EcoThermostat ecoThermostat = new EcoThermostat();
+        basicThermostat.getStatus();
+        basicThermostat.triggerAlarm();
 
+        ecoThermostat.getStatus();
+        ecoThermostat.enableEcoMode();
         // Koniec Tydzień 7, SOLID - Interface Segregation 3
 
         System.out.println(SEPARATOR);

@@ -5,6 +5,7 @@ public interface SmartDeviceVisitor extends
         LightingSmartDeviceVisitor,
         ExternalSmartDeviceVisitor,
         EnvironmentSmartDeviceVisitor,
+        EcoThermostatVisitor,
         PowerSmartDeviceVisitor {
 }
 

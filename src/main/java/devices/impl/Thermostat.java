@@ -1,5 +1,7 @@
 package devices.impl;
 
+import devices.InterfaceSegregation.Alarmable;
+import devices.InterfaceSegregation.TemperatureControllable;
 import devices.mediator.Mediator;
 import devices.memento.ThermostatMemento;
 import devices.observer.Observer;
@@ -11,7 +13,7 @@ import util.SmartLogger;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Thermostat extends AbstractSmartDevice implements SmartDevice, Subject {
+public class Thermostat extends AbstractSmartDevice implements SmartDevice, Subject, TemperatureControllable, Alarmable {
     private int temperature = 20; // default temperature
     private Mediator mediator;
     private List<Observer> observers = new ArrayList<>();
@@ -45,12 +47,12 @@ public class Thermostat extends AbstractSmartDevice implements SmartDevice, Subj
             setTemperature(20);
         }
     }
-
+    @Override
     public void setTemperature(int temperature) {
         this.temperature = temperature;
         notifyObservers();
     }
-
+    @Override
     public int getTemperature() {
         return temperature;
     }
@@ -106,6 +108,12 @@ public class Thermostat extends AbstractSmartDevice implements SmartDevice, Subj
         this.isOn = memento.isOn();
         System.out.println("State restored: " + getStatus());
     }
+
+    @Override
+    public void triggerAlarm() {
+        System.out.println("Thermostat raises alarm!");
+    }
+
     // Koniec Tydzień 6, Wzorzec Memento 2
 }
 
