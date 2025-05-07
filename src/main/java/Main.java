@@ -5,6 +5,7 @@ import devices.command.MacroCommand;
 import devices.command.TurnOffDeviceCommand;
 import devices.command.TurnOnDeviceCommand;
 import devices.configs.*;
+import devices.dependencyInversion.EcoThermostatController;
 import devices.impl.AbstractSmartDevice;
 import devices.impl.SmartDevice;
 import devices.impl.Thermostat;
@@ -160,9 +161,9 @@ public class Main
 
         // Tydzień 7, SOLID - Dependency Inversion 3
         System.out.println("SOLID - Dependency Inversion 3");
-
-
-
+        EcoThermostatController controller = new EcoThermostatController(ecoThermostat);
+        controller.enableThermostatEcoMode();
+        controller.disableThermostatEcoMode();
         // Koniec Tydzień 7, SOLID - Dependency Inversion 3
     }
     private static void getDeviceStatus(SmartDevice device){
