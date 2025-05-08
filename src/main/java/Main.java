@@ -4,8 +4,10 @@ import devices.command.Command;
 import devices.command.MacroCommand;
 import devices.command.TurnOffDeviceCommand;
 import devices.command.TurnOnDeviceCommand;
-import devices.configs.*;
-import devices.dependencyInversion.EcoThermostatController;
+import devices.configs.DeviceConfigRepository;
+import devices.configs.DeviceManager;
+import devices.configs.InMemoryConfigRepository;
+import devices.configs.LightConfig;
 import devices.impl.AbstractSmartDevice;
 import devices.impl.SmartDevice;
 import devices.impl.Thermostat;
@@ -161,9 +163,13 @@ public class Main
 
         // Tydzień 7, SOLID - Dependency Inversion 3
         System.out.println("SOLID - Dependency Inversion 3");
-        EcoThermostatController controller = new EcoThermostatController(ecoThermostat);
-        controller.enableThermostatEcoMode();
-        controller.disableThermostatEcoMode();
+        AbstractSmartDevice smartDevice = new Light();
+        AbstractSmartDevice smartDevice2 = new Thermostat();
+        AbstractSmartDevice smartDevice3 = new SmartLock("Front Door", 1);
+
+        for (AbstractSmartDevice device : List.of(smartDevice, smartDevice2, smartDevice3)) {
+            turnOnAbstractSmartDevice(device);
+        }
         // Koniec Tydzień 7, SOLID - Dependency Inversion 3
     }
     private static void getDeviceStatus(SmartDevice device){
@@ -175,6 +181,13 @@ public class Main
         System.out.println("Status: ");
         System.out.println(device.getStatus());
     }
+
+    private static void turnOnAbstractSmartDevice(AbstractSmartDevice device){
+        device.turnOn();
+        System.out.print(device.getId() + " Status: ");
+        System.out.println(device.getStatus());
+    }
+
 }
 
     /*
