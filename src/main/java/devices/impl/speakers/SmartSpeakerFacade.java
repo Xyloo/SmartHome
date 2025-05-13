@@ -1,5 +1,6 @@
 package devices.impl.speakers;
 
+import devices.configs.SpeakerConfig;
 import devices.impl.lighting.Light;
 
 import java.util.logging.Logger;
@@ -13,8 +14,8 @@ public class SmartSpeakerFacade {
         this.speakerSystem = new SmartSpeakerSystem();
     }
 
-    public void installSpeaker(String location, String model, String manufacturer, boolean voiceAssistantCapable) {
-        speakerSystem.installSpeaker(location, model, manufacturer, voiceAssistantCapable);
+    public void installSpeaker(String location, SpeakerConfig config) {
+        speakerSystem.installSpeaker(location, config);
     }
 
     public void playMusicOnAll(String song) {

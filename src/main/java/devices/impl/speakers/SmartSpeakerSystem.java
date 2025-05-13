@@ -1,5 +1,6 @@
 package devices.impl.speakers;
 
+import devices.configs.SpeakerConfig;
 import devices.strategy.PartyModeSpeaker;
 import devices.strategy.SpeakersModeStrategy;
 import util.SmartLogger;
@@ -13,11 +14,13 @@ public class SmartSpeakerSystem {
     private final List<SpeakersModeStrategy> strategies = new ArrayList<>();
     private final SmartLogger logger = SmartLogger.getInstance();
 
-    public SmartSpeaker installSpeaker(String location, String model, String manufacturer, boolean voiceAssistantCapable) {
-        SpeakerType type = SpeakerFactory.getSpeakerType(model, manufacturer, voiceAssistantCapable);
+    public SmartSpeaker installSpeaker(String location, SpeakerConfig config) {
+        SpeakerType type = SpeakerFactory.getSpeakerType(config.getModel(),
+                config.getManufacturer(),
+                config.isVoiceAssistantCapable());
         SmartSpeaker speaker = new SmartSpeaker(type, location);
         speakers.add(speaker);
-        System.out.println("Installed " + model + " speaker at " + location);
+        System.out.println("Installed " + config.getModel() + " speaker at " + location);
         return speaker;
     }
 

@@ -17,6 +17,7 @@ import devices.impl.security.SecurityCamera;
 import devices.impl.security.SecurityCameraDevice;
 import devices.impl.security.lockingsystem.Blind;
 import devices.impl.security.lockingsystem.LockingSystem;
+import devices.impl.speakers.SmartSpeakerSystem;
 import devices.state.lockings.SmartLock;
 import devices.visitor.EnableSecurityVisitor;
 import devices.visitor.TurnOnVisitor;
@@ -39,6 +40,8 @@ public class Main
         getDeviceStatus(thermostat);
 
         // Koniec Tydzień 7, SOLID - Liskov Substitution 1
+
+
 
         System.out.println(SEPARATOR);
 
@@ -600,12 +603,22 @@ public class Main
         System.out.println(SEPARATOR);
 
         // Tydzień 3, Wzorzec Flyweight 3
+        // Tydzień 3, Wzorzec Flyweight 3
         SmartSpeakerSystem speakerSystem = new SmartSpeakerSystem();
 
-        // Install speakers (note how shared SpeakerType is reused if identical)
-        speakerSystem.installSpeaker("Living Room", "Echo Dot", "Amazon", true);
-        speakerSystem.installSpeaker("Kitchen", "Echo Dot", "Amazon", true);
-        speakerSystem.installSpeaker("Bedroom", "HomePod Mini", "Apple", false);
+        SpeakerConfig amazonSpeakerConfig = new SpeakerConfig("Echo Dot", "Amazon", true);
+        SpeakerConfig appleSpeakerConfig = new SpeakerConfig("HomePod Mini", "Apple", false);
+
+        speakerSystem.installSpeaker("Living Room", amazonSpeakerConfig);
+        speakerSystem.installSpeaker("Kitchen", amazonSpeakerConfig);
+        speakerSystem.installSpeaker("Bedroom", appleSpeakerConfig);
+
+        // Play music on all speakers
+        speakerSystem.playMusicOnAll("Imagine by John Lennon");
+
+        // Adjust volume on all speakers
+        speakerSystem.setAllVolumes(70);
+        // Koniec, Tydzień 3, Wzorzec Flyweight 3
 
         // Play music on all speakers
         speakerSystem.playMusicOnAll("Imagine by John Lennon");
@@ -619,8 +632,8 @@ public class Main
         // Tydzień 3, Wzorzec Facade 3
         SmartSpeakerFacade speakerFacade = new SmartSpeakerFacade();
 
-        speakerFacade.installSpeaker("Living Room", "Echo Dot", "Amazon", true);
-        speakerFacade.installSpeaker("Kitchen", "Echo Dot", "Amazon", true);
+        speakerFacade.installSpeaker("Living Room", amazonSpeakerConfig);
+        speakerFacade.installSpeaker("Kitchen", amazonSpeakerConfig);
 
         speakerFacade.turnOnAllSpeakers();
         speakerFacade.playMusicOnAll("Imagine by John Lennon");

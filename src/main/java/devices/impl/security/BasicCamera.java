@@ -60,7 +60,7 @@ public class BasicCamera extends AbstractSmartDevice implements Recordable, Auto
 
     @Override
     public  void setAutoRecordingEnabled(boolean enabled) {
-
+        isAutoRecording = enabled;
     }
 
     @Override
