@@ -1,5 +1,6 @@
 package devices.impl.security.lockingsystem;
 
+import devices.configs.BlindConfig;
 import devices.factory.LockingSystemFactory;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,8 +9,8 @@ import java.util.List;
 public class LockingSystem {
     private List<SmartBlind> blinds = new ArrayList<>();
 
-    public void installBlind(String location, String type, String color, String anyOtherParameter) {
-        BlindType blindType = LockingSystemFactory.getBlinds(type,color,anyOtherParameter);
+    public void installBlind(String location, BlindConfig config) {
+        BlindType blindType = LockingSystemFactory.getBlinds(config.getType(),config.getColor(),config.getExtra());
         SmartBlind blind = new Blind(blindType,location);
         System.out.println("Zainstalowano nową roletę typu " + blindType.type + " w lokalizacji: "+ location);
         blinds.add(blind);

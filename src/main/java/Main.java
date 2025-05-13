@@ -4,10 +4,7 @@ import devices.command.Command;
 import devices.command.MacroCommand;
 import devices.command.TurnOffDeviceCommand;
 import devices.command.TurnOnDeviceCommand;
-import devices.configs.DeviceConfigRepository;
-import devices.configs.DeviceManager;
-import devices.configs.InMemoryConfigRepository;
-import devices.configs.LightConfig;
+import devices.configs.*;
 import devices.impl.AbstractSmartDevice;
 import devices.impl.SmartDevice;
 import devices.impl.Thermostat;
@@ -18,6 +15,8 @@ import devices.impl.security.ExternalSecurityCamera;
 import devices.impl.security.Interfaces.Recordable;
 import devices.impl.security.SecurityCamera;
 import devices.impl.security.SecurityCameraDevice;
+import devices.impl.security.lockingsystem.Blind;
+import devices.impl.security.lockingsystem.LockingSystem;
 import devices.state.lockings.SmartLock;
 import devices.visitor.EnableSecurityVisitor;
 import devices.visitor.TurnOnVisitor;
@@ -30,6 +29,7 @@ public class Main
     private static final String SEPARATOR = "----------------------------------------";
 
     public static void main(String[] args) {
+
         // Tydzień 7, SOLID - Liskov Substitution 1
         System.out.println("SOLID - Liskov Substitution 1");
         SmartDevice light = new Light();
@@ -526,9 +526,19 @@ public class Main
 
         //Tydzień 3, Wzorzec Flyweight 2
         LockingSystem system = new LockingSystem();
-        system.installBlind("Sypialnia","Dzień-noc","Białe","Zaciemniające");
-        system.installBlind("Kuchnia","Dzień-noc","Białe","Termoizolacyjne");
-        system.installBlind("Salon","Dzień-noc","Białe","Zaciemniające");
+
+        BlindConfig whiteBlackoutRoller =
+                new BlindConfig("Roller", "White", "Blackout");
+
+        BlindConfig dayNightWhiteThermal =
+                new BlindConfig("DayNight", "White", "Thermal");
+
+        BlindConfig dayNightWhiteBlackout =
+                new BlindConfig("DayNight", "White", "Blackout");
+
+        system.installBlind("Sypialnia", whiteBlackoutRoller);
+        system.installBlind("Kuchnia" , dayNightWhiteThermal);
+        system.installBlind("Salon"   , dayNightWhiteBlackout);
 
         system.openAll();
         system.listDevices();
