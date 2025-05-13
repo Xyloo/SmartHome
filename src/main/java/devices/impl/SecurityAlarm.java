@@ -8,7 +8,7 @@ import notifications.NotificationGroup;
 // Tydzień 5, Wzorzec State 1
 public class SecurityAlarm implements SmartDevice
 {
-    private boolean on;
+    private boolean isOn;
     private final NotificationGroup notificationGroup;
     private Mediator mediator;
     private AlarmState state;
@@ -21,20 +21,20 @@ public class SecurityAlarm implements SmartDevice
 
     @Override
     public void turnOn() {
-        on = true;
+        isOn = true;
         notificationGroup.send("Security alarm was just turned on");
         arm();
     }
 
     @Override
     public void turnOff() {
-        on = false;
+        isOn = false;
         notificationGroup.send("Security alarm was just turned off");
         disarm();
     }
 
     public String getStatus() {
-        return "Security alarm is " + (on ? "ON" : "OFF") + " and is currently " + state.getStatus();
+        return "Security alarm is " + (isOn ? "ON" : "OFF") + " and is currently " + state.getStatus();
     }
 
     @Override

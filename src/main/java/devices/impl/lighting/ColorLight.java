@@ -4,26 +4,26 @@ import devices.visitor.SmartDeviceVisitor;
 
 
 public class ColorLight extends Light implements ColorLightingDevice {
-    private String color;
+    private String lightColor;
 
     public ColorLight(String color) {
         super();
-        this.color = color;
+        this.lightColor = color;
     }
 
     @Override
     public void setColor(String color) {
-        this.color = color.toLowerCase();
+        this.lightColor = color.toLowerCase();
     }
 
     @Override
     public String getColor() {
-        return color;
+        return lightColor;
     }
 
     @Override
     public String getStatus(){
-        return super.getStatus() + ", Color: " + color;
+        return super.getStatus() + ", Color: " + lightColor;
     }
 
     @Override

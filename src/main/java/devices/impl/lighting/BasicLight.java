@@ -5,15 +5,15 @@ import devices.mediator.Mediator;
 
 public class BasicLight implements SmartDevice
 {
-    private boolean on;
+    private boolean isOn;
     private Mediator mediator;
 
     public void switchOn() {
-        on = true;
+        isOn = true;
     }
 
     public void switchOff() {
-        on = false;
+        isOn = false;
     }
 
     public void SetNightMode(){
@@ -22,16 +22,16 @@ public class BasicLight implements SmartDevice
 
     @Override
     public void turnOn() {
-        on = true;
+        isOn = true;
     }
 
     @Override
     public void turnOff() {
-        on = false;
+        isOn = false;
     }
 
     public String getStatus() {
-        return on ? "ON" : "OFF";
+        return isOn ? "ON" : "OFF";
     }
 
     @Override

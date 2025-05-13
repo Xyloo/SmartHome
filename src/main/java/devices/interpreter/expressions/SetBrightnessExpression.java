@@ -17,7 +17,7 @@ public class SetBrightnessExpression implements Expression {
     @Override
     public void interpret( Context context) {
         SmartDevice device = context.getDevice(deviceName);
-        if (device != null && device instanceof LightingDevice) {
+        if (device instanceof LightingDevice) {
             ((LightingDevice) device).setBrightness(brightness);
             util.SmartLogger.getInstance().log ("[SetBrightnessExpression] Setting brightness to " + brightness);
             }

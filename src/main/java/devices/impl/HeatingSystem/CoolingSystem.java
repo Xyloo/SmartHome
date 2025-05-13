@@ -6,11 +6,11 @@ import devices.observer.Observer;
 public class CoolingSystem implements Observer<Integer> {
     private final int minTemperatureToStartCooling = 25;
     @Override
-    public void update(Integer value) {
-        if (value > minTemperatureToStartCooling) {
-            System.out.println("Actual temperature: "+value+" Cooling system ON.");
+    public void update(Integer actualTemperature) {
+        if (actualTemperature > minTemperatureToStartCooling) {
+            System.out.println("Actual temperature: "+actualTemperature+" Cooling system ON.");
         } else {
-            System.out.println("Actual temperature: "+value+" Cooling system OFF.");
+            System.out.println("Actual temperature: "+actualTemperature+" Cooling system OFF.");
         }
     }
 }

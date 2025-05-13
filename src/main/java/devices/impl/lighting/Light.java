@@ -43,17 +43,20 @@ public class Light extends AbstractSmartDevice implements LightingDevice, Observ
     @Override
     public void Handle(String event) {
         System.out.println("Light handling event: " + event);
-        if(event.equals("LIGHTS_TURN_OFF")) {
-            System.out.println("Smart light - setting brightness to 0");
-            setBrightness(0);
-        }
-        else if(event.equals("activateSecurityMode")){
-            util.SmartLogger.getInstance().log("Event: activateSecurityMode; Turning on brightness");
-            turnOn();
-            setBrightness(50);
-        }else if(event.equals("deactivateSecurityMode")){
-            util.SmartLogger.getInstance().log("Event: deactivateSecurityMode; Turning off lights");
-            turnOff();
+        switch (event) {
+            case "LIGHTS_TURN_OFF" -> {
+                System.out.println("Smart light - setting brightness to 0");
+                setBrightness(0);
+            }
+            case "activateSecurityMode" -> {
+                util.SmartLogger.getInstance().log("Event: activateSecurityMode; Turning on brightness");
+                turnOn();
+                setBrightness(50);
+            }
+            case "deactivateSecurityMode" -> {
+                util.SmartLogger.getInstance().log("Event: deactivateSecurityMode; Turning off lights");
+                turnOff();
+            }
         }
     }
 
@@ -83,6 +86,5 @@ public class Light extends AbstractSmartDevice implements LightingDevice, Observ
         isOn = memento.isOn();
         brightness = memento.getBrightness();
     }
-
 }
 

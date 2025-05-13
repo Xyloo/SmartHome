@@ -6,11 +6,11 @@ import devices.observer.Observer;
 public class HeatingSystem implements Observer<Integer> {
     private final int maxTemperatureToStartHeating = 20;
     @Override
-    public void update(Integer value) {
-        if (value < maxTemperatureToStartHeating) {
-            System.out.println("Actual temperature: "+value+" Heating system ON.");
+    public void update(Integer actualTemperature) {
+        if (actualTemperature < maxTemperatureToStartHeating) {
+            System.out.println("Actual temperature: "+actualTemperature+" Heating system ON.");
         } else {
-            System.out.println("Actual temperature: "+value+" Heating system OFF.");
+            System.out.println("Actual temperature: "+actualTemperature+" Heating system OFF.");
         }
     }
 }
