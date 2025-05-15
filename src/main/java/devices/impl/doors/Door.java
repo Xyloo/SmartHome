@@ -22,7 +22,7 @@ public class Door extends AbstractSmartDevice implements SmartDevice, LockingSys
     }
 
     @Override
-    public void Handle(String event) {
+    public void handle(String event) {
         util.SmartLogger.getInstance().log("Door handle: " + event);
         if(event.equals("activateSecurityMode")){
             close();

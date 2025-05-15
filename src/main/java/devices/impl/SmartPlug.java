@@ -36,7 +36,7 @@ public class SmartPlug extends AbstractSmartDevice implements SmartDevice, Clone
     }
 
     @Override
-    public void Handle(String event) {
+    public void handle(String event) {
         if(event.equals("SMART_PLUG_OFF")){
             this.turnOff();
         }

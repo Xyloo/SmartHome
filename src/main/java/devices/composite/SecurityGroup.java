@@ -54,7 +54,7 @@ public class SecurityGroup extends AbstractDeviceGroup implements SecurityCamera
     }
 
     @Override
-    public void Handle(String event) {
+    public void handle(String event) {
         if(event.equals("RECORDING_START_GROUP")){
             startRecording();
         }

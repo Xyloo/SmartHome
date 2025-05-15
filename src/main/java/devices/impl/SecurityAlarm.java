@@ -43,7 +43,7 @@ public class SecurityAlarm implements SmartDevice
     }
 
     @Override
-    public void Handle(String event) {
+    public void handle(String event) {
         if(event.equals("ALARM_TURN_ON")){
             turnOn();
         }

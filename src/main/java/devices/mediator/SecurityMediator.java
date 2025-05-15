@@ -16,7 +16,7 @@ public class SecurityMediator implements Mediator {
         util.SmartLogger.getInstance().log("[SecurityMediator] Event received: " + event);
         for (SmartDevice device : devices) {
             if (device != sender) {
-                device.Handle(event);
+                device.handle(event);
             }
         }
     }

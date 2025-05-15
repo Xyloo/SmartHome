@@ -43,7 +43,7 @@ public class NotificationDeviceDecorator implements SmartDevice
     }
 
     @Override
-    public void Handle(String event) {
+    public void handle(String event) {
         if(event.equals("NOTIFICATION_DEVICE_ON")){
             turnOn();
         }

@@ -7,6 +7,6 @@ public interface SmartDevice {
     void turnOff();
     String getStatus();
     void setMediator(Mediator mediator);
-    void Handle(String event);
+    void handle(String event);
 }
 

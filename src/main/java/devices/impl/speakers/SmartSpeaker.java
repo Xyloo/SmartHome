@@ -81,7 +81,7 @@ public class SmartSpeaker implements SmartDevice
     }
 
     @Override
-    public void Handle(String event) {
+    public void handle(String event) {
         if(event.equals("SPEAKER_VOLUME_50")){
             setVolume(SpeakerVolumeConstants.DEFAULT_VOLUME);
         }

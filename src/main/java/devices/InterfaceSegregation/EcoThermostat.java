@@ -30,7 +30,7 @@ public class EcoThermostat  implements SmartDevice, TemperatureControllable, Ene
     }
 
     @Override
-    public void Handle(String event) {
+    public void handle(String event) {
         if(event.equals("SET_TEMPERATURE_20")){
             setTemperature(ThermostatConstants.DEFAULT_TEMPERATURE);
         }

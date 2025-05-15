@@ -30,7 +30,7 @@ public class ExternalSecurityCameraAdapter extends AbstractSmartDevice implement
     }
 
     @Override
-    public void Handle(String event) {
+    public void handle(String event) {
         if(event.equals("START_RECORDING"))
             startRecording();
     }

@@ -53,7 +53,7 @@ public class SecurityCamera extends AbstractSmartDevice implements SecurityCamer
     }
 
     @Override
-    public void Handle(String event) {
+    public void handle(String event) {
         System.out.println("Camera handling event: " + event);
         if(event.equals("CAMERA_SNAPSHOT")){
             System.out.println("Security camera - taking snapshot");

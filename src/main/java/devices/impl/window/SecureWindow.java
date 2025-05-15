@@ -50,7 +50,7 @@ public class SecureWindow extends AbstractSmartDevice implements SmartDevice {
     }
 
     @Override
-    public void Handle(String event) {
+    public void handle(String event) {
         if(event.equals("activateSecurityMode")){
             util.SmartLogger.getInstance().log("[SecureWindow] - closing blinds, locking window ");
             turnOff();

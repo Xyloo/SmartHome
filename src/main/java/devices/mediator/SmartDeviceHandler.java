@@ -16,7 +16,7 @@ public class SmartDeviceHandler implements Mediator{
     @Override
     public void notify(SmartDevice sender, String event) {
         for (SmartDevice device : devices) {
-            device.Handle(event);
+            device.handle(event);
         }
     }
 }

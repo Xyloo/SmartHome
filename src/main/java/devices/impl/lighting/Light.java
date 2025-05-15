@@ -42,7 +42,7 @@ public class Light extends AbstractSmartDevice implements LightingDevice, Observ
     }
 
     @Override
-    public void Handle(String event) {
+    public void handle(String event) {
         System.out.println("Light handling event: " + event);
         switch (event) {
             case "LIGHTS_TURN_OFF" -> {

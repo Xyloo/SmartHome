@@ -33,7 +33,7 @@ public class BasicCamera extends AbstractSmartDevice implements Recordable, Auto
     }
 
     @Override
-    public void Handle(String event) {
+    public void handle(String event) {
         util.SmartLogger.getInstance().log("BasicCamera: handle " + event);
     }
 

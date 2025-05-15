@@ -35,7 +35,7 @@ public class LightingGroup extends AbstractDeviceGroup implements LightingDevice
     }
 
     @Override
-    public void Handle(String event) {
+    public void handle(String event) {
         if(event.equals("LIGHTING_GROUP_TURN_OFF")){
             setBrightness(0);
         }

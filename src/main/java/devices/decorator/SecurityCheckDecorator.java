@@ -56,7 +56,7 @@ public class SecurityCheckDecorator implements SmartDevice {
     }
 
     @Override
-    public void Handle(String event) {
+    public void handle(String event) {
         if(event.equals("SECURITY_CHECK_TURN_ON")){
             turnOn();
         }

@@ -40,7 +40,7 @@ public class BasicLight implements SmartDevice
     }
 
     @Override
-    public void Handle(String event) {
+    public void handle(String event) {
 
     }
 }

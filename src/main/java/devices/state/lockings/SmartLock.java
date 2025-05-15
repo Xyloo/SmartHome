@@ -40,7 +40,7 @@ public class SmartLock extends AbstractSmartDevice implements Lockable {
     }
 
     @Override
-    public void Handle(String event) {
+    public void handle(String event) {
 
     }
 

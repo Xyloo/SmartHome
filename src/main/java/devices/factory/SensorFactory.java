@@ -36,7 +36,6 @@ public class SensorFactory {
             sensors.put(key, sensorType);
             System.out.println("New sensor added: " + key);
         }
-
         return sensorType;
     }
 }

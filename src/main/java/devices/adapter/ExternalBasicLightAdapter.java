@@ -41,7 +41,7 @@ public class ExternalBasicLightAdapter extends AbstractSmartDevice implements Sm
     }
 
     @Override
-    public void Handle(String event) {
+    public void handle(String event) {
         if(event.equals("EXTERNAL_LIGHT_ON")){
             turnOn();
         }

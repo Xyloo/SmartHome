@@ -68,7 +68,7 @@ public class SecurityCameraDecorator implements SecurityCameraDevice {
     }
 
     @Override
-    public void Handle(String event) {
+    public void handle(String event) {
         if(event.equals("SECURITY_CAMERA_ON")){
             turnOn();
         }

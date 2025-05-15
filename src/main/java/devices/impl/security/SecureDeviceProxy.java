@@ -66,7 +66,7 @@ public class SecureDeviceProxy implements SmartDevice {
     }
 
     @Override
-    public void Handle(String event) {
+    public void handle(String event) {
         if(event.equals("SECURE_DEVICE_TURN_OFF")){
             turnOff();
         }
