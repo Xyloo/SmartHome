@@ -1,5 +1,7 @@
 package devices.configs;
 
+import devices.impl.LightBrightnessConstants;
+
 public class ConfigProvider {
     private final DeviceConfigRepository repo;
 
@@ -22,7 +24,7 @@ public class ConfigProvider {
             case "light":
                 return new LightConfig.Builder()
                         .initialState(false)
-                        .brightness(44)
+                        .brightness(LightBrightnessConstants.DEFAULT_BRIGHTNESS)
                         .build();
             case "securitycamera":
                 return new SecurityCameraConfig.Builder()

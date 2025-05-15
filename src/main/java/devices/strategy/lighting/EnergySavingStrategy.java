@@ -1,5 +1,6 @@
 package devices.strategy.lighting;
 
+import devices.impl.LightBrightnessConstants;
 import devices.impl.lighting.LightingDevice;
 
 
@@ -7,7 +8,7 @@ import devices.impl.lighting.LightingDevice;
 public class EnergySavingStrategy implements BrightnessStrategy {
     @Override
     public void apply(LightingDevice light) {
-        light.setBrightness(30);
+        light.setBrightness(LightBrightnessConstants.LIGHT_ECO);
         System.out.println("Strategy: Set energy-saving brightness.");
     }
 }

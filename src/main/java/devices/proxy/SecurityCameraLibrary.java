@@ -5,11 +5,12 @@ public class SecurityCameraLibrary implements Camera {
     private String resolution;
     private String delay;
     private String savingSettings;
+    private final int VIDEO_SIZE = 1024;
 
     @Override
     public void startRecording() {
         System.out.println("Recording started...");
-        videoData = new byte[1024];
+        videoData = new byte[VIDEO_SIZE];
     }
 
     @Override

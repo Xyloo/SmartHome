@@ -1,17 +1,17 @@
 package devices.impl.security.sensors;
 
 import devices.factory.SensorFactory;
+
 import java.util.HashMap;
 import java.util.Map;
 
 public class SmartHomeSecuritySystem {
     private final Map<String, Sensor> sensors = new HashMap<>();
 
-    public void installSensor(int batteryLevel, boolean isActive, String location,
-                              String type, String settings, String model, boolean sendNotification) {
-        SecuritySensor sensorType = SensorFactory.getSensorType(type, settings, model);
-        Sensor sensor = new Sensor(batteryLevel, isActive, location, sensorType, sendNotification);
-        sensors.put(location, sensor);
+    public void installSensor(SensorCommonData sensorCommonData, SensorTypeData sensorTypeData) {
+        SecuritySensor sensorType = SensorFactory.getSensorType(sensorTypeData);
+        Sensor sensor = new Sensor(sensorCommonData, sensorType);
+        sensors.put(sensorCommonData.location(), sensor);
     }
 
     public void triggerAlarm(String location) {

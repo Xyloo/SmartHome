@@ -16,6 +16,10 @@ public class Sensor {
         this.type = type;
         this.sendNotification = sendNotification;
     }
+
+    public Sensor(SensorCommonData sensorCommonData, SecuritySensor type) {
+        this(sensorCommonData.batteryLevel(), sensorCommonData.isActive(), sensorCommonData.location(), type, sensorCommonData.sendNotification());
+    }
     public void trigger(){
         type.triggerAlarm(location,sendNotification);
     }

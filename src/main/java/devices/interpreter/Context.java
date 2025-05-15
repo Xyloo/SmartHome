@@ -2,7 +2,6 @@ package devices.interpreter;
 
 
 import devices.impl.SmartDevice;
-import devices.impl.speakers.SmartSpeaker;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -1,7 +1,5 @@
 package devices.impl.security;
 
-import java.util.Date;
-
 public interface ExternalSecurityCameraDevice {
     void toggleRecording();
     void saveDataToExternalStorage();

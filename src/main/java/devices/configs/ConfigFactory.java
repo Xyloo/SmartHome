@@ -1,12 +1,14 @@
 package devices.configs;
 
+import devices.impl.LightBrightnessConstants;
+
 public class ConfigFactory {
 
     public static DeviceConfig createConfig(String deviceType) {
         if (deviceType.equalsIgnoreCase("light")) {
             return new LightConfig.Builder()
                     .initialState(false)
-                    .brightness(60)
+                    .brightness(LightBrightnessConstants.DEFAULT_BRIGHTNESS)
                     .build();
         } else if (deviceType.equalsIgnoreCase("securityCamera")) {
             return new SecurityCameraConfig.Builder()

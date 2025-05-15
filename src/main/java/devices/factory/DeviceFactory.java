@@ -5,7 +5,6 @@ import devices.impl.SmartPlug;
 import devices.impl.Thermostat;
 import devices.impl.lighting.Light;
 import devices.impl.security.SecurityCamera;
-import devices.impl.window.SecureWindow;
 
 // Tydzień 1, Wzorzec Factory 1
 // Wzorzec fabryki pozwala na tworzenie obiektów bez konieczności ujawniania logiki tworzenia obiektów.

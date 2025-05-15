@@ -3,6 +3,7 @@ package home;
 import devices.impl.SecurityAlarm;
 import devices.impl.SmartDevice;
 import devices.impl.Thermostat;
+import devices.impl.ThermostatConstants;
 import devices.impl.lighting.Light;
 import devices.impl.security.lockingsystem.Blind;
 import devices.impl.security.sensors.MotionSensor;
@@ -41,14 +42,14 @@ public class SmartHomeFacade implements SmartHomeMediator {
 
     public void activateNightMode() {
         performAction(Light.class, Light::turnOff);
-        performAction(Thermostat.class, device -> device.setTemperature(18));
+        performAction(Thermostat.class, device -> device.setTemperature(ThermostatConstants.ECO_TEMPERATURE));
         performAction(SecurityAlarm.class, SecurityAlarm::turnOn);
         notificationGroup.send("Night mode activated.");
     }
 
     public void deactivateNightMode() {
         performAction(Light.class, Light::turnOn);
-        performAction(Thermostat.class, device -> device.setTemperature(21));
+        performAction(Thermostat.class, device -> device.setTemperature(ThermostatConstants.COMFORTABLE_TEMPERATURE));
         performAction(SecurityAlarm.class, SecurityAlarm::turnOff);
         notificationGroup.send("Night mode deactivated.");
     }

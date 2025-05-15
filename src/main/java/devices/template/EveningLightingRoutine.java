@@ -1,5 +1,6 @@
 package devices.template;
 
+import devices.impl.LightBrightnessConstants;
 import devices.impl.lighting.LightingDevice;
 
 public class EveningLightingRoutine extends DeviceRoutine {
@@ -12,6 +13,6 @@ public class EveningLightingRoutine extends DeviceRoutine {
     protected void performAction() {
         logger.log(this, "Executing EveningLightingRoutine on " + device.getStatus());
         device.turnOn();
-        ((LightingDevice) device).setBrightness(40);
+        ((LightingDevice) device).setBrightness(LightBrightnessConstants.LIGHT_DIM);
     }
 }

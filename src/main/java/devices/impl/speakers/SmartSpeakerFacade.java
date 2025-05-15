@@ -1,9 +1,9 @@
 package devices.impl.speakers;
 
 import devices.configs.SpeakerConfig;
+import devices.impl.LightBrightnessConstants;
+import devices.impl.SpeakerVolumeConstants;
 import devices.impl.lighting.Light;
-
-import java.util.logging.Logger;
 
 // Tydzień 3, Wzorzec Facade 3
 public class SmartSpeakerFacade {
@@ -60,10 +60,10 @@ public class SmartSpeakerFacade {
     public void activatePartyMode() {
         System.out.println("Activating Party Mode");
         playMusicOnAll("Party Playlist");
-        setVolumeForAll(90);
+        setVolumeForAll(SpeakerVolumeConstants.SPEAKER_PARTY);
 
         Light light = getLighting();
-        light.setBrightness(90);
+        light.setBrightness(LightBrightnessConstants.LIGHT_BRIGHT);
     }
     // Simulation of getting lighting system
     private Light getLighting(){

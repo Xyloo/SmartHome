@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Thermostat extends AbstractSmartDevice implements SmartDevice, Subject, TemperatureControllable, Alarmable {
-    private int temperature = 20; // default temperature
+    private int temperature = ThermostatConstants.DEFAULT_TEMPERATURE; // default temperature
     private Mediator mediator;
     private List<Observer> observers = new ArrayList<>();
     private TemperatureControlStrategy strategy;
@@ -22,18 +22,18 @@ public class Thermostat extends AbstractSmartDevice implements SmartDevice, Subj
     @Override
     public void turnOn() {
         super.turnOn();
-        temperature = 20;
+        temperature = ThermostatConstants.DEFAULT_TEMPERATURE;
     }
 
     @Override
     public void turnOff() {
         super.turnOff();
-        temperature = 0;
+        temperature = ThermostatConstants.THERMOSTAT_OFF;
     }
 
     @Override
     public String getStatus() {
-        return (temperature == 0) ? "Thermostat is OFF" : "Thermostat is ON. Current temperature is " + temperature + " degrees";
+        return (temperature == ThermostatConstants.THERMOSTAT_OFF) ? "Thermostat is OFF" : "Thermostat is ON. Current temperature is " + temperature + " degrees";
     }
 
     @Override
@@ -44,7 +44,7 @@ public class Thermostat extends AbstractSmartDevice implements SmartDevice, Subj
     @Override
     public void Handle(String event) {
         if(event.equals("SET_TEMPERATURE_20")){
-            setTemperature(20);
+            setTemperature(ThermostatConstants.DEFAULT_TEMPERATURE);
         }
     }
     @Override

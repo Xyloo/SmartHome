@@ -2,6 +2,7 @@ package devices.impl.lighting;
 
 import devices.impl.AbstractSmartDevice;
 import devices.configs.LightConfig;
+import devices.impl.LightBrightnessConstants;
 import devices.mediator.Mediator;
 import devices.memento.LightMemento;
 import devices.observer.Observer;
@@ -46,12 +47,12 @@ public class Light extends AbstractSmartDevice implements LightingDevice, Observ
         switch (event) {
             case "LIGHTS_TURN_OFF" -> {
                 System.out.println("Smart light - setting brightness to 0");
-                setBrightness(0);
+                setBrightness(LightBrightnessConstants.LIGHT_OFF);
             }
             case "activateSecurityMode" -> {
                 util.SmartLogger.getInstance().log("Event: activateSecurityMode; Turning on brightness");
                 turnOn();
-                setBrightness(50);
+                setBrightness(LightBrightnessConstants.LIGHT_DIM);
             }
             case "deactivateSecurityMode" -> {
                 util.SmartLogger.getInstance().log("Event: deactivateSecurityMode; Turning off lights");
@@ -64,7 +65,7 @@ public class Light extends AbstractSmartDevice implements LightingDevice, Observ
     public void update(Object value) {
         if(value instanceof String && value.equals("MOTION_DETECTED")) {
             turnOn();
-            setBrightness(80);
+            setBrightness(LightBrightnessConstants.LIGHT_BRIGHT);
         }
     }
 

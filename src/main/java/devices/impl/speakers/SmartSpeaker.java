@@ -1,6 +1,7 @@
 package devices.impl.speakers;
 
 import devices.impl.SmartDevice;
+import devices.impl.SpeakerVolumeConstants;
 import devices.mediator.Mediator;
 import devices.strategy.SpeakersModeStrategy;
 import util.SmartLogger;
@@ -18,7 +19,7 @@ public class SmartSpeaker implements SmartDevice
     public SmartSpeaker(SpeakerType speakerType, String location) {
         this.speakerType = speakerType;
         this.location = location;
-        this.volume = 50; // default volume level
+        this.volume = SpeakerVolumeConstants.DEFAULT_VOLUME; // default volume level
     }
 
     //Tydzień 5, Wzorzec Strategy 2
@@ -82,7 +83,7 @@ public class SmartSpeaker implements SmartDevice
     @Override
     public void Handle(String event) {
         if(event.equals("SPEAKER_VOLUME_50")){
-            setVolume(50);
+            setVolume(SpeakerVolumeConstants.DEFAULT_VOLUME);
         }
     }
 }

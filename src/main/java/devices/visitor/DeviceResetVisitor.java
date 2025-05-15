@@ -3,6 +3,7 @@ package devices.visitor;
 import devices.adapter.ExternalBasicLightAdapter;
 import devices.adapter.ExternalSecurityCameraAdapter;
 import devices.adapter.ExternalThermostatAdapter;
+import devices.impl.LightBrightnessConstants;
 import devices.impl.SmartPlug;
 import devices.impl.Thermostat;
 import devices.impl.doors.Door;
@@ -11,8 +12,6 @@ import devices.impl.lighting.Light;
 import devices.impl.security.SecurityCamera;
 import devices.impl.window.SecureWindow;
 import devices.state.lockings.SmartLock;
-
-import java.awt.*;
 
 // Tydzień 6, Wzorzec Visitor 3
 public class DeviceResetVisitor implements SmartDeviceVisitor
@@ -48,7 +47,7 @@ public class DeviceResetVisitor implements SmartDeviceVisitor
     @Override
     public void visit(Light light) {
         light.turnOff();
-        light.setBrightness(60);
+        light.setBrightness(LightBrightnessConstants.DEFAULT_BRIGHTNESS);
     }
 
     @Override

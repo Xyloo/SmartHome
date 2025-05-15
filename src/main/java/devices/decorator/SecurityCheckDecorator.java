@@ -9,6 +9,7 @@ public class SecurityCheckDecorator implements SmartDevice {
     private SmartDevice decoratedDevice;
     private SmartLogger logger = SmartLogger.getInstance();
     private Mediator mediator;
+    private final double securityThreshold = 0.5;
 
     public SecurityCheckDecorator(SmartDevice device) {
         this.decoratedDevice = device;
@@ -18,7 +19,6 @@ public class SecurityCheckDecorator implements SmartDevice {
     private boolean performSecurityCheck() {
         logger.log(this,"Performing security check for " + decoratedDevice.getClass().getSimpleName() + "...");
         var random = Math.random();
-        double securityThreshold = 0.5;
         if (random < securityThreshold) {
             logger.log(this,"Security check passed.");
             return true;
