@@ -5,6 +5,7 @@ import devices.command.MacroCommand;
 import devices.command.TurnOffDeviceCommand;
 import devices.command.TurnOnDeviceCommand;
 import devices.configs.*;
+import devices.factory.DeviceFactory;
 import devices.impl.AbstractSmartDevice;
 import devices.impl.SmartDevice;
 import devices.impl.Thermostat;
@@ -30,6 +31,33 @@ public class Main
     private static final String SEPARATOR = "----------------------------------------";
 
     public static void main(String[] args) {
+
+        try
+        {
+            SmartDevice monitor = DeviceFactory.createDevice ("monitor");
+        }
+        catch(Exception e)
+        {
+            System.out.println ("Nie można utworzyć urządzenia: " + e.getMessage());
+        }
+        try
+        {
+            DeviceConfig deviceConfig = ConfigFactory.createConfig ("monitor");
+        }
+        catch (Exception e)
+        {
+            System.out.println ("Nie można utworzyć konfiguracji urządzenia: " + e.getMessage());
+        }
+
+        try{
+            DeviceManager manager = DeviceManager.getInstance();
+        }
+        catch (Exception e)
+        {
+            System.out.println ("Nie można uzyskać instancji DeviceManager: " + e.getMessage());
+        }
+
+        System.out.println ("\n" + SEPARATOR);
 
         // Tydzień 7, SOLID - Liskov Substitution 1
         System.out.println("SOLID - Liskov Substitution 1");

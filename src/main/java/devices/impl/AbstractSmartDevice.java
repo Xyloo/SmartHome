@@ -20,7 +20,7 @@ public abstract class AbstractSmartDevice implements SmartDevice {
     }
 
     public AbstractSmartDevice(String name, int locationId) {
-        this();
+        this(); 
         this.name = name;
         this.locationId = locationId;
     }
