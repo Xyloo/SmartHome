@@ -17,7 +17,7 @@ public class TurnOffDeviceCommand implements Command {
 
     @Override
     public void undo() {
-        device.turnOff();
+        device.turnOn();
     }
 }
 // Koniec Tydzien 4, Wzorzec Command 2

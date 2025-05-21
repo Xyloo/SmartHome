@@ -1,4 +1,5 @@
 import devices.InterfaceSegregation.EcoThermostat;
+import devices.adapter.ExternalBasicLightAdapter;
 import devices.adapter.ExternalSecurityCameraAdapter;
 import devices.command.Command;
 import devices.command.MacroCommand;
@@ -8,8 +9,10 @@ import devices.configs.*;
 import devices.factory.DeviceFactory;
 import devices.impl.AbstractSmartDevice;
 import devices.impl.SmartDevice;
+import devices.impl.SmartPlug;
 import devices.impl.Thermostat;
 import devices.impl.doors.Door;
+import devices.impl.lighting.ColorLight;
 import devices.impl.lighting.Light;
 import devices.impl.security.BasicCamera;
 import devices.impl.security.ExternalSecurityCamera;
@@ -19,201 +22,84 @@ import devices.impl.security.SecurityCameraDevice;
 import devices.state.lockings.SmartLock;
 import devices.visitor.EnableSecurityVisitor;
 import devices.visitor.TurnOnVisitor;
+import util.DeviceAction;
+import util.DeviceChecker;
+import util.DeviceTransformer;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.stream.Stream;
 
 public class Main
 {
     private static final String SEPARATOR = "----------------------------------------";
 
-    public static void main(String[] args) {
+    public static void main(String[] args)
+    {
+        // Tydzień 8, Interfejs funkcyjny 1
+        Light light = new Light();
+        DeviceAction turnOnAction = SmartDevice::turnOn;
+        System.out.println("Initial light status: " + light.getStatus());
+        turnOnAction.perform(light);
+        System.out.println("Light status after action: " + light.getStatus());
 
-        try
-        {
-            SmartDevice monitor = DeviceFactory.createDevice ("monitor");
-        }
-        catch(Exception e)
-        {
-            System.out.println ("Nie można utworzyć urządzenia: " + e.getMessage());
-        }
-        try
-        {
-            DeviceConfig deviceConfig = ConfigFactory.createConfig ("monitor");
-        }
-        catch (Exception e)
-        {
-            System.out.println ("Nie można utworzyć konfiguracji urządzenia: " + e.getMessage());
-        }
+        // Koniec Tydzień 8, Interfejs funkcyjny 1
+        System.out.println(SEPARATOR);
 
-        try{
-            DeviceManager manager = DeviceManager.getInstance();
-        }
-        catch (Exception e)
-        {
-            System.out.println ("Nie można uzyskać instancji DeviceManager: " + e.getMessage());
-        }
+        // Tydzień 8, Interfejs funkcyjny 2
+        Thermostat thermostat = new Thermostat();
+        DeviceChecker isLight = device -> device instanceof Light;
+        System.out.println("Is " + light.getClass().getSimpleName() + " a Light? " + isLight.check(light)); // true
+        System.out.println("Is " + thermostat.getClass().getSimpleName() + " a Light? " + isLight.check(thermostat)); // false
 
-        System.out.println ("\n" + SEPARATOR);
+        // Koniec Tydzień 8, Interfejs funkcyjny 2
+        System.out.println(SEPARATOR);
 
-        // Tydzień 7, SOLID - Liskov Substitution 1
-        System.out.println("SOLID - Liskov Substitution 1");
-        SmartDevice light = new Light();
-        SmartDevice thermostat = new Thermostat();
+        // Tydzień 8, Interfejs funkcyjny 3
 
-        getDeviceStatus(light);
-        getDeviceStatus(thermostat);
+        DeviceTransformer toStatusString = device -> "STATUS: " + device.getStatus();
+        System.out.println(toStatusString.transform(light));
+        System.out.println(toStatusString.transform(thermostat));
 
-        // Koniec Tydzień 7, SOLID - Liskov Substitution 1
+        // Koniec Tydzień 8, Interfejs funkcyjny 3
+        System.out.println(SEPARATOR);
 
+        // Tydzień 8, Przykład na strumienie i kolekcje
+        List<SmartDevice> lights = List.of(light, new ColorLight("red"));
+        List<SmartDevice> security = List.of(new SmartLock("frontDoor", 1), new SecurityCamera());
+        List<SmartDevice> indoors = List.of(thermostat, new SmartPlug("plug1"), new SmartPlug("plug2"));
 
+        // no predicate to see the difference
+        Stream.of(lights, security, indoors)
+                .flatMap(Collection::stream)
+                .map(device -> "Device status: " + device.getStatus()) // Function usage
+                .forEach(System.out::println);
 
         System.out.println(SEPARATOR);
 
-        // Tydzień 7, SOLID - Liskov Substitution 2
-        System.out.println("SOLID - Liskov Substitution 2");
-        Light light2 = new Light();
-        AbstractSmartDevice abstractSmartDevice = light2;
+        Stream.of(lights, security, indoors)
+                .flatMap(Collection::stream)
+                .filter(device -> !device.getStatus().toLowerCase().contains("off")) // Predicate usage
+                .map(device -> "Active device: " + device.getStatus()) // Function usage
+                .forEach(System.out::println);
 
-        getDeviceStatus(light2);
-        getDeviceStatus(abstractSmartDevice);
 
-        Door door = new Door();
-        abstractSmartDevice = door;
-
-        getDeviceStatus(door);
-        getDeviceStatus(abstractSmartDevice);
-
-        // Koniec Tydzień 7, SOLID - Liskov Substitution 2
-
+        // Koniec Tydzień 8, Przykład na strumienie i kolekcje
         System.out.println(SEPARATOR);
 
-        // Tydzień 7, SOLID - Liskov Substitution 3
-        System.out.println("SOLID - Liskov Substitution 3");
+        // Tydzień 8, Przykład wykorzystania Predicate i Function
+        Predicate<SmartDevice> isCamera = d -> d instanceof SecurityCamera;
+        System.out.println(isCamera.test(new SecurityCamera())); // true
+        System.out.println(isCamera.test(new Light())); // false
 
-        SecurityCameraDevice securityCamera = new SecurityCamera();
-        ExternalSecurityCamera externalSecurityCamera = new ExternalSecurityCamera();
-        SecurityCameraDevice externalCam = new ExternalSecurityCameraAdapter(externalSecurityCamera);
+        Function<SmartDevice, String> deviceName = d -> d.getClass().getSimpleName();
+        System.out.println(deviceName.apply(new Light())); // "Light"
+        System.out.println(deviceName.apply(new SecurityCamera())); // "SecurityCamera"
 
-        List<SecurityCameraDevice> cameras = new ArrayList<>();
-        cameras.add(securityCamera);
-        cameras.add(externalCam);
-
-        for (SecurityCameraDevice cam : cameras) {
-            cam.turnOn();
-            cam.takeSnapshot();
-            System.out.println("Status → " + cam.getStatus());
-            cam.turnOff();
-            System.out.println();
-        }
-
-        // Koniec Tydzień 7, SOLID - Liskov Substitution 3
-
-        System.out.println(SEPARATOR);
-
-        // Tydzień 7, SOLID - Interface Segregation 1
-        System.out.println("SOLID - Interface Segregation 1");
-
-        SmartLock smartLock = new SmartLock("Front Door", 1);
-
-        EnableSecurityVisitor securityVisitor = new EnableSecurityVisitor();
-        smartLock.acceptVisitor(securityVisitor); // only security behavior is triggered
-
-        TurnOnVisitor turnOnVisitor = new TurnOnVisitor();
-        smartLock.acceptVisitor(turnOnVisitor);
-
-        // Koniec Tydzień 7, SOLID - Interface Segregation 1
-
-        System.out.println(SEPARATOR);
-
-        // Tydzień 7, SOLID - Interface Segregation 2
-        System.out.println("SOLID - Interface Segregation 2");
-
-        // Koniec Tydzień 7, SOLID - Interface Segregation 2
-
-        BasicCamera basicCamera = new BasicCamera();
-        List<Recordable> recordables = new ArrayList<>();
-        basicCamera.stopRecording();
-        externalCam.stopRecording();
-        securityCamera.stopRecording();
-        recordables.add(basicCamera);
-        recordables.add(externalCam);
-        recordables.add(securityCamera);
-        System.out.println("\n");
-
-        for (Recordable recordable : recordables) {
-            recordable.startRecording();
-            System.out.println("Recordable status:" + ((SmartDevice)recordable).getStatus());
-        }
-
-        System.out.println(SEPARATOR);
-
-        // Tydzień 7, SOLID - Interface Segregation 3
-        System.out.println("SOLID - Interface Segregation 3");
-        Thermostat basicThermostat = new Thermostat();
-        EcoThermostat ecoThermostat = new EcoThermostat();
-        basicThermostat.getStatus();
-        basicThermostat.triggerAlarm();
-
-        ecoThermostat.getStatus();
-        ecoThermostat.enableEcoMode();
-        // Koniec Tydzień 7, SOLID - Interface Segregation 3
-
-        System.out.println(SEPARATOR);
-
-        // Tydzień 7, SOLID - Dependency Inversion 1
-        System.out.println("SOLID - Dependency Inversion 1");
-        Thermostat thermostat1 = new Thermostat();
-        Command turnOnDevice = new TurnOnDeviceCommand(thermostat1);
-        Command turnOffDevice = new TurnOffDeviceCommand(thermostat1);
-
-        MacroCommand macro = new MacroCommand();
-        macro.addCommand(turnOnDevice);
-        macro.addCommand(turnOffDevice);
-        macro.execute();
-
-        // Koniec Tydzień 7, SOLID - Dependency Inversion 1
-
-        System.out.println(SEPARATOR);
-
-        // Tydzień 7, SOLID - Dependency Inversion 2
-        System.out.println("SOLID - Dependency Inversion 2");
-
-        DeviceConfigRepository repo = new InMemoryConfigRepository();
-        DeviceManager.init(repo);
-
-        var config = DeviceManager.getInstance().getSetting("Light", LightConfig.class);
-        System.out.println(config.toString());
-
-        // Koniec Tydzień 7, SOLID - Dependency Inversion 2
-
-        System.out.println(SEPARATOR);
-
-        // Tydzień 7, SOLID - Dependency Inversion 3
-        System.out.println("SOLID - Dependency Inversion 3");
-        AbstractSmartDevice smartDevice = new Light();
-        AbstractSmartDevice smartDevice2 = new Thermostat();
-        AbstractSmartDevice smartDevice3 = new SmartLock("Front Door", 1);
-
-        for (AbstractSmartDevice device : List.of(smartDevice, smartDevice2, smartDevice3)) {
-            turnOnAbstractSmartDevice(device);
-        }
-        // Koniec Tydzień 7, SOLID - Dependency Inversion 3
-    }
-    private static void getDeviceStatus(SmartDevice device){
-        System.out.println("Status: ");
-        System.out.println(device.getStatus());
-    }
-
-    private static void getDeviceStatus(AbstractSmartDevice device){
-        System.out.println("Status: ");
-        System.out.println(device.getStatus());
-    }
-
-    private static void turnOnAbstractSmartDevice(AbstractSmartDevice device){
-        device.turnOn();
-        System.out.print(device.getId() + " Status: ");
-        System.out.println(device.getStatus());
+        // Koniec Tydzień 8, Przykład wykorzystania Predicate i Function
     }
 
 }
@@ -1295,5 +1181,192 @@ private void tydzien4(){
         speakerSystem.setStrategyToAllSpeakers(new LofiModeSpeaker());
 
         // Koniec Tydzień 6, SOLID - Open-Close 3
+    }
+    private static void getDeviceStatus(SmartDevice device){
+        System.out.println("Status: ");
+        System.out.println(device.getStatus());
+    }
+
+    private static void getDeviceStatus(AbstractSmartDevice device){
+        System.out.println("Status: ");
+        System.out.println(device.getStatus());
+    }
+
+    private static void turnOnAbstractSmartDevice(AbstractSmartDevice device){
+        device.turnOn();
+        System.out.print(device.getId() + " Status: ");
+        System.out.println(device.getStatus());
+    }
+     private void tydzien7 () {
+        try
+        {
+            SmartDevice monitor = DeviceFactory.createDevice("monitor");
+        } catch (Exception e)
+        {
+            System.out.println("Nie można utworzyć urządzenia: " + e.getMessage());
+        }
+        try
+        {
+            DeviceConfig deviceConfig = ConfigFactory.createConfig("monitor");
+        } catch (Exception e)
+        {
+            System.out.println("Nie można utworzyć konfiguracji urządzenia: " + e.getMessage());
+        }
+
+        try
+        {
+            DeviceManager manager = DeviceManager.getInstance();
+        } catch (Exception e)
+        {
+            System.out.println("Nie można uzyskać instancji DeviceManager: " + e.getMessage());
+        }
+
+        System.out.println("\n" + SEPARATOR);
+
+        // Tydzień 7, SOLID - Liskov Substitution 1
+        System.out.println("SOLID - Liskov Substitution 1");
+        SmartDevice light = new Light();
+        SmartDevice thermostat = new Thermostat();
+
+        getDeviceStatus(light);
+        getDeviceStatus(thermostat);
+
+        // Koniec Tydzień 7, SOLID - Liskov Substitution 1
+
+
+        System.out.println(SEPARATOR);
+
+        // Tydzień 7, SOLID - Liskov Substitution 2
+        System.out.println("SOLID - Liskov Substitution 2");
+        Light light2 = new Light();
+        AbstractSmartDevice abstractSmartDevice = light2;
+
+        getDeviceStatus(light2);
+        getDeviceStatus(abstractSmartDevice);
+
+        Door door = new Door();
+        abstractSmartDevice = door;
+
+        getDeviceStatus(door);
+        getDeviceStatus(abstractSmartDevice);
+
+        // Koniec Tydzień 7, SOLID - Liskov Substitution 2
+
+        System.out.println(SEPARATOR);
+
+        // Tydzień 7, SOLID - Liskov Substitution 3
+        System.out.println("SOLID - Liskov Substitution 3");
+
+        SecurityCameraDevice securityCamera = new SecurityCamera();
+        ExternalSecurityCamera externalSecurityCamera = new ExternalSecurityCamera();
+        SecurityCameraDevice externalCam = new ExternalSecurityCameraAdapter(externalSecurityCamera);
+
+        List<SecurityCameraDevice> cameras = new ArrayList<>();
+        cameras.add(securityCamera);
+        cameras.add(externalCam);
+
+        for (SecurityCameraDevice cam : cameras)
+        {
+            cam.turnOn();
+            cam.takeSnapshot();
+            System.out.println("Status → " + cam.getStatus());
+            cam.turnOff();
+            System.out.println();
+        }
+
+        // Koniec Tydzień 7, SOLID - Liskov Substitution 3
+
+        System.out.println(SEPARATOR);
+
+        // Tydzień 7, SOLID - Interface Segregation 1
+        System.out.println("SOLID - Interface Segregation 1");
+
+        SmartLock smartLock = new SmartLock("Front Door", 1);
+
+        EnableSecurityVisitor securityVisitor = new EnableSecurityVisitor();
+        smartLock.acceptVisitor(securityVisitor); // only security behavior is triggered
+
+        TurnOnVisitor turnOnVisitor = new TurnOnVisitor();
+        smartLock.acceptVisitor(turnOnVisitor);
+
+        // Koniec Tydzień 7, SOLID - Interface Segregation 1
+
+        System.out.println(SEPARATOR);
+
+        // Tydzień 7, SOLID - Interface Segregation 2
+        System.out.println("SOLID - Interface Segregation 2");
+
+        // Koniec Tydzień 7, SOLID - Interface Segregation 2
+
+        BasicCamera basicCamera = new BasicCamera();
+        List<Recordable> recordables = new ArrayList<>();
+        basicCamera.stopRecording();
+        externalCam.stopRecording();
+        securityCamera.stopRecording();
+        recordables.add(basicCamera);
+        recordables.add(externalCam);
+        recordables.add(securityCamera);
+        System.out.println("\n");
+
+        for (Recordable recordable : recordables)
+        {
+            recordable.startRecording();
+            System.out.println("Recordable status:" + ((SmartDevice) recordable).getStatus());
+        }
+
+        System.out.println(SEPARATOR);
+
+        // Tydzień 7, SOLID - Interface Segregation 3
+        System.out.println("SOLID - Interface Segregation 3");
+        Thermostat basicThermostat = new Thermostat();
+        EcoThermostat ecoThermostat = new EcoThermostat();
+        basicThermostat.getStatus();
+        basicThermostat.triggerAlarm();
+
+        ecoThermostat.getStatus();
+        ecoThermostat.enableEcoMode();
+        // Koniec Tydzień 7, SOLID - Interface Segregation 3
+
+        System.out.println(SEPARATOR);
+
+        // Tydzień 7, SOLID - Dependency Inversion 1
+        System.out.println("SOLID - Dependency Inversion 1");
+        Thermostat thermostat1 = new Thermostat();
+        Command turnOnDevice = new TurnOnDeviceCommand(thermostat1);
+        Command turnOffDevice = new TurnOffDeviceCommand(thermostat1);
+
+        MacroCommand macro = new MacroCommand();
+        macro.addCommand(turnOnDevice);
+        macro.addCommand(turnOffDevice);
+        macro.execute();
+
+        // Koniec Tydzień 7, SOLID - Dependency Inversion 1
+
+        System.out.println(SEPARATOR);
+
+        // Tydzień 7, SOLID - Dependency Inversion 2
+        System.out.println("SOLID - Dependency Inversion 2");
+
+        DeviceConfigRepository repo = new InMemoryConfigRepository();
+        DeviceManager.init(repo);
+
+        var config = DeviceManager.getInstance().getSetting("Light", LightConfig.class);
+        System.out.println(config.toString());
+
+        // Koniec Tydzień 7, SOLID - Dependency Inversion 2
+
+        System.out.println(SEPARATOR);
+
+        // Tydzień 7, SOLID - Dependency Inversion 3
+        System.out.println("SOLID - Dependency Inversion 3");
+        AbstractSmartDevice smartDevice = new Light();
+        AbstractSmartDevice smartDevice2 = new Thermostat();
+        AbstractSmartDevice smartDevice3 = new SmartLock("Front Door", 1);
+
+        for (AbstractSmartDevice device : List.of(smartDevice, smartDevice2, smartDevice3))
+        {
+            turnOnAbstractSmartDevice(device);
+        }
+        // Koniec Tydzień 7, SOLID - Dependency Inversion 3
     }
  */
