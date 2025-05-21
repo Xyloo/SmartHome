@@ -33,7 +33,8 @@ public class Light extends AbstractSmartDevice implements LightingDevice, Observ
 
     @Override
     public String getStatus() {
-        return "Light [" + id + "] is " + (isOn ? "ON" : "OFF") + " Brightness: " + brightness;
+        String brightnessString = " Brightness: " + brightness;
+        return "Light [" + id + "] is " + (isOn ? "ON" + brightnessString : "OFF");
     }
 
     @Override
