@@ -7,11 +7,12 @@ import devices.visitor.SmartDeviceVisitor;
 
 public class SmartLock extends AbstractSmartDevice implements Lockable {
     private LockState state;
-
+    public boolean isLocked = false;
     public SmartLock(String name, int locationId) {
         super(name, locationId);
-        // Default state is Locked.
-        state = new LockedState();
+
+        state = new UnlockedState();
+        isLocked = state.getStatus().equals("Locked");
     }
 
     // Allow the state to be changed
@@ -22,11 +23,13 @@ public class SmartLock extends AbstractSmartDevice implements Lockable {
     @Override
     public void lock() {
         state.lock(this);
+        isLocked = true;
     }
 
     @Override
     public void unlock() {
         state.unlock(this);
+        isLocked = false;
     }
 
     @Override

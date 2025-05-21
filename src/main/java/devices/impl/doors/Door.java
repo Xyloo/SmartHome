@@ -4,11 +4,12 @@ import devices.impl.AbstractSmartDevice;
 import devices.impl.SmartDevice;
 import devices.impl.security.lockingsystem.LockingSystemDevice;
 import devices.mediator.Mediator;
+import devices.visitor.SecuritySmartDeviceVisitor;
 import devices.visitor.SmartDeviceVisitor;
 
 public class Door extends AbstractSmartDevice implements SmartDevice, LockingSystemDevice {
     public static final String CONFIG_KEY = "DOOR";
-    private boolean isLocked = false;
+    public boolean isLocked = false;
     private Mediator mediator;
 
     @Override
@@ -56,6 +57,10 @@ public class Door extends AbstractSmartDevice implements SmartDevice, LockingSys
 
     @Override
     public void acceptVisitor(SmartDeviceVisitor visitor)
+    {
+        visitor.visit(this);
+    }
+    public void acceptVisitor(SecuritySmartDeviceVisitor visitor)
     {
         visitor.visit(this);
     }
