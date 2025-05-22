@@ -8,7 +8,7 @@ import notifications.NotificationGroup;
 // Tydzień 5, Wzorzec State 1
 public class SecurityAlarm implements SmartDevice
 {
-    private boolean isOn;
+    private boolean isOn = true;
     private final NotificationGroup notificationGroup;
     private Mediator mediator;
     private AlarmState state;

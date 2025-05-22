@@ -5,10 +5,22 @@ import devices.impl.SmartDevice;
 import devices.impl.security.lockingsystem.Blind;
 import devices.impl.security.lockingsystem.BlindType;
 import devices.mediator.Mediator;
+import devices.visitor.SecuritySmartDeviceVisitor;
 import devices.visitor.SmartDeviceVisitor;
 
 public class SecureWindow extends AbstractSmartDevice implements SmartDevice {
     private final Blind blind;
+
+    public boolean isLocked()
+    {
+        return locked;
+    }
+
+    public void setLocked(boolean locked)
+    {
+        this.locked = locked;
+    }
+
     private boolean locked;
     private Mediator mediator;
 
@@ -66,6 +78,11 @@ public class SecureWindow extends AbstractSmartDevice implements SmartDevice {
 
     @Override
     public void acceptVisitor(SmartDeviceVisitor visitor)
+    {
+        visitor.visit(this);
+    }
+
+    public void acceptVisitor(SecuritySmartDeviceVisitor visitor)
     {
         visitor.visit(this);
     }

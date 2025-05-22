@@ -1,5 +1,6 @@
 package devices.bridge;
 
+import devices.command.Command;
 import devices.impl.SmartDevice;
 import devices.impl.lighting.Light;
 import util.SmartLogger;
@@ -7,6 +8,7 @@ import util.SmartLogger;
 //Tydzień 2, Wzorzec Bridge 3
 public class MobileRemoteControl extends AbstractRemoteControl {
     SmartLogger logger = SmartLogger.getInstance();
+    Command mainCommand;
     boolean voiceControlEnabled = false;
 
     public MobileRemoteControl(SmartDevice device) {
@@ -31,6 +33,25 @@ public class MobileRemoteControl extends AbstractRemoteControl {
         }
         else{
             logger.log(this,"Device is not a light device!");
+        }
+    }
+
+    public void setMainCommand(Command command)
+    {
+        this.mainCommand = command;
+        logger.log(this,"Main command set to: " + command.getClass().getSimpleName());
+    }
+
+    public void pressMainButton()
+    {
+        if(mainCommand != null)
+        {
+            mainCommand.execute();
+            logger.log(this,"Executing main command: " + mainCommand.getClass().getSimpleName());
+        }
+        else
+        {
+            logger.log(this,"No main command set!");
         }
     }
 

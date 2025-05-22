@@ -7,6 +7,8 @@ import devices.impl.security.Interfaces.MotionDetectable;
 import devices.impl.security.Interfaces.Recordable;
 import devices.mediator.Mediator;
 import devices.observer.Observer;
+import devices.visitor.EnableSecurityVisitor;
+import devices.visitor.SecuritySmartDeviceVisitor;
 import devices.visitor.SmartDeviceVisitor;
 import util.DeviceManager;
 
@@ -110,6 +112,21 @@ public class SecurityCamera extends AbstractSmartDevice implements SecurityCamer
     public void acceptVisitor(SmartDeviceVisitor visitor)
     {
         visitor.visit(this);
+    }
+
+    public void acceptVisitor(SecuritySmartDeviceVisitor visitor)
+    {
+        visitor.visit(this);
+    }
+
+    public boolean isRecording()
+    {
+        return isRecording;
+    }
+
+    public void setRecording(boolean recording)
+    {
+        isRecording = recording;
     }
 }
 

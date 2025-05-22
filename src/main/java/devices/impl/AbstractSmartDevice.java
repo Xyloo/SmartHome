@@ -8,6 +8,12 @@ public abstract class AbstractSmartDevice implements SmartDevice {
     protected final String id;
     protected String name;
     protected int locationId;
+
+    public boolean isOn()
+    {
+        return isOn;
+    }
+
     protected boolean isOn;
 
     public AbstractSmartDevice(){

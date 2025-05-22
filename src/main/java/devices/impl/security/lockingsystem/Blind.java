@@ -5,9 +5,25 @@ import devices.memento.BlindsMemento;
 public class Blind implements SmartBlind{
     private final String location;
     private int coveringLevel;
+
+    public boolean isOpen()
+    {
+        return isOpen;
+    }
+
     private boolean isOpen;
     private String mode;
     private final BlindType blindType;
+
+    public int getCoveringLevel()
+    {
+        return coveringLevel;
+    }
+
+    public void setCoveringLevel(int coveringLevel)
+    {
+        this.coveringLevel = coveringLevel;
+    }
 
     public Blind(BlindType type, String location) {
         this.blindType = type;
@@ -35,11 +51,12 @@ public class Blind implements SmartBlind{
     }
     // Tydzien 6 Wzorzec Memento 1
     public BlindsMemento saveState() {
-        return new BlindsMemento(coveringLevel, mode);
+        return new BlindsMemento(coveringLevel, mode, isOpen);
     }
     public void restoreState(BlindsMemento memento) {
         this.coveringLevel = memento.getCoveringLevel();
         this.mode = memento.getMode();
+        this.isOpen = memento.isOpen();
     }
     // Koniec Tydzień 6 Wzorzec Memento 1
     @Override

@@ -6,7 +6,7 @@ import java.util.List;
 
 public class BatterySubject implements Subject {
     private final List<Observer<Integer>> observers = new ArrayList<>();
-    private int batteryLevel;
+    private int batteryLevel = 100;
 
     public void setBatteryLevel(int level) {
         this.batteryLevel = level;
@@ -32,5 +32,9 @@ public class BatterySubject implements Subject {
         for (Observer<Integer> observer : observers) {
             observer.update(batteryLevel);
         }
+    }
+
+    public String getStatus() {
+        return "Battery level: " + batteryLevel + "%";
     }
 }
